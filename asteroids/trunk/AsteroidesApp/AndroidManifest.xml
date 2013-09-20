@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.asteroidesapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.asteroidesapp.Asteroids"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.asteroidesapp.activities.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="com.example.asteroidesapp.config.Preferencies"
+            android:label="@string/title_activity_preferencies"
+            android:parentActivityName="com.example.asteroidesapp.Asteroids" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.asteroidesapp.Asteroides" />
+        </activity>
+        <activity
+            android:name="com.example.asteroidesapp.activities.ExitActivity"
+            android:label="@string/title_activity_exit"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="com.example.asteroidesapp.activities.ScoreActivity"
+            android:label="@string/title_activity_score"
+            android:parentActivityName="com.example.asteroidesapp.Asteroids" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.asteroidesapp.Asteroides" />
+        </activity>
+    </application>
+
+</manifest>

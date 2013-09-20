@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="main_preferences" >
+
+    <PreferenceCategory android:title="@string/text_main_preferences" >
+        <CheckBoxPreference
+            android:key="music"
+            android:summary="@string/text_summary_music_preferences"
+            android:title="@string/text_music_preferences" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/graphicsTypes"
+            android:entryValues="@array/graphicsTypesValues"
+            android:key="grahics"
+            android:summary="@string/text_summary_grahics_preferences"
+            android:title="@string/text_grahics_preferences" />
+
+        <EditTextPreference
+            android:defaultValue="3"
+            android:key="fragments"
+            android:summary="@string/text_summary_fragments_preferences"
+            android:title="@string/text_fragments_preferences" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/text_multiplayer_preferences" >
+        <CheckBoxPreference
+            android:key="multiplayer"
+            android:title="@string/text_multiplayer_preferences_activate" />
+
+        <EditTextPreference
+            android:defaultValue="3"
+            android:key="maxPlayers"
+            android:title="@string/text_maxPlayers_preferences" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/connetionTypes"
+            android:entryValues="@array/connetionTypesValues"
+            android:key="connectionType"
+            android:title="@string/text_connectionType_preferences" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

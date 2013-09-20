@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/config"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/action_settings"
+        android:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/about"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="@string/text_btn_about"
+        android:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/exit"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="@string/text_btn_exit"
+        android:showAsAction="always">
+    </item>
+
+</menu>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Asteroides</string>
+
+    <!-- MAIN ACTIVITY -->
+    <string name="game_title">Asteroides</string>
+    <string name="text_btn_play">Jugar!</string>
+    <string name="text_btn_config">Configurar</string>
+    <string name="text_btn_about">Acerca de</string>
+    <string name="text_btn_scores">Puntuaciones</string>
+    <string name="text_btn_exit">Salir</string>
+
+    <!-- CONFIG MENU -->
+    <string name="action_settings">Configuracion</string>
+
+    <!-- PREFERENCES -->
+    <string name="title_activity_preferencies">Preferencias</string>
+    <string name="text_main_preferences">Asteroides</string>
+    <string name="text_summary_music_preferences">Se reproduce música de fondo</string>
+    <string name="text_music_preferences">Reproducir música</string>
+    <string name="text_summary_grahics_preferences">Se escoge la representación de gráficos</string>
+    <string name="text_grahics_preferences">Tipo de Gráficos</string>
+    <string name="text_summary_fragments_preferences">En cuantos trozos se divide un asteroide</string>
+    <string name="text_fragments_preferences">Número de Fragmentos</string>
+    <string name="text_multiplayer_preferences">Multijugador</string>
+    <string name="text_multiplayer_preferences_activate">Modo Multijugador</string>
+    <string name="text_maxPlayers_preferences">Máximo de Jugadores</string>
+    <string name="text_connectionType_preferences">Tipo de Conexión</string>
+
+    <!-- ABOUT ACTIVITY -->
+    <string name="title_activity_about">Acerca de &#8230;</string>
+    <string name="text_about">Este programa ha sido desarrollado 
+        como ejemplo en el curso de Android para demostrar como 
+        se pueden lanzar actividades desde la actividad principal.</string>
+
+    <!-- EXIT ACTIVITY -->
+    <string name="title_activity_exit">Salir?</string>
+    <string name="text_exit">¿Desea salir de Asteroides?</string>
+    <string name="txt_exit_ok_btn">OK</string>
+    <string name="txt_exit_cancel_btn">Cancelar</string>
+
+    <!-- SCORES ACTIVITY -->
+    <string name="title_activity_scores">Puntuaciones</string>
+    <string name="scores_text">Puntuaciones</string>
+    <string name="scores_text_empty">Sin Puntuaciones</string>
+    <string name="title_activity_score">ScoreActivity</string>
+    <string name="img_desc">Imagen de las puntuaciones</string>
+
+</resources>

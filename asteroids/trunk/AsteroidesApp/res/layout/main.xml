@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="30dip"
+    tools:context=".Asteroids" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dip"
+        android:gravity="center"
+        android:text="@string/game_title"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btn_play"
+        style="@style/TextoAsteroides.Botones"
+        android:text="@string/text_btn_play" />
+
+    <Button
+        android:id="@+id/btn_config"
+        style="@style/TextoAsteroides.Botones"
+        android:text="@string/text_btn_config"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_about"
+        style="@style/TextoAsteroides.Botones"
+        android:text="@string/text_btn_about"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_scores"
+        style="@style/TextoAsteroides.Botones"
+        android:text="@string/text_btn_scores" />
+
+    <Button
+        android:id="@+id/btn_exit"
+        style="@style/TextoAsteroides.Botones"
+        android:text="@string/text_btn_exit"
+        android:visibility="gone" />
+
+</LinearLayout>
