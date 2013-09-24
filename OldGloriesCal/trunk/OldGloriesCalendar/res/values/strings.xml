@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Old Glories Calendar</string>
+    <string name="action_settings">Configuracion</string>
+    
+    <string name="text_empty">Vacio</string>
+    
+    <string name="title_activity_partido_detail">Detalles Partido</string>
+    <string name="title_activity_partidos">Partidos</string>
+    
+    <string name="desc_icono_local">Icono local/visitante</string>
+
+</resources>
