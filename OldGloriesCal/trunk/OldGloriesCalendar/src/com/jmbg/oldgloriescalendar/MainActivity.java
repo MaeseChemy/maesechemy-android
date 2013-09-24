@@ -1,43 +1,23 @@
 package com.jmbg.oldgloriescalendar;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Vector;
-
-import com.jmbg.oldgloriescalendar.data.Partido;
-import com.jmbg.oldgloriescalendar.data.PartidosSQLite;
-
-
 import android.os.Bundle;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ListView;
 
-public class MainActivity extends ListActivity {
-	
-	private PartidosSQLite partidosSQLite;
-	private Vector<Partido> partidos;
-	
+public class MainActivity extends Activity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		this.partidosSQLite = new PartidosSQLite(this, "DBCalendar", null, 1);
-		
-		//Fecha actual
-		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(new Date());		
-		
-		this.partidos = this.partidosSQLite.listaPartidos(calendar);
-        //this.partidos = this.partidosSQLite.listaPartidos();
-        
-		
-		PartidosAdapter adapterScore = new PartidosAdapter(this, this.partidos);
-		setListAdapter(adapterScore);
+		Drawable background = getResources().getDrawable(R.drawable.ic_background);
+
+		// setting the opacity (alpha)
+		background.setAlpha(50);
 	}
 
 	@Override
@@ -47,15 +27,14 @@ public class MainActivity extends ListActivity {
 		return true;
 	}
 	
-	@Override
-	protected void onListItemClick(ListView listView, View view, int position, long id){
-		super.onListItemClick(listView, view, position, id);
-		
-		Partido partido = (Partido)getListAdapter().getItem(position);
-		
-		Intent iDetalles = new Intent(this, PartidoDetailActivity.class);
-		iDetalles.putExtra("partido", partido);
-		startActivity(iDetalles);
+	public void abrirPartidos(View view){
+		Intent iPartidos = new Intent(this, PartidosActivity.class);
+		startActivity(iPartidos);
+	}
+	
+	public void abrirEquipos(View view){
+		Intent iEquipos = new Intent(this, EquiposActivity.class);
+		startActivity(iEquipos);
 	}
 
 }

@@ -1,8 +1,12 @@
-package com.jmbg.oldgloriescalendar;
+package com.jmbg.oldgloriescalendar.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
+import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.R.drawable;
+import com.jmbg.oldgloriescalendar.R.id;
+import com.jmbg.oldgloriescalendar.R.layout;
 import com.jmbg.oldgloriescalendar.data.Partido;
 
 
@@ -42,7 +46,7 @@ public class PartidosAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = this.actividad.getLayoutInflater();
-		View view = inflater.inflate(R.layout.elemento_lista, null, true);
+		View view = inflater.inflate(R.layout.elemento_lista_partidos, null, true);
 		
 		TextView jornada = (TextView)view.findViewById(R.id.jornada);
 		jornada.setText(this.partidos.elementAt(position).getJornada());

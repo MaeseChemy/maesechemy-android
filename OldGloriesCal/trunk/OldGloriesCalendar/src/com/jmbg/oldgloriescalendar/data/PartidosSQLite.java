@@ -123,5 +123,69 @@ public class PartidosSQLite extends SQLiteOpenHelper {
 		db.close();
 		return partidos;
 	}
+	
+	public Vector<Partido> listaPartidosEquipo(String oponente) {
+		Vector<Partido> partidos = new Vector<Partido>();
+		SQLiteDatabase db = getReadableDatabase();
+
+		Cursor cursor = db.rawQuery(
+				"SELECT " + DB_CAMPO_JORNADA + ", " + DB_CAMPO_FECHA + ", "
+						+ DB_CAMPO_OPONENTE + ", " + DB_CAMPO_CAMPO + ", "
+						+ DB_CAMPO_LOCAL + " FROM " + DB_TABLA + " WHERE "
+						+ DB_CAMPO_OPONENTE + " = '" + oponente +"' ORDER BY "+DB_CAMPO_FECHA,
+				null);
+
+		while (cursor.moveToNext()) {
+			Partido partido = new Partido();
+
+			partido.setJornada(cursor.getString(0));
+			partido.setFechaLong(cursor.getLong(1));
+			partido.setOponente(cursor.getString(2));
+			partido.setLugar(cursor.getString(3));
+			partido.setLocal(cursor.getInt(4) == 0 ? false : true);
+
+			partidos.add(partido);
+		}
+
+		db.close();
+		return partidos;
+	}
+	
+	public Vector<String> listaEquipos() {
+		Vector<String> oponentes = new Vector<String>();
+		SQLiteDatabase db = getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("SELECT DISTINCT(" + DB_CAMPO_OPONENTE + ") "
+				+ " FROM " + DB_TABLA,
+				null);
+
+		while (cursor.moveToNext()) {
+			String oponente = cursor.getString(0);
+
+			oponentes.add(oponente);
+		}
+
+		db.close();
+		return oponentes;
+	}
+	
+	public Vector<String> listaCampos() {
+		Vector<String> campos = new Vector<String>();
+		SQLiteDatabase db = getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("SELECT DISTINCT(" + DB_CAMPO_CAMPO + ") "
+				+ " FROM " + DB_TABLA,
+				null);
+
+		while (cursor.moveToNext()) {
+			String campo = cursor.getString(0);
+
+			campos.add(campo);
+		}
+
+		db.close();
+		return campos;
+	}
+	
 
 }
