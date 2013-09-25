@@ -37,4 +37,9 @@ public class MainActivity extends Activity {
 		startActivity(iEquipos);
 	}
 
+	public void mostrarComoLlegar(View view){
+		Intent iMap = new Intent(this, MapaActivity.class);
+		startActivity(iMap);
+	}
+	
 }

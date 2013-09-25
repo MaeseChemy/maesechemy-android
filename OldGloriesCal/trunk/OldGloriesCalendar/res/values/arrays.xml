@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- PREFERENCIAS DE PARTIDOS -->
     <string-array name="preferencias_partido_local">
         <item>Todo</item>
         <item>Local</item>
@@ -33,6 +34,22 @@
         <item>La Cantera F7 2</item>
     </string-array>
     <string-array name="preferencias_partido_campo_valores">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- PREFERENCIAS DE MAPA -->
+    <string-array name="preferencias_mapa_layer">
+        <item>Normal</item>
+        <item>Hibrido</item>
+        <item>Satelite</item>
+        <item>Terreno</item>
+        <item>Ninguno</item>
+    </string-array>
+    <string-array name="preferencias_mapa_layer_valores">
         <item>0</item>
         <item>1</item>
         <item>2</item>

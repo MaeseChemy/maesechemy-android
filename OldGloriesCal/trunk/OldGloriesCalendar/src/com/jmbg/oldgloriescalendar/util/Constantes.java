@@ -23,7 +23,7 @@ public class Constantes {
 	public static final String TEXTO_HORA_CUATRO = "16:00";
 	public static final String TEXTO_HORA_CINCO = "17:15";
 	public static final String TEXTO_HORA_SEIS = "18:30";
-	public static final String TEXTO_HORA_OCHO = "22:00";
+	public static final String TEXTO_HORA_OCHO = "20:00";
 
 	public static final int CAMPO_TODOS= 0;
 	public static final int CAMPO_FT2_M1 = 1;
@@ -39,7 +39,10 @@ public class Constantes {
 	
 	
 	
-	public static final int BACK_PREF = 1234;
+	public static final int BACK_PREF = 1;
+	public static final int BACK_PREF_MAP = 2;
+
+	
 
 	
 }

@@ -8,15 +8,13 @@
         android:key="local"
         android:summary="@string/preferencias_partido_local"
         android:title="@string/text_preferencias_partido_local" />
-    
-        <ListPreference
+    <ListPreference
         android:defaultValue="0"
         android:entries="@array/preferencias_partido_horas"
         android:entryValues="@array/preferencias_partido_horas_valores"
         android:key="horas"
         android:summary="@string/preferencias_partido_horas"
         android:title="@string/text_preferencias_partido_horas" />
-
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/preferencias_partido_campos"
