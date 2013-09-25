@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="preferencias_partido_local">
+        <item>Todo</item>
+        <item>Local</item>
+        <item>Visitante</item>
+    </string-array>
+    <string-array name="preferencias_partido_local_valores">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="preferencias_partido_horas">
+        <item>Todas</item>
+        <item>16:00</item>
+        <item>17:15</item>
+        <item>18:30</item>
+        <item>20:00</item>
+    </string-array>
+    <string-array name="preferencias_partido_horas_valores">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="preferencias_partido_campos">
+        <item>Todos</item>
+        <item>La Cantera FT2 M1</item>
+        <item>La Cantera FT2 M2</item>
+        <item>La Cantera F7 1</item>
+        <item>La Cantera F7 2</item>
+    </string-array>
+    <string-array name="preferencias_partido_campo_valores">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+</resources>
