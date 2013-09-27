@@ -8,7 +8,6 @@ import java.util.Locale;
 
 import com.jmbg.oldgloriescalendar.equipo.EquiposActivity;
 import com.jmbg.oldgloriescalendar.mapa.MapaActivity;
-import com.jmbg.oldgloriescalendar.mapa.PreferenciasMapaActivity;
 import com.jmbg.oldgloriescalendar.partido.PartidosActivity;
 import com.jmbg.oldgloriescalendar.service.ServicioFechaPartido;
 import com.jmbg.oldgloriescalendar.util.Constantes;

@@ -151,8 +151,7 @@ public class ServicioFechaPartido extends Service {
 
 		long diff = d2.getTime() - d1.getTime();
 		double diffDays = diff / (24 * 60 * 60 * 1000);
-		
-		if(isDouble(diffDays))
+				if(isDouble(diffDays))
 			return -1;
 		else
 			return (int) diffDays;

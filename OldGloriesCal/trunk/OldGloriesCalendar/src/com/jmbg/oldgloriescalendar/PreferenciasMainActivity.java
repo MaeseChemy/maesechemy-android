@@ -1,7 +1,6 @@
 package com.jmbg.oldgloriescalendar;
 
 import com.jmbg.oldgloriescalendar.R;
-import com.jmbg.oldgloriescalendar.R.xml;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
