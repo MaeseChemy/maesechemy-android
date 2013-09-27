@@ -11,7 +11,7 @@ import java.util.Vector;
 import com.jmbg.oldgloriescalendar.MainActivity;
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.data.Partido;
-import com.jmbg.oldgloriescalendar.data.PartidosSQLite;
+import com.jmbg.oldgloriescalendar.data.LigaDBSQLite;
 import com.jmbg.oldgloriescalendar.partido.PartidoDetailActivity;
 import com.jmbg.oldgloriescalendar.util.Constantes;
 
@@ -25,10 +25,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 public class ServicioFechaPartido extends Service {
 
-	private PartidosSQLite partidosSQLite;
+	private LigaDBSQLite liga;
 	private Vector<Partido> partidos;
 
 	private NotificationManager nm;
@@ -36,41 +37,63 @@ public class ServicioFechaPartido extends Service {
 
 	@Override
 	public void onCreate() {
-		// Toast.makeText(this,
-		// "[PARTIDO_CHECKER] Servicio de chequeo de fecha creado",
-		// Toast.LENGTH_SHORT).show();
+		Log.i(Constantes.TAG, "[" + ServicioFechaPartido.class.getName()
+				+ ".onCreate] Creando servicio de notificacion de partidos...");
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		this.partidosSQLite = new PartidosSQLite(this, "DBCalendar", null, 1);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
 		// Fecha actual
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
-		this.partidos = this.partidosSQLite.listaPartidos();
+		this.partidos = this.liga.listaPartidos();
 
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int fllags, int idArranque) {
-		// Toast.makeText(this,
-		// "[PARTIDO_CHECKER] Servicio arrancado ["+idArranque+"]",
-		// Toast.LENGTH_SHORT).show();
-
-		SimpleDateFormat dfday = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
+		Log.d(Constantes.TAG,
+				"["
+						+ ServicioFechaPartido.class.getName()
+						+ ".onStartCommand] Creado servicio de notificacion de partidos...");
+		SimpleDateFormat dfday = new SimpleDateFormat("dd/MM/yyyy HH",
+				Locale.US);
 
 		String fechaActSt = dfday.format(Calendar.getInstance().getTime());
+
+		/*
+		 * Avisamos al usuario sobre los partidos que se van a jugar de la hora
+		 * actual a DIAS_AVISO_MAX dias. Si el partido es a las 18 avisaremos al
+		 * usuario a las 18 de los dias previos.
+		 */
+		Log.d(Constantes.TAG, "[" + ServicioFechaPartido.class.getName()
+				+ ".onStartCommand] Buscamos partidos próximos a la fecha ["
+				+ fechaActSt + "]...");
 		for (Partido partido : this.partidos) {
 			String fechaPartSt = dfday.format(partido.getFecha());
-			int dias = -1;
+			double dias = -1;
 			try {
 				dias = diffDays(fechaActSt, fechaPartSt);
-			} catch (ParseException e) {
-				e.printStackTrace();
+			} catch (ParseException exPE) {
+				Log.e(Constantes.TAG,
+						"["
+								+ ServicioFechaPartido.class.getName()
+								+ ".onStartCommand] Error parseando una de las fechas ["
+								+ fechaActSt + "," + fechaPartSt + "]. ["
+								+ exPE.getMessage() + "]");
 			}
 
-			if (0 <= dias && dias <= 2) {
-				if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-					generarNotificacionCompat(dias, partido);
-				} else {
-					generarNotificacion(dias, partido);
+			// Si el resultado no es entero, no es un dia exacto.
+			if (!isDouble(dias)) {
+				if (0 <= dias && dias <= Constantes.DIAS_AVISO_MAX) {
+					Log.d(Constantes.TAG,
+							"["
+									+ ServicioFechaPartido.class.getName()
+									+ ".onStartCommand] Partido localizado. Generamos notificación. ["
+									+ partido.toString() + "]");
+					if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+						generarNotificacionCompat((int) dias, partido);
+					} else {
+						generarNotificacion((int) dias, partido);
+					}
 				}
 			}
 		}
@@ -79,18 +102,19 @@ public class ServicioFechaPartido extends Service {
 
 	@SuppressWarnings("deprecation")
 	private void generarNotificacion(int dias, Partido partido) {
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm",
+				Locale.US);
 		String textoDias = "Partido en " + dias + " dias";
 		String textoEncuentro = partido.getJornada()
 				+ "-"
-				+ (partido.isLocal() ? Constantes.equipo + " - "
+				+ (partido.isLocal() ? Constantes.EQUIPO + " - "
 						+ partido.getOponente() : partido.getOponente() + " - "
-						+ Constantes.equipo);
+						+ Constantes.EQUIPO);
 		String textoLugar = df.format(partido.getFecha()) + " - "
 				+ partido.getLugar();
 
-		Notification notif = new Notification(R.drawable.ic_campo,
-				textoDias, System.currentTimeMillis());
+		Notification notif = new Notification(R.drawable.ic_campo, textoDias,
+				System.currentTimeMillis());
 		PendingIntent inPen = PendingIntent.getActivity(this, 0, new Intent(
 				this, MainActivity.class), 0);
 		notif.setLatestEventInfo(this, textoEncuentro, textoLugar, inPen);
@@ -100,11 +124,12 @@ public class ServicioFechaPartido extends Service {
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void generarNotificacionCompat(int dias, Partido partido) {
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm",
+				Locale.US);
 		String textoDias = "Partido en " + dias + " dias";
-		String textoEncuentro = partido.isLocal() ? Constantes.equipo + " - "
+		String textoEncuentro = partido.isLocal() ? Constantes.EQUIPO + " - "
 				+ partido.getOponente() : partido.getOponente() + " - "
-				+ Constantes.equipo;
+				+ Constantes.EQUIPO;
 		String textoLugar = df.format(partido.getFecha()) + " - "
 				+ partido.getLugar();
 
@@ -132,8 +157,6 @@ public class ServicioFechaPartido extends Service {
 
 	@Override
 	public void onDestroy() {
-		// Toast.makeText(this, "[PARTIDO_CHECKER] Servicio destruido",
-		// Toast.LENGTH_SHORT).show();
 		nm.cancel(ID_NOTIF_CREAR);
 	}
 
@@ -143,21 +166,26 @@ public class ServicioFechaPartido extends Service {
 		return null;
 	}
 
-	private int diffDays(String dateStart, String dateEnd)
+	private double diffDays(String dateStart, String dateEnd)
 			throws ParseException {
-		SimpleDateFormat dfday = new SimpleDateFormat("dd/MM/yyyy HH", Locale.US);
-		Date d1 = dfday.parse(dateStart);
-		Date d2 = dfday.parse(dateEnd);
+		SimpleDateFormat dfday = new SimpleDateFormat("dd/MM/yyyy HH",
+				Locale.US);
+		Calendar d1 = Calendar.getInstance();
+		d1.setTime(dfday.parse(dateStart));
+		Calendar d2 = Calendar.getInstance();
+		d2.setTime(dfday.parse(dateEnd));
 
-		long diff = d2.getTime() - d1.getTime();
+		System.out.println("getTime start = " + d1.getTimeInMillis());
+		System.out.println("getTime end = " + d2.getTimeInMillis());
+
+		double diff = d2.getTimeInMillis() - d1.getTimeInMillis();
+
 		double diffDays = diff / (24 * 60 * 60 * 1000);
-				if(isDouble(diffDays))
-			return -1;
-		else
-			return (int) diffDays;
+
+		return diffDays;
 	}
-	
-	private boolean isDouble(Double number){
+
+	private boolean isDouble(Double number) {
 		return number % 1 != 0;
 	}
 

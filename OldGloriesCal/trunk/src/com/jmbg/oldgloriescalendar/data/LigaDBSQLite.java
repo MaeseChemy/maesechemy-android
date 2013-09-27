@@ -11,8 +11,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-public class PartidosSQLite extends SQLiteOpenHelper {
+public class LigaDBSQLite extends SQLiteOpenHelper {
 
 	private Context context;
 
@@ -23,6 +24,8 @@ public class PartidosSQLite extends SQLiteOpenHelper {
 	private final static String DB_CAMPO_CAMPO = "CAMPO";
 	private final static String DB_CAMPO_LOCAL = "LOCAL";
 
+	private final static int DB_VERSION = 1;
+	
 	private final static String SENTENCIA_CREATE_TABLE = "CREATE TABLE "
 			+ DB_TABLA + " (" + DB_CAMPO_JORNADA + " TEXT PRIMARY KEY, "
 			+ DB_CAMPO_FECHA + " LONG," + "" + DB_CAMPO_OPONENTE + " TEXT,"
@@ -32,9 +35,8 @@ public class PartidosSQLite extends SQLiteOpenHelper {
 	private final static String SENTENCIA_DROP_TABLE = "DROP TABLE IF EXISTS "
 			+ DB_TABLA;
 
-	public PartidosSQLite(Context context, String name, CursorFactory factory,
-			int version) {
-		super(context, name, factory, version);
+	public LigaDBSQLite(Context context, String name, CursorFactory factory) {
+		super(context, name, factory, DB_VERSION);
 		this.context = context;
 
 	}
@@ -42,13 +44,12 @@ public class PartidosSQLite extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SENTENCIA_CREATE_TABLE);
-
-		this.poblarBD(db);
+		this.cargarPartidos(db);
 	}
 
-	private void poblarBD(SQLiteDatabase db) {
+	private void cargarPartidos(SQLiteDatabase db) {
 		LectorLiga lector = new LectorLiga(context);
-		List<Partido> partidosFichero = lector.leerPartidos();
+		List<Partido> partidosFichero = lector.obtenerPartidos();
 
 		for (Partido partido : partidosFichero) {
 			this.guardarPartido(partido, db);
@@ -57,7 +58,9 @@ public class PartidosSQLite extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// Se elimina la versión anterior de la tabla
+	    Log.w(LigaDBSQLite.class.getName(),
+	            "Upgrading database from version " + oldVersion + " to "
+	                + newVersion + ", which will destroy all old data");
 		db.execSQL(SENTENCIA_DROP_TABLE);
 
 		// Se crea la nueva versión de la tabla

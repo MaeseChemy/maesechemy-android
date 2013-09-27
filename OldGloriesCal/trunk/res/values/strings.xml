@@ -6,7 +6,6 @@
     <string name="main_partidos">Partidos</string>
     <string name="main_equipos">Equipos</string>
     <string name="main_campo">Campo</string>
-    
 
     <!-- ACTIVIDAD DE PARTIDOS -->
     <string name="text_empty">Vacio</string>
@@ -35,12 +34,11 @@
     <string name="title_activity_preferencias_main">Preferencias</string>
     <string name="preferencias_main_notificaciones">Notificaciones</string>
     <string name="text_preferencias_main_notificaciones">Activar/Desactivar notificaciones</string>
-    
 
     <!-- ACTIVIDAD MAPA -->
     <string name="title_activity_mapa">Mapa</string>
     <string name="map_texto_desc_btn_ruta">Obtener ruta</string>
+    <string name="map_texto_desc_btn_centrar_campo">Centrar mapa en campo</string>
     <string name="map_texto_desc_btn_layer">Cambio de capa del mapa</string>
 
-    
 </resources>

@@ -9,7 +9,7 @@ import java.util.Vector;
 
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.data.Partido;
-import com.jmbg.oldgloriescalendar.data.PartidosSQLite;
+import com.jmbg.oldgloriescalendar.data.LigaDBSQLite;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 public class EquipoDetailActivity extends Activity {
 
-	private PartidosSQLite partidosSQLite;
+	private LigaDBSQLite liga;
 	private Vector<Partido> partidos;
 
 	@Override
@@ -33,11 +33,11 @@ public class EquipoDetailActivity extends Activity {
 
 		this.setTitle(equipo);
 
-		this.partidosSQLite = new PartidosSQLite(this, "DBCalendar", null, 1);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
 		// Fecha actual
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
-		this.partidos = this.partidosSQLite.listaPartidosEquipo(equipo);
+		this.partidos = this.liga.listaPartidosEquipo(equipo);
 
 		TabHost tabHost = (TabHost) findViewById(R.id.equipo_detail_tabhost);
 		tabHost.setup();

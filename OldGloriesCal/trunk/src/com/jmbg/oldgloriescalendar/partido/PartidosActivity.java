@@ -11,15 +11,19 @@ import java.util.Vector;
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.adapter.PartidosAdapter;
 import com.jmbg.oldgloriescalendar.data.Partido;
-import com.jmbg.oldgloriescalendar.data.PartidosSQLite;
+import com.jmbg.oldgloriescalendar.data.LigaDBSQLite;
 import com.jmbg.oldgloriescalendar.util.Constantes;
+import com.jmbg.oldgloriescalendar.util.TiempoHttpClient;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,9 +31,11 @@ import android.widget.ListView;
 
 public class PartidosActivity extends ListActivity {
 
-	private PartidosSQLite partidosSQLite;
+	private LigaDBSQLite liga;
 	private Vector<Partido> partidos;
 	private Vector<Partido> partidosFiltrados;
+	
+	private String jsonTimeTiempo;
 
 	private int tipoLocal;
 	private int tipoHora;
@@ -45,12 +51,41 @@ public class PartidosActivity extends ListActivity {
 		// setting the opacity (alpha)
 		background.setAlpha(50);
 
-		this.partidosSQLite = new PartidosSQLite(this, "DBCalendar", null, 1);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
 		// Fecha actual
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());
-		this.partidos = this.partidosSQLite.listaPartidos(calendar);
+		this.partidos = this.liga.listaPartidos(calendar);
 		iniciarAdapterListView();
+
+		//JSONTiempoTask task = new JSONTiempoTask();
+		//task.execute();
+	}
+
+	private class JSONTiempoTask extends AsyncTask<Void, Void, String> {
+		private ProgressDialog progressDialog;
+
+		protected String doInBackground(Void... params) {
+			TiempoHttpClient tiempo = new TiempoHttpClient();
+			String res = tiempo.getDatosDeTiempo();
+			Log.e(Constantes.TAG,res);
+			return res;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = new ProgressDialog(PartidosActivity.this);
+			progressDialog.setMessage("Obteniendo tiempo...");
+			progressDialog.setIndeterminate(true);
+			progressDialog.show();
+		}
+
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			progressDialog.hide();
+			jsonTimeTiempo = result;
+		}
 	}
 
 	private void iniciarAdapterListView() {
@@ -59,7 +94,6 @@ public class PartidosActivity extends ListActivity {
 		PartidosAdapter adapterScore = new PartidosAdapter(this,
 				this.partidosFiltrados);
 		setListAdapter(adapterScore);
-		
 	}
 
 	private void iniciarPreferencias() {
@@ -104,10 +138,10 @@ public class PartidosActivity extends ListActivity {
 		Intent iPrefPart = new Intent(this, PreferenciasPartidoActivity.class);
 		startActivityForResult(iPrefPart, Constantes.BACK_PREF);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == Constantes.BACK_PREF){
+		if (requestCode == Constantes.BACK_PREF) {
 			iniciarAdapterListView();
 		}
 	}

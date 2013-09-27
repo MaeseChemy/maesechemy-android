@@ -6,7 +6,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jmbg.oldgloriescalendar.R;
@@ -35,10 +34,6 @@ public class MapaActivity extends FragmentActivity {
 	private int tipoCapa;
 	private GoogleMap mMap;
 	public Marker marker;
-	private static final LatLng CANTERA = new LatLng(40.339661, -3.762539);
-	private static final String NOMBRE_POLIDEPORTIVO = "Polideportivo: La Cantera";
-	private static final String DIRECCION_POLIDEPORTIVO = "Calle Arquitectura 6, Leganés, Madrid";
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +51,16 @@ public class MapaActivity extends FragmentActivity {
 			mMap = fm.getMap();
 			if (mMap != null) {
 				this.mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-				this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CANTERA,
-						15));
+				this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+						Constantes.CANTERA, 15));
 				this.mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
 				// Habilitamos nuestra posicion
 				this.mMap.setMyLocationEnabled(true);
 				// Situamos el polideportivo
 				this.marker = this.mMap.addMarker(new MarkerOptions()
-						.position(CANTERA)
-						.title(NOMBRE_POLIDEPORTIVO)
-						.snippet(DIRECCION_POLIDEPORTIVO)
+						.position(Constantes.CANTERA)
+						.title(Constantes.NOMBRE_POLIDEPORTIVO)
+						.snippet(Constantes.DIRECCION_POLIDEPORTIVO)
 						.icon(BitmapDescriptorFactory
 								.fromResource(R.drawable.ic_map_pin))
 						.anchor(0.5f, 0.5f));
@@ -134,23 +129,30 @@ public class MapaActivity extends FragmentActivity {
 	public void mostrarRuta(View view) {
 		// Intent intent = new Intent(Intent.ACTION_VIEW,
 		// Uri.parse(generarUrl()));
-		// intent.setComponent(new ComponentName("com.google.android.apps.maps",
-		// "com.google.android.maps.MapsActivity"));
+		// intent.setComponent(new
+		// ComponentName("com.google.android.apps.maps","com.google.android.maps.MapsActivity"));
 
 		Intent intent = new Intent(Intent.ACTION_VIEW,
 				Uri.parse(generarUrl(Constantes.MAP_URI_GENERIC)));
 		startActivity(intent);
+	}
+	
+	public void centrarCampo(View view) {
+		this.mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+				Constantes.CANTERA, 15));
 	}
 
 	private String generarUrl(int tipoUri) {
 		String res = "";
 		switch (tipoUri) {
 		case Constantes.MAP_URI_GENERIC:
-			res = "geo:0,0?q=" + CANTERA.latitude + "," + CANTERA.longitude;
+			res = "geo:0,0?q=" + Constantes.CANTERA.latitude + ","
+					+ Constantes.CANTERA.longitude;
 			break;
 		case Constantes.MAP_URI_GOOGLE_MAPS:
-			res = "http://maps.google.com/maps?f=d&daddr=" + CANTERA.latitude
-					+ "," + CANTERA.longitude;
+			res = "http://maps.google.com/maps?f=d&daddr="
+					+ Constantes.CANTERA.latitude + ","
+					+ Constantes.CANTERA.longitude;
 			break;
 		default:
 			break;

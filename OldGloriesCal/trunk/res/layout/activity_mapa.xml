@@ -21,6 +21,19 @@
         android:orientation="horizontal" >
 
         <ImageButton
+            android:id="@+id/map_centrar_campo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:background="#FFFFFFFF"
+            android:contentDescription="@string/map_texto_desc_btn_centrar_campo"
+            android:onClick="centrarCampo"
+            android:padding="1pt"
+            android:src="@drawable/ic_loc_campo" />
+		<View 
+		    android:layout_height="fill_parent"
+		    android:layout_width="1dp"/>
+        <ImageButton
             android:id="@+id/map_obtener_ruta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +42,7 @@
             android:contentDescription="@string/map_texto_desc_btn_ruta"
             android:onClick="mostrarRuta"
             android:padding="1pt"
-            android:src="@android:drawable/ic_menu_directions" />
+            android:src="@drawable/ic_direction" />
     </RadioGroup>
 
 </FrameLayout>

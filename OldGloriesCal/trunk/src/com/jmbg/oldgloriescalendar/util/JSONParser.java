@@ -37,9 +37,6 @@ public class JSONParser {
 		// Execute the request
 		HttpResponse response;
 		try {
-
-			// https://api.vkontakte.ru/method/audio.search?uid=163398985&q=akoncount=100&access_token=2a4db0e223f0f5ab23f0f5ab5f23da5680223f023f1f5a3c696b018be9b17b9
-
 			response = httpclient.execute(httpget);
 			HttpEntity entity = response.getEntity();
 
