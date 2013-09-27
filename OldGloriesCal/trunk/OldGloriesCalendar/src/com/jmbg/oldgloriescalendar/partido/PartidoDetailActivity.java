@@ -1,7 +1,11 @@
-package com.jmbg.oldgloriescalendar;
+package com.jmbg.oldgloriescalendar.partido;
 
 import java.text.SimpleDateFormat;
 
+import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.R.id;
+import com.jmbg.oldgloriescalendar.R.layout;
+import com.jmbg.oldgloriescalendar.R.menu;
 import com.jmbg.oldgloriescalendar.data.Partido;
 
 

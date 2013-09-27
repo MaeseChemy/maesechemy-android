@@ -1,14 +1,18 @@
-package com.jmbg.oldgloriescalendar;
+package com.jmbg.oldgloriescalendar.partido;
+
+import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.R.xml;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.KeyEvent;
 
-public class PreferenciasMapaActivity extends PreferenceActivity{
+public class PreferenciasPartidoActivity extends PreferenceActivity{
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate (Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.preferencias_mapa);
+		addPreferencesFromResource(R.xml.preferencias_partidos);
 	}
 	
 	@Override

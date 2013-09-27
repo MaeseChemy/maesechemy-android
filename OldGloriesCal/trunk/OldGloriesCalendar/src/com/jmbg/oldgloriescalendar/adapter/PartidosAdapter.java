@@ -1,12 +1,10 @@
-package com.jmbg.oldgloriescalendar.util;
+package com.jmbg.oldgloriescalendar.adapter;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Vector;
 
 import com.jmbg.oldgloriescalendar.R;
-import com.jmbg.oldgloriescalendar.R.drawable;
-import com.jmbg.oldgloriescalendar.R.id;
-import com.jmbg.oldgloriescalendar.R.layout;
 import com.jmbg.oldgloriescalendar.data.Partido;
 
 
@@ -51,7 +49,7 @@ public class PartidosAdapter extends BaseAdapter{
 		TextView jornada = (TextView)view.findViewById(R.id.jornada);
 		jornada.setText(this.partidos.elementAt(position).getJornada());
 		
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
 		String fechaPartido = df.format(this.partidos.elementAt(position).getFecha());
 		TextView fecha = (TextView)view.findViewById(R.id.fecha);
 		fecha.setText(fechaPartido);

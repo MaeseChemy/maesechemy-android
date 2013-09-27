@@ -1,4 +1,4 @@
-package com.jmbg.oldgloriescalendar;
+package com.jmbg.oldgloriescalendar.equipo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -6,6 +6,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.R.id;
+import com.jmbg.oldgloriescalendar.R.layout;
+import com.jmbg.oldgloriescalendar.R.menu;
 import com.jmbg.oldgloriescalendar.data.Partido;
 import com.jmbg.oldgloriescalendar.data.PartidosSQLite;
 

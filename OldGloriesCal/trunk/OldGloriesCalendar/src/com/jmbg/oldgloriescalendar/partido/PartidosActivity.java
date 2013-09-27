@@ -1,4 +1,4 @@
-package com.jmbg.oldgloriescalendar;
+package com.jmbg.oldgloriescalendar.partido;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -7,10 +7,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.R.drawable;
+import com.jmbg.oldgloriescalendar.R.id;
+import com.jmbg.oldgloriescalendar.R.layout;
+import com.jmbg.oldgloriescalendar.R.menu;
+import com.jmbg.oldgloriescalendar.adapter.PartidosAdapter;
 import com.jmbg.oldgloriescalendar.data.Partido;
 import com.jmbg.oldgloriescalendar.data.PartidosSQLite;
 import com.jmbg.oldgloriescalendar.util.Constantes;
-import com.jmbg.oldgloriescalendar.util.PartidosAdapter;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;

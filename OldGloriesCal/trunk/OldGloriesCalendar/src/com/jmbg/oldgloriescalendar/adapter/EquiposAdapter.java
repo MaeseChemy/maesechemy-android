@@ -1,11 +1,8 @@
-package com.jmbg.oldgloriescalendar.util;
+package com.jmbg.oldgloriescalendar.adapter;
 
 import java.util.Vector;
 
 import com.jmbg.oldgloriescalendar.R;
-import com.jmbg.oldgloriescalendar.R.drawable;
-import com.jmbg.oldgloriescalendar.R.id;
-import com.jmbg.oldgloriescalendar.R.layout;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

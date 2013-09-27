@@ -1,10 +1,14 @@
-package com.jmbg.oldgloriescalendar;
+package com.jmbg.oldgloriescalendar.equipo;
 
 import java.util.Vector;
 
+import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.R.drawable;
+import com.jmbg.oldgloriescalendar.R.layout;
+import com.jmbg.oldgloriescalendar.R.menu;
+import com.jmbg.oldgloriescalendar.adapter.EquiposAdapter;
 import com.jmbg.oldgloriescalendar.data.PartidosSQLite;
 import com.jmbg.oldgloriescalendar.util.Constantes;
-import com.jmbg.oldgloriescalendar.util.EquiposAdapter;
 
 import android.os.Bundle;
 import android.app.ListActivity;
