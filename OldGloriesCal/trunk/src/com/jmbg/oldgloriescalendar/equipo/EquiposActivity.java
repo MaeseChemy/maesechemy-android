@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.adapter.EquiposAdapter;
+import com.jmbg.oldgloriescalendar.data.Equipo;
 import com.jmbg.oldgloriescalendar.data.LigaDBSQLite;
 import com.jmbg.oldgloriescalendar.util.Constantes;
 
@@ -17,7 +18,7 @@ import android.widget.ListView;
 
 public class EquiposActivity extends ListActivity {
 
-	private Vector<String> equipos;
+	private Vector<Equipo> equipos;
 	private LigaDBSQLite liga;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,12 @@ public class EquiposActivity extends ListActivity {
 	protected void onListItemClick(ListView listView, View view, int position, long id){
 		super.onListItemClick(listView, view, position, id);
 		
-		String equipo = (String)getListAdapter().getItem(position);
+		Equipo equipo = (Equipo)getListAdapter().getItem(position);
+		String nombreEquipo = equipo.getNombre();
 		
-		if (!equipo.equals(Constantes.EQUIPO)){
+		if (!nombreEquipo.equals(Constantes.EQUIPO)){
 			Intent iDetalles = new Intent(this, EquipoDetailActivity.class);
-			iDetalles.putExtra("equipo", equipo);
+			iDetalles.putExtra("equipo", nombreEquipo);
 			startActivity(iDetalles);
 		}
 	}

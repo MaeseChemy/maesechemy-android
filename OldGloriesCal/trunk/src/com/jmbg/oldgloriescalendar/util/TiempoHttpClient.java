@@ -19,7 +19,8 @@ public class TiempoHttpClient {
 
 	private static String IMG_URL = "http://openweathermap.org/img/w/";
 	private static final String PETICION_TIEMPO = "http://api.openweathermap.org/data/2.5/forecast/daily?q="
-			+ Constantes.DIRECCION_POLIDEPORTIVO.replace(" ", "") + "&mode=json&units=metric&cnt=10";
+			+ Constantes.DIRECCION_POLIDEPORTIVO.replace(" ", "")
+			+ "&mode=json&units=metric&cnt=10";
 
 	public String getDatosDeTiempo() {
 		HttpClient httpclient = new DefaultHttpClient();
@@ -48,9 +49,13 @@ public class TiempoHttpClient {
 			return sb.toString();
 		} catch (Throwable t) {
 			t.printStackTrace();
-		} 
+		}
 		return null;
 
+	}
+
+	public String getImageURL(int id) {
+		return IMG_URL+id;
 	}
 
 	public byte[] getImage(String code) {

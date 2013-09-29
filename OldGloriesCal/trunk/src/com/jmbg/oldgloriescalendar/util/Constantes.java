@@ -6,6 +6,7 @@ public class Constantes {
 	public static final String TAG = "OGC";
 	public static final String EQUIPO = "OLD GLORIES RELOADED";
 	public static final String FICHERO_PARTIDOS = "listadoliga.txt";
+	public static final String FICHERO_EQUIPOS = "equiposliga.txt";
 	
 	/*CONSTANTES PARA EL MAPA*/
 	public static final LatLng CANTERA = new LatLng(40.339661, -3.762539);

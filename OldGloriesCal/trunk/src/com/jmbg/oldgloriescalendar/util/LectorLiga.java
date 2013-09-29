@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.jmbg.oldgloriescalendar.data.Equipo;
 import com.jmbg.oldgloriescalendar.data.Partido;
 
 import android.content.Context;
@@ -21,12 +22,16 @@ import android.util.Log;
 public class LectorLiga {
 
 	private Context context;
-	
+
 	private List<Partido> partidos;
+	private List<Equipo> equipos;
+
 	public LectorLiga(Context context) {
 		this.context = context;
 		this.partidos = new ArrayList<Partido>();
+		this.equipos = new ArrayList<Equipo>();
 		leerPartidos();
+		leerEquipos();
 	}
 
 	private void leerPartidos() {
@@ -62,9 +67,48 @@ public class LectorLiga {
 							+ exIO.getMessage() + "]");
 		}
 	}
-	
-	public List<Partido> obtenerPartidos(){
+
+	private void leerEquipos() {
+		AssetManager am = this.context.getAssets();
+		InputStream is;
+
+		Log.i(Constantes.TAG,
+				"["
+						+ LectorLiga.class.getName()
+						+ ".leerEquipos] Iniciando lectura de ficheros para generar los equipos de la liga... ["
+						+ Constantes.FICHERO_EQUIPOS + "]");
+		try {
+			is = am.open(Constantes.FICHERO_EQUIPOS);
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+			String linea = "";
+
+			while ((linea = br.readLine()) != null) {
+				Log.e(Constantes.TAG,linea);
+				Equipo equipo = generarEquipo(linea);
+				if (equipo != null)
+					this.equipos.add(equipo);
+			}
+			is.close();
+			br.close();
+		} catch (FileNotFoundException exFNF) {
+			Log.e(Constantes.TAG, "[" + LectorLiga.class.getName()
+					+ ".leerEquipos] Fichero [" + Constantes.FICHERO_EQUIPOS
+					+ "] no localizado [" + exFNF.getMessage() + "]");
+		} catch (IOException exIO) {
+			Log.e(Constantes.TAG,
+					"[" + LectorLiga.class.getName()
+							+ ".leerEquipos] Error I/O al leer el fichero ["
+							+ exIO.getMessage() + "]");
+		}
+	}
+
+	public List<Partido> obtenerPartidos() {
 		return this.partidos;
+	}
+
+	public List<Equipo> obtenerEquipos() {
+		return this.equipos;
 	}
 
 	/**
@@ -98,7 +142,6 @@ public class LectorLiga {
 				date = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US)
 						.parse(fecha);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -122,5 +165,30 @@ public class LectorLiga {
 							+ Constantes.EQUIPO + "]. Se devuelve null.");
 			return null;
 		}
+
+	}
+
+	/**
+	 * Genera un objeto Partido a partir de una linea; EQUIPO|CAMISETA
+	 * 
+	 * @param linea
+	 *            Datos del partido
+	 * @return Objeto Partido con los datos del mismo o null en caso de que la
+	 *         linea no sea de un partido del equipo principal.
+	 */
+	private Equipo generarEquipo(String linea) {
+		Log.d(Constantes.TAG, "[" + LectorLiga.class.getName()
+				+ ".generaEquipo] Generando equipo [" + linea + "]");
+
+		Equipo equipo = new Equipo();
+		String campos[] = linea.split("\\|");
+
+		String nombre = campos[0];
+		String camiseta = campos[1];
+
+		equipo.setNombre(nombre);
+		equipo.setCamiseta(camiseta);
+
+		return equipo;
 	}
 }

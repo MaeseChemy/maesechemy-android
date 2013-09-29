@@ -1,42 +1,59 @@
 package com.jmbg.oldgloriescalendar.util;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.jmbg.oldgloriescalendar.data.Weather;
+
 public class WeatherJSON {
+	public final static String WEATHER_LIST = "list";
 	public final static String WEATHER_DATE = "dt";
-	public final static String WEATHER_MAIN = "main";
-	public final static String WEATHER_WIND = "wind";
 	public final static String WEATHER_CONDITIONS = "weather";
+	public final static String WEATHER_ID = "id";
+	public final static String WEATHER_MAIN = "main";
+	public final static String WEATHER_DESC = "description";
+	public final static String WEATHER_ICON = "icon";
+	public final static String WEATHER_TEMP = "temp";
+	public final static String WEATHER_TEMP_MIN = "min";
+	public final static String WEATHER_TEMP_MAX = "max";
 
-	// TODO: Precipiations are not included in this version
-
-	public static String weatherFromWeatherJSON(JSONObject json)
+	public Map<Date, Weather> weatherFromWeatherJSON(String json)
 			throws JSONException {
-		//Weather weather = new Weather();
+		Map<Date, Weather> listaTiempo = new HashMap<Date, Weather>();
+		JSONObject jsonObjectMain = new JSONObject(json);
 
-//		weather.setCity(CityJSON.cityFromWeatherJSON(json));
-//		weather.setDate(new Date(json.getInt(WEATHER_DATE)));
-//		weather.setMain(MainJSON.mainFromWeatherJSON(json
-//				.getJSONObject(WEATHER_MAIN)));
-//		weather.setWind(WindJSON.windFromWeatherJSON(json
-//				.getJSONObject(WEATHER_WIND)));
-//
-//		ArrayList<WeatherCondition> wcs = new ArrayList<WeatherCondition>();
-//		JSONArray array = json.getJSONArray(WEATHER_CONDITIONS);
-//		for (int i = 0; i < array.length(); i++) {
-//			JSONObject jsonWC = array.getJSONObject(i);
-//			wcs.add(WeatherConditionJSON
-//					.weatherConditionFromWeatherJSON(jsonWC));
-//		}
-//		weather.setConditions(wcs);
+		JSONArray arrayList = jsonObjectMain.getJSONArray(WEATHER_LIST);
+		System.out.println("Number of object = " + arrayList.length());
 
-//		return weather;
-		return "";
+		for (int i = 0; i < arrayList.length(); i++) {
+			Weather weather = new Weather();
+			JSONObject jsonObjectList = arrayList.getJSONObject(i);
+			weather.setFechaTiempo(new Date(jsonObjectList.getLong(WEATHER_DATE)*1000));
+			
+			JSONArray arrayListWeather = jsonObjectList
+					.getJSONArray(WEATHER_CONDITIONS);
+			JSONObject JSONObjectWeather = arrayListWeather.getJSONObject(0);
+			
+			weather.setId(JSONObjectWeather.getInt(WEATHER_ID));
+			weather.setMain(JSONObjectWeather.getString(WEATHER_MAIN));
+
+			weather.setDescripcion(JSONObjectWeather.getString(WEATHER_DESC));
+			weather.setIcon(JSONObjectWeather.getString(WEATHER_ICON));
+			weather.setTemperaturas(jsonObjectList.getJSONObject(WEATHER_TEMP));
+			weather.setTempMax(weather.getTemperaturas().getDouble(WEATHER_TEMP_MAX));
+			weather.setTempMin(weather.getTemperaturas().getDouble(WEATHER_TEMP_MIN));
+			
+			System.out.println(weather.toString());
+			listaTiempo.put(weather.getFechaTiempo(), weather);
+			System.out.println();
+
+		}
+		return listaTiempo;
 	}
 
 }

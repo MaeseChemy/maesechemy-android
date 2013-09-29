@@ -24,7 +24,9 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	private final static String DB_CAMPO_CAMPO = "CAMPO";
 	private final static String DB_CAMPO_LOCAL = "LOCAL";
 
-	private final static int DB_VERSION = 1;
+	private final static String DB_TABLA_EQUIPO = "EQUIPOS";
+	private final static String DB_CAMPO_EQUIPO = "EQUIPO";
+	private final static String DB_CAMPO_CAMISETA = "CAMISETA";
 	
 	private final static String SENTENCIA_CREATE_TABLE = "CREATE TABLE "
 			+ DB_TABLA + " (" + DB_CAMPO_JORNADA + " TEXT PRIMARY KEY, "
@@ -32,8 +34,16 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 			+ "" + DB_CAMPO_CAMPO + " TEXT," + "" + DB_CAMPO_LOCAL
 			+ " INTEGER)";
 
+	private final static String SENTENCIA_CREATE_TABLE_EQUIPOS = "CREATE TABLE "
+			+ DB_TABLA_EQUIPO + " (" + DB_CAMPO_EQUIPO + " TEXT PRIMARY KEY, "
+			+ DB_CAMPO_CAMISETA + ")";
+	
 	private final static String SENTENCIA_DROP_TABLE = "DROP TABLE IF EXISTS "
 			+ DB_TABLA;
+	private final static String SENTENCIA_DROP_TABLE_EQUIPOS = "DROP TABLE IF EXISTS "
+			+ DB_TABLA_EQUIPO;
+	
+	private final static int DB_VERSION = 2;
 
 	public LigaDBSQLite(Context context, String name, CursorFactory factory) {
 		super(context, name, factory, DB_VERSION);
@@ -44,15 +54,21 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SENTENCIA_CREATE_TABLE);
-		this.cargarPartidos(db);
+		db.execSQL(SENTENCIA_CREATE_TABLE_EQUIPOS);
+		this.cargarDB(db);
 	}
 
-	private void cargarPartidos(SQLiteDatabase db) {
+	private void cargarDB(SQLiteDatabase db) {
 		LectorLiga lector = new LectorLiga(context);
 		List<Partido> partidosFichero = lector.obtenerPartidos();
-
+		
 		for (Partido partido : partidosFichero) {
 			this.guardarPartido(partido, db);
+		}
+		
+		List<Equipo> equiposFichero = lector.obtenerEquipos();
+		for (Equipo equipo : equiposFichero) {
+			this.guardarEquipo(equipo, db);
 		}
 	}
 
@@ -62,7 +78,7 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	            "Upgrading database from version " + oldVersion + " to "
 	                + newVersion + ", which will destroy all old data");
 		db.execSQL(SENTENCIA_DROP_TABLE);
-
+		db.execSQL(SENTENCIA_DROP_TABLE_EQUIPOS);
 		// Se crea la nueva versión de la tabla
 		onCreate(db);
 	}
@@ -73,6 +89,12 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 				+ partido.getJornada() + "', " + partido.getFechaLong() + ", '"
 				+ partido.getOponente() + "', '" + partido.getLugar() + "', "
 				+ (partido.isLocal() ? 1 : 0) + ")");
+	}
+	
+	public void guardarEquipo(Equipo equipo, SQLiteDatabase db) {
+
+		db.execSQL("INSERT INTO " + DB_TABLA_EQUIPO + " VALUES('"
+				+ equipo.getNombre() + "', '" + equipo.getCamiseta()+"')");
 	}
 
 	public Vector<Partido> listaPartidos() {
@@ -154,22 +176,23 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 		return partidos;
 	}
 	
-	public Vector<String> listaEquipos() {
-		Vector<String> oponentes = new Vector<String>();
+	public Vector<Equipo> listaEquipos() {
+		Vector<Equipo> equipos = new Vector<Equipo>();
 		SQLiteDatabase db = getReadableDatabase();
 
-		Cursor cursor = db.rawQuery("SELECT DISTINCT(" + DB_CAMPO_OPONENTE + ") "
-				+ " FROM " + DB_TABLA,
+		Cursor cursor = db.rawQuery("SELECT " + DB_CAMPO_EQUIPO + ", "+ DB_CAMPO_CAMISETA
+				+ " FROM " + DB_TABLA_EQUIPO,
 				null);
 
 		while (cursor.moveToNext()) {
-			String oponente = cursor.getString(0);
-
-			oponentes.add(oponente);
+			Equipo equipo = new Equipo();
+			equipo.setNombre(cursor.getString(0));
+			equipo.setCamiseta(cursor.getString(1));			
+			equipos.add(equipo);
 		}
 
 		db.close();
-		return oponentes;
+		return equipos;
 	}
 	
 	public Vector<String> listaCampos() {

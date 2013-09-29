@@ -13,17 +13,13 @@ import com.jmbg.oldgloriescalendar.adapter.PartidosAdapter;
 import com.jmbg.oldgloriescalendar.data.Partido;
 import com.jmbg.oldgloriescalendar.data.LigaDBSQLite;
 import com.jmbg.oldgloriescalendar.util.Constantes;
-import com.jmbg.oldgloriescalendar.util.TiempoHttpClient;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +31,7 @@ public class PartidosActivity extends ListActivity {
 	private Vector<Partido> partidos;
 	private Vector<Partido> partidosFiltrados;
 	
-	private String jsonTimeTiempo;
-
+	
 	private int tipoLocal;
 	private int tipoHora;
 	private int tipoCampo;
@@ -57,35 +52,6 @@ public class PartidosActivity extends ListActivity {
 		calendar.setTime(new Date());
 		this.partidos = this.liga.listaPartidos(calendar);
 		iniciarAdapterListView();
-
-		//JSONTiempoTask task = new JSONTiempoTask();
-		//task.execute();
-	}
-
-	private class JSONTiempoTask extends AsyncTask<Void, Void, String> {
-		private ProgressDialog progressDialog;
-
-		protected String doInBackground(Void... params) {
-			TiempoHttpClient tiempo = new TiempoHttpClient();
-			String res = tiempo.getDatosDeTiempo();
-			Log.e(Constantes.TAG,res);
-			return res;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			progressDialog = new ProgressDialog(PartidosActivity.this);
-			progressDialog.setMessage("Obteniendo tiempo...");
-			progressDialog.setIndeterminate(true);
-			progressDialog.show();
-		}
-
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			progressDialog.hide();
-			jsonTimeTiempo = result;
-		}
 	}
 
 	private void iniciarAdapterListView() {

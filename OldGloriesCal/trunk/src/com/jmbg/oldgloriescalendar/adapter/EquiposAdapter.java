@@ -3,6 +3,7 @@ package com.jmbg.oldgloriescalendar.adapter;
 import java.util.Vector;
 
 import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.data.Equipo;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -15,9 +16,9 @@ import android.widget.TextView;
 public class EquiposAdapter extends BaseAdapter {
 
 	private final Activity actividad;
-	private final Vector<String> equipos;
+	private final Vector<Equipo> equipos;
 
-	public EquiposAdapter(Activity actividad, Vector<String> equipos) {
+	public EquiposAdapter(Activity actividad, Vector<Equipo> equipos) {
 		super();
 		this.actividad = actividad;
 		this.equipos = equipos;
@@ -45,35 +46,39 @@ public class EquiposAdapter extends BaseAdapter {
 				.inflate(R.layout.elemento_lista_equipo, null, true);
 
 		TextView equipo = (TextView) view.findViewById(R.id.equipo);
-		equipo.setText(this.equipos.elementAt(position));
+		equipo.setText(this.equipos.elementAt(position).getNombre());
 
 		// TextView subtexto = (TextView)view.findViewById(R.id.subtexto);
 		// subtexto.setText(this.equipos.elementAt(position));
 
-		int round = (int) (Math.round(Math.random() * 5));
+		String camiseta = this.equipos.elementAt(position).getCamiseta();
 		ImageView imagenCamiseta = (ImageView) view
 				.findViewById(R.id.icono_camiseta);
-		switch (round) {
-		case 0:
-			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_amarilla);
-			break;
-		case 1:
+
+		if (camiseta.equals("Azul")) {
 			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_azul);
-			break;
-		case 2:
-			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_blanca);
-			break;
-		case 3:
+		} else if (camiseta.equals("Negra")) {
 			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_negra);
-			break;
-		case 4:
-			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_roja);
-			break;
-		case 5:
+		} else if (camiseta.equals("Morada")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_morada);
+		} else if (camiseta.equals("Blanca")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_blanca);
+		} else if (camiseta.equals("Amarilla")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_amarilla);
+		} else if (camiseta.equals("Verde")) {
 			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_verde);
-			break;
-		default:
-			break;
+		} else if (camiseta.equals("Blanca-Azul")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_blanca_azul);
+		} else if (camiseta.equals("Blanca-Verde")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_blanca_verde);
+		} else if (camiseta.equals("Negro-Morado")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_negro_morado);
+		} else if (camiseta.equals("Blanca-Roja")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_blanca_roja);
+		} else if (camiseta.equals("Blanca-Negra")) {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_blanca_negra);
+		} else {
+			imagenCamiseta.setImageResource(R.drawable.ic_camiseta_roja);
 		}
 
 		return view;
