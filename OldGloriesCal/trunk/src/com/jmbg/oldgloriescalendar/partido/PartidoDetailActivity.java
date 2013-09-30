@@ -91,7 +91,6 @@ public class PartidoDetailActivity extends Activity {
 		protected String doInBackground(Void... params) {
 			tiempoConsulta = new TiempoHttpClient();
 			String res = tiempoConsulta.getDatosDeTiempo();
-			Log.e(Constantes.TAG, res);
 			return res;
 		}
 
@@ -106,7 +105,6 @@ public class PartidoDetailActivity extends Activity {
 
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			progressDialog.hide();
 			parserJSON = new WeatherJSON();
 
 			Map<Date, Weather> listaTiempo = new HashMap<Date, Weather>();
@@ -127,6 +125,8 @@ public class PartidoDetailActivity extends Activity {
 			}
 			tiempo = listaTiempo.get(fechaPartido.getTime());
 			asignarTiempoPartido(tiempoConsulta);
+			progressDialog.hide();
+			progressDialog.dismiss();
 		}
 	}
 

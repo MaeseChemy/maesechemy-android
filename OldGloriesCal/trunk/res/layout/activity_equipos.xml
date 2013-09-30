@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_background"
     android:orientation="vertical"
-    tools:context=".ScoreActivity" >
+    tools:context=".EquiposActivity" >
 
     <ListView
         android:id="@android:id/list"

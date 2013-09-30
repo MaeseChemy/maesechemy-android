@@ -62,6 +62,8 @@
                 android:textStyle="bold"
                 android:typeface="monospace" />
         </LinearLayout>
+        
+        
     </TableRow>
     <TableRow
         android:id="@+id/row2"
@@ -69,6 +71,29 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center" >
+                <!-- Equipos -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btn_main_plantilla"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_plantilla"
+                android:onClick="abrirPlantilla" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_plantilla"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+        </LinearLayout>
 
         <!-- Mapa -->
 

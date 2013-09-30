@@ -101,6 +101,12 @@ public class MainActivity extends Activity {
 		startActivityForResult(iPrefPart, Constantes.BACK_PREF_MAIN);
 	}
 	
+	public void abrirPlantilla(View view) {
+		Log.d(Constantes.TAG, "["+MainActivity.class.getName()+".abrirPlantilla] Accediendo a plantilla...");
+		Intent iPlantilla = new Intent(this, PlantillaActivity.class);
+		startActivity(iPlantilla);
+	}
+	
 	/**
 	 * Metodo de arrancado de preferencias. Se da valor a la variable notificaciones para saber si es necesario
 	 * activar/desactivar el servicio de notificaciones que controlan las fechas de partidos para avisar al usuario.

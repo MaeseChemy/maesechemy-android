@@ -28,29 +28,29 @@ public class WeatherJSON {
 		JSONObject jsonObjectMain = new JSONObject(json);
 
 		JSONArray arrayList = jsonObjectMain.getJSONArray(WEATHER_LIST);
-		System.out.println("Number of object = " + arrayList.length());
 
 		for (int i = 0; i < arrayList.length(); i++) {
 			Weather weather = new Weather();
 			JSONObject jsonObjectList = arrayList.getJSONObject(i);
-			weather.setFechaTiempo(new Date(jsonObjectList.getLong(WEATHER_DATE)*1000));
-			
+			weather.setFechaTiempo(new Date(jsonObjectList
+					.getLong(WEATHER_DATE) * 1000));
+
 			JSONArray arrayListWeather = jsonObjectList
 					.getJSONArray(WEATHER_CONDITIONS);
 			JSONObject JSONObjectWeather = arrayListWeather.getJSONObject(0);
-			
+
 			weather.setId(JSONObjectWeather.getInt(WEATHER_ID));
 			weather.setMain(JSONObjectWeather.getString(WEATHER_MAIN));
 
 			weather.setDescripcion(JSONObjectWeather.getString(WEATHER_DESC));
 			weather.setIcon(JSONObjectWeather.getString(WEATHER_ICON));
 			weather.setTemperaturas(jsonObjectList.getJSONObject(WEATHER_TEMP));
-			weather.setTempMax(weather.getTemperaturas().getDouble(WEATHER_TEMP_MAX));
-			weather.setTempMin(weather.getTemperaturas().getDouble(WEATHER_TEMP_MIN));
-			
-			System.out.println(weather.toString());
+			weather.setTempMax(weather.getTemperaturas().getDouble(
+					WEATHER_TEMP_MAX));
+			weather.setTempMin(weather.getTemperaturas().getDouble(
+					WEATHER_TEMP_MIN));
+
 			listaTiempo.put(weather.getFechaTiempo(), weather);
-			System.out.println();
 
 		}
 		return listaTiempo;
