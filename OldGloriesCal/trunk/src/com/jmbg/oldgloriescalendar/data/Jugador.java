@@ -9,6 +9,7 @@ public class Jugador implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private int dorsal;
 	private String nombre;
 	private int goles;
 	private int tarjetasAmarillas;
@@ -18,13 +19,22 @@ public class Jugador implements Serializable {
 		super();
 	}
 
-	public Jugador(String nombre, int goles, int tarjetasAmarillas,
+	public Jugador(int dorsal, String nombre, int goles, int tarjetasAmarillas,
 			int tarjetasRojas) {
 		super();
+		this.dorsal = dorsal;
 		this.nombre = nombre;
 		this.goles = goles;
 		this.tarjetasAmarillas = tarjetasAmarillas;
 		this.tarjetasRojas = tarjetasRojas;
+	}
+
+	public void setDorsal(int dorsal) {
+		this.dorsal = dorsal;
+	}
+
+	public int getDorsal() {
+		return dorsal;
 	}
 
 	public String getNombre() {
@@ -61,8 +71,8 @@ public class Jugador implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Jugador [nombre=" + nombre + ", goles=" + goles
-				+ ", tarjetasAmarillas=" + tarjetasAmarillas
+		return "Jugador [dorsal=" + dorsal + ", nombre=" + nombre + ", goles="
+				+ goles + ", tarjetasAmarillas=" + tarjetasAmarillas
 				+ ", tarjetasRojas=" + tarjetasRojas + "]";
 	}
 

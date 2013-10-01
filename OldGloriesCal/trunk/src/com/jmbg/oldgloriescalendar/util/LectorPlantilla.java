@@ -21,7 +21,7 @@ import android.util.Log;
 
 public class LectorPlantilla {
 
-	private final static String URL_JUGADORES = "http://54.229.202.59/futbol/goleadores.txt";
+	private final static String URL_JUGADORES = "http://54.229.202.59/futbol/plantilla.txt";
 	private List<Jugador> plantilla;
 
 	public LectorPlantilla() {
@@ -107,18 +107,22 @@ public class LectorPlantilla {
 		Jugador jugador = new Jugador();
 		String campos[] = linea.split("\\|");
 
-		String nombre = campos[0];
+		int dorsal = 0;
+		String nombre= "";
 		int goles = 0;
 		int tarjetasAmarillas = 0;
 		int tarjetasRojas = 0;
 		try {
-			goles = Integer.parseInt(campos[1]);
-			tarjetasAmarillas = Integer.parseInt(campos[2]);
-			tarjetasRojas = Integer.parseInt(campos[3]);
+			nombre = campos[1];
+			dorsal = Integer.parseInt(campos[0]);
+			goles = Integer.parseInt(campos[2]);
+			tarjetasAmarillas = Integer.parseInt(campos[3]);
+			tarjetasRojas = Integer.parseInt(campos[4]);
 		} catch (NumberFormatException eNFE) {
 			eNFE.printStackTrace();
 		}
-
+		
+		jugador.setDorsal(dorsal);
 		jugador.setNombre(nombre);
 		jugador.setGoles(goles);
 		jugador.setTarjetasAmarillas(tarjetasAmarillas);

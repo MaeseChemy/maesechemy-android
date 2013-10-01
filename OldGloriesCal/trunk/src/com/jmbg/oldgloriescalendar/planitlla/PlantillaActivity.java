@@ -1,8 +1,9 @@
-package com.jmbg.oldgloriescalendar;
+package com.jmbg.oldgloriescalendar.planitlla;
 import java.util.List;
 import java.util.Vector;
 
 
+import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.adapter.PlantillaAdapter;
 import com.jmbg.oldgloriescalendar.data.Jugador;
 import com.jmbg.oldgloriescalendar.util.LectorPlantilla;

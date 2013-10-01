@@ -16,8 +16,7 @@
 
     <!-- ACTIVIDAD EQUIPOS -->
     <string name="title_activity_equipos">Equipos</string>
-    <string name="title_activity_equipo_detail">EquipoDetailActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_equipo_detail">Detalle Equipo</string>
 
     <!-- PREFERENCIAS -->
     <string name="action_settings">Configuracion</string>
@@ -47,5 +46,7 @@
     <string name="desc_icono_ta">Tarjetas Amarillas</string>
     <string name="desc_icono_tr">Tarjetas Rojas</string>
     <string name="desc_icono_goles">Goles</string>
+    <string name="desc_icono_dorsal">Icono Dorsal</string>
+    
 
 </resources>

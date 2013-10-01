@@ -114,7 +114,7 @@
                 android:value="com.jmbg.oldgloriescalendar.mapa.MapaActivityivity" />
         </activity>
         <activity
-            android:name="com.jmbg.oldgloriescalendar.PlantillaActivity"
+            android:name="com.jmbg.oldgloriescalendar.planitlla.PlantillaActivity"
             android:label="@string/title_activity_plantilla"
             android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity" >
             <meta-data

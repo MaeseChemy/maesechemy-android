@@ -2,72 +2,87 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+  	android:padding="2dp"
+    android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/nombre_jugador"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textSize="10pt"
-        android:textStyle="bold"
-        android:typeface="sans" />
+    <ImageView
+        android:id="@+id/icono_dorsal"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:contentDescription="@string/desc_icono_dorsal"
+        android:scaleType="center"
+        android:src="@drawable/ic_dorsal1" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/icono_goles_jugador"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:contentDescription="@string/desc_icono_goles"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_balon" />
+        android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/goles_jugador"
-            android:layout_width="wrap_content"
+            android:id="@+id/nombre_jugador"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="8pt"
-            android:textStyle="italic"
-            android:typeface="serif" />
+            android:singleLine="true"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:typeface="sans" />
 
-        <ImageView
-            android:id="@+id/icono_ta_jugador"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:contentDescription="@string/desc_icono_ta"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_tarjeta_amarilla" />
-
-        <TextView
-            android:id="@+id/tarjAma_jugador"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="8pt"
-            android:textStyle="italic"
-            android:typeface="serif" />
+            android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/icono_tr_jugador"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:contentDescription="@string/desc_icono_tr"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_tarjeta_roja" />
+            <ImageView
+                android:id="@+id/icono_goles_jugador"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:contentDescription="@string/desc_icono_goles"
+                android:scaleType="center"
+                android:src="@drawable/ic_balon" />
 
-        <TextView
-            android:id="@+id/tarjRoj_jugador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="8pt"
-            android:textStyle="italic"
-            android:typeface="serif" />
+            <TextView
+                android:id="@+id/goles_jugador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="8pt"
+                android:textStyle="italic"
+                android:typeface="serif"/>
+
+            <ImageView
+                android:id="@+id/icono_ta_jugador"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:contentDescription="@string/desc_icono_ta"
+                android:scaleType="center"
+                android:src="@drawable/ic_tarjeta_amarilla" />
+
+            <TextView
+                android:id="@+id/tarjAma_jugador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="8pt"
+                android:textStyle="italic"
+                android:typeface="serif" />
+
+            <ImageView
+                android:id="@+id/icono_tr_jugador"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:contentDescription="@string/desc_icono_tr"
+                android:scaleType="center"
+                android:src="@drawable/ic_tarjeta_roja" />
+
+            <TextView
+                android:id="@+id/tarjRoj_jugador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="8pt"
+                android:textStyle="italic"
+                android:typeface="serif" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
