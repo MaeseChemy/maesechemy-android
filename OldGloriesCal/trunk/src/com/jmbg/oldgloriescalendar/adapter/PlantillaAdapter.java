@@ -92,6 +92,9 @@ public class PlantillaAdapter extends BaseAdapter {
 		case 16:
 			dorsal.setImageResource(R.drawable.ic_dorsal16);
 			break;
+		case 21:
+			dorsal.setImageResource(R.drawable.ic_dorsal21);
+			break;
 		case 23:
 			dorsal.setImageResource(R.drawable.ic_dorsal23);
 			break;
