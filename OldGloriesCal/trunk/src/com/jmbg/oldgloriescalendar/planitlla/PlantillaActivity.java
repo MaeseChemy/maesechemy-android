@@ -1,22 +1,22 @@
 package com.jmbg.oldgloriescalendar.planitlla;
-import java.util.List;
 import java.util.Vector;
-
 
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.adapter.PlantillaAdapter;
 import com.jmbg.oldgloriescalendar.data.Jugador;
-import com.jmbg.oldgloriescalendar.util.LectorPlantilla;
+import com.jmbg.oldgloriescalendar.data.LigaDBSQLite;
+import com.jmbg.oldgloriescalendar.util.Constantes;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 
 public class PlantillaActivity extends ListActivity {
 
 	private Vector<Jugador> plantilla;
+	private LigaDBSQLite liga;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,9 @@ public class PlantillaActivity extends ListActivity {
 		setContentView(R.layout.activity_plantilla);
 		// Show the Up button in the action bar.
 		
-		LectorPlantillaTask task = new LectorPlantillaTask();
-		task.execute();
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
+		
+		refrescarJugadores();
 	}
 
 	@Override
@@ -35,38 +36,22 @@ public class PlantillaActivity extends ListActivity {
 		return true;
 	}
 	
-	private class LectorPlantillaTask extends AsyncTask<Void, Void, List<Jugador>> {
-		private ProgressDialog progressDialog;
-		private LectorPlantilla lectorPlantilla;
-
-		protected List<Jugador> doInBackground(Void... params) {
-			lectorPlantilla = new LectorPlantilla();
-			List<Jugador> jugadores = lectorPlantilla.obtenerJugadores();
-			return jugadores;
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Log.d(Constantes.TAG, "["+PlantillaActivity.class.getName()+".onOptionsItemSelected] Opcion seleccionada en el menu");
+		switch (item.getItemId()) {
+		case R.id.main_refresh:
+			Log.d(Constantes.TAG, "["+PlantillaActivity.class.getName()+".onOptionsItemSelected] Main Refresh");
+			this.liga.actualizarPlantilla();
+			return true;
+		default:
 		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			progressDialog = new ProgressDialog(PlantillaActivity.this);
-			progressDialog.setMessage("Obteniendo plantilla...");
-			progressDialog.setIndeterminate(true);
-			progressDialog.show();
-		}
-
-		protected void onPostExecute(List<Jugador> result) {
-			super.onPostExecute(result);
+		return false;
+	}
 	
-			plantilla = new Vector<Jugador>();
-			List<Jugador> jugadoresHTTP = result;
-			for (Jugador jugador : jugadoresHTTP) {
-				plantilla.add(jugador);
-			}
-			PlantillaAdapter adapterPlantilla = new PlantillaAdapter(PlantillaActivity.this, plantilla);
-			setListAdapter(adapterPlantilla);
-			
-			progressDialog.hide();
-			progressDialog.dismiss();
-		}
+	public void refrescarJugadores(){
+		this.plantilla = this.liga.listaJugadores();
+		PlantillaAdapter adapterPlantilla = new PlantillaAdapter(PlantillaActivity.this, plantilla);
+		setListAdapter(adapterPlantilla);
 	}
 }
