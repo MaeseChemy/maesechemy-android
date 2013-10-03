@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ACTIVIDAD PRINCIPAL -->
+    <string name="app_name">Old Glories Calendar</string>
+    <string name="main_partidos">Partidos</string>
+    <string name="main_plantilla">Plantilla</string>
+    <string name="main_equipos">Equipos</string>
+    <string name="main_campo">Campo</string>
+
+    <!-- ACTIVIDAD DE PARTIDOS -->
+    <string name="text_empty">Vacio</string>
+    <string name="title_activity_partido_detail">Detalles Partido</string>
+    <string name="title_activity_partidos">Partidos</string>
+    <string name="desc_icono_local">Icono local/visitante</string>
+
+    <!-- ACTIVIDAD EQUIPOS -->
+    <string name="title_activity_equipos">Equipos</string>
+    <string name="title_activity_equipo_detail">Detalle Equipo</string>
+
+    <!-- PREFERENCIAS -->
+    <string name="action_settings">Configuracion</string>
+    <string name="vista_mes">Vista Mes</string>
+    <string name="title_activity_preferencias">Preferencias Partidos</string>
+    <string name="preferencias_partido_local">Visitante/Local</string>
+    <string name="text_preferencias_partido_local">Partidos como visitante o local</string>
+    <string name="preferencias_partido_horas">Hora</string>
+    <string name="text_preferencias_partido_horas">Hora del partido</string>
+    <string name="preferencias_partido_campo">Campo</string>
+    <string name="text_preferencias_partido_campo">Campo del partido</string>
+    <string name="title_activity_preferencias_capas">Preferencias Capas</string>
+    <string name="preferencias_mapa_layer">Capas</string>
+    <string name="text_preferencias_mapa_layer">Cambiar el tipo de capa del mapa</string>
+    <string name="title_activity_preferencias_main">Preferencias</string>
+    <string name="preferencias_main_notificaciones">Notificaciones</string>
+    <string name="text_preferencias_main_notificaciones">Activar/Desactivar notificaciones</string>
+
+    <!-- ACTIVIDAD MAPA -->
+    <string name="title_activity_mapa">Mapa</string>
+    <string name="map_texto_desc_btn_ruta">Obtener ruta</string>
+    <string name="map_texto_desc_btn_centrar_campo">Centrar mapa en campo</string>
+    <string name="map_texto_desc_btn_layer">Cambio de capa del mapa</string>
+
+    <!-- ACTIVIDAD PLANTILLA -->
+    <string name="title_activity_plantilla">Plantilla</string>
+    <string name="desc_icono_ta">Tarjetas Amarillas</string>
+    <string name="desc_icono_tr">Tarjetas Rojas</string>
+    <string name="desc_icono_goles">Goles</string>
+    <string name="desc_icono_dorsal">Icono Dorsal</string>
+    
+
+</resources>
