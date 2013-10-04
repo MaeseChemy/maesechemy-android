@@ -3,8 +3,8 @@
     android:id="@+id/table_layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10pt"
     android:background="@drawable/ic_background"
+    android:padding="10pt"
     tools:context=".PartidosActivity" >
 
     <TableRow
@@ -19,9 +19,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10pt"
             android:gravity="center"
-            android:orientation="vertical"
-			android:layout_margin="10pt">
+            android:orientation="vertical" >
 
             <Button
                 android:id="@+id/btn_main_partidos"
@@ -62,16 +62,16 @@
                 android:textStyle="bold"
                 android:typeface="monospace" />
         </LinearLayout>
-        
-        
     </TableRow>
+
     <TableRow
         android:id="@+id/row2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center" >
-                <!-- Equipos -->
+
+        <!-- Equipos -->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -100,12 +100,45 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10pt"
             android:gravity="center"
-            android:orientation="vertical"
-			android:layout_margin="10pt">
+            android:orientation="vertical" >
 
             <Button
-                android:id="@+id/btn_main_local"
+                android:id="@+id/btn_main_clasificacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_clasificacion"
+                android:onClick="abrirClasificacion" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_clasificacion"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+        </LinearLayout>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/row3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <!-- Mapa -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10pt"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btn_main_mapa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_mapa"
@@ -119,6 +152,6 @@
                 android:textStyle="bold"
                 android:typeface="monospace" />
         </LinearLayout>
-        </TableRow>
+    </TableRow>
 
 </TableLayout>

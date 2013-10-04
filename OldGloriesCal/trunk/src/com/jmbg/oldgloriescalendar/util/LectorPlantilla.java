@@ -41,8 +41,6 @@ public class LectorPlantilla {
 			con.setDoOutput(true);
 			con.connect();
 
-			// Let's read the response
-			StringBuffer buffer = new StringBuffer();
 			is = con.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			String line = null;
@@ -52,7 +50,6 @@ public class LectorPlantilla {
 					this.plantilla.add(jugador);
 			}
 
-			System.out.println(buffer.toString());
 			is.close();
 			con.disconnect();
 		} catch (Throwable t) {

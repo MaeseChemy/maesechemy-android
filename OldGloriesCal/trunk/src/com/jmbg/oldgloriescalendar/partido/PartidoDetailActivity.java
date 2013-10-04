@@ -13,7 +13,6 @@ import org.json.JSONException;
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.data.Partido;
 import com.jmbg.oldgloriescalendar.data.Weather;
-import com.jmbg.oldgloriescalendar.util.Constantes;
 import com.jmbg.oldgloriescalendar.util.TiempoHttpClient;
 import com.jmbg.oldgloriescalendar.util.WeatherJSON;
 
@@ -21,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TabHost;

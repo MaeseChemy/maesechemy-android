@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import com.jmbg.oldgloriescalendar.clasificacion.ClasificacionActivity;
 import com.jmbg.oldgloriescalendar.equipo.EquiposActivity;
 import com.jmbg.oldgloriescalendar.mapa.MapaActivity;
 import com.jmbg.oldgloriescalendar.partido.PartidosActivity;
@@ -106,6 +107,12 @@ public class MainActivity extends Activity {
 		Log.d(Constantes.TAG, "["+MainActivity.class.getName()+".abrirPlantilla] Accediendo a plantilla...");
 		Intent iPlantilla = new Intent(this, PlantillaActivity.class);
 		startActivity(iPlantilla);
+	}
+	
+	public void abrirClasificacion(View view){
+		Log.d(Constantes.TAG, "["+MainActivity.class.getName()+".abrirClasificacion] Accediendo a clasificacion...");
+		Intent iClasificacion = new Intent(this, ClasificacionActivity.class);
+		startActivity(iClasificacion);
 	}
 	
 	/**

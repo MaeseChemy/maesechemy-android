@@ -6,6 +6,7 @@
     <string name="main_partidos">Partidos</string>
     <string name="main_plantilla">Plantilla</string>
     <string name="main_equipos">Equipos</string>
+    <string name="main_clasificacion">Clasificacion</string>
     <string name="main_campo">Campo</string>
 
     <!-- ACTIVIDAD DE PARTIDOS -->
@@ -42,12 +43,16 @@
     <string name="map_texto_desc_btn_layer">Cambio de capa del mapa</string>
 
     <!-- ACTIVIDAD PLANTILLA -->
-	<string name="action_update_data">Refrescar</string>
+    <string name="action_update_data">Refrescar</string>
     <string name="title_activity_plantilla">Plantilla</string>
     <string name="desc_icono_ta">Tarjetas Amarillas</string>
     <string name="desc_icono_tr">Tarjetas Rojas</string>
     <string name="desc_icono_goles">Goles</string>
     <string name="desc_icono_dorsal">Icono Dorsal</string>
     
-
+    <!-- ACTIVIDAD CLASIFICACION -->
+    <string name="title_activity_clasificacion">Clasificacion</string>
+    <string name="texto_partidos_clasificacion">Partidos</string>
+    <string name="texto_goles_clasificacion">Goles</string>
+    <string name="texto_puntos_clasificacion">Puntos</string>
 </resources>

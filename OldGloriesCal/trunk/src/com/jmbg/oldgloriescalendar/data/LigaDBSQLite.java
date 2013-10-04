@@ -4,7 +4,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
+import com.jmbg.oldgloriescalendar.clasificacion.ClasificacionActivity;
 import com.jmbg.oldgloriescalendar.planitlla.PlantillaActivity;
+import com.jmbg.oldgloriescalendar.util.LectorClasificacion;
 import com.jmbg.oldgloriescalendar.util.LectorLiga;
 import com.jmbg.oldgloriescalendar.util.LectorPlantilla;
 
@@ -30,26 +32,23 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	private final static String DB_CAMPO_CAMPO = "CAMPO";
 	private final static String DB_CAMPO_LOCAL = "LOCAL";
 
-	private final static String SENTENCIA_CREATE_TABLE = "CREATE TABLE "
-			+ DB_TABLA + " (" + DB_CAMPO_JORNADA + " TEXT PRIMARY KEY, "
-			+ DB_CAMPO_FECHA + " LONG," + "" + DB_CAMPO_OPONENTE + " TEXT,"
-			+ "" + DB_CAMPO_CAMPO + " TEXT," + "" + DB_CAMPO_LOCAL
-			+ " INTEGER)";
-	private final static String SENTENCIA_DROP_TABLE = "DROP TABLE IF EXISTS "
-			+ DB_TABLA;
+	private final static String SENTENCIA_CREATE_TABLE = "CREATE TABLE " + DB_TABLA + " (" 
+			+ DB_CAMPO_JORNADA  + " TEXT PRIMARY KEY, "
+			+ DB_CAMPO_FECHA    + " LONG,"
+			+ DB_CAMPO_OPONENTE + " TEXT,"
+			+ DB_CAMPO_CAMPO    + " TEXT," 
+			+ DB_CAMPO_LOCAL    + " INTEGER)";
+	private final static String SENTENCIA_DROP_TABLE = "DROP TABLE IF EXISTS " + DB_TABLA;
 
 	/* TABLA EQUIPOS */
 	private final static String DB_TABLA_EQUIPO = "EQUIPOS";
 	private final static String DB_CAMPO_EQUIPO_EQUIPO = "EQUIPO";
 	private final static String DB_CAMPO_EQUIPO_CAMISETA = "CAMISETA";
 
-	private final static String SENTENCIA_CREATE_TABLE_EQUIPOS = "CREATE TABLE "
-			+ DB_TABLA_EQUIPO
-			+ " ("
-			+ DB_CAMPO_EQUIPO_EQUIPO
-			+ " TEXT PRIMARY KEY, " + DB_CAMPO_EQUIPO_CAMISETA + ")";
-	private final static String SENTENCIA_DROP_TABLE_EQUIPOS = "DROP TABLE IF EXISTS "
-			+ DB_TABLA_EQUIPO;
+	private final static String SENTENCIA_CREATE_TABLE_EQUIPOS = "CREATE TABLE " + DB_TABLA_EQUIPO + " ("
+			+ DB_CAMPO_EQUIPO_EQUIPO   + " TEXT PRIMARY KEY, "
+			+ DB_CAMPO_EQUIPO_CAMISETA + " TEXT)";
+	private final static String SENTENCIA_DROP_TABLE_EQUIPOS = "DROP TABLE IF EXISTS " + DB_TABLA_EQUIPO;
 
 	/* TABLA PLANTILLA */
 	private final static String DB_TABLA_PLANTILLA = "PLANTILLA";
@@ -59,24 +58,41 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	private final static String DB_CAMPO_PLANTILLA_TARAMA = "TARAMA";
 	private final static String DB_CAMPO_PLANTILLA_TARROJ = "TARROJ";
 
-	private final static String SENTENCIA_CREATE_TABLE_PLANTILLA = "CREATE TABLE "
-			+ DB_TABLA_PLANTILLA
-			+ " ("
-			+ DB_CAMPO_PLANTILLA_DORSAL
-			+ " INTEGER PRIMARY KEY, "
-			+ DB_CAMPO_PLANTILLA_NOMBRE
-			+ " TEXT,"
-			+ ""
-			+ DB_CAMPO_PLANTILLA_GOLES
-			+ " INTEGER,"
-			+ ""
-			+ DB_CAMPO_PLANTILLA_TARAMA
-			+ " INTEGER,"
-			+ ""
+	private final static String SENTENCIA_CREATE_TABLE_PLANTILLA = "CREATE TABLE " + DB_TABLA_PLANTILLA	+ " ("
+			+ DB_CAMPO_PLANTILLA_DORSAL	+ " INTEGER PRIMARY KEY, "
+			+ DB_CAMPO_PLANTILLA_NOMBRE	+ " TEXT,"
+			+ DB_CAMPO_PLANTILLA_GOLES	+ " INTEGER,"
+			+ DB_CAMPO_PLANTILLA_TARAMA	+ " INTEGER,"
 			+ DB_CAMPO_PLANTILLA_TARROJ + " INTEGER)";
 	private final static String SENTENCIA_DROP_TABLE_PLANTILLA = "DROP TABLE IF EXISTS "
 			+ DB_TABLA_PLANTILLA;
 
+	/* TABLA CLASIFICACION */
+	private final static String DB_TABLA_CLASIFICACION = "CLASIFICACION";
+	private final static String DB_CAMPO_CLASIFICACION_POSICION = "POSICION";
+	private final static String DB_CAMPO_CLASIFICACION_EQUIPO = "EQUIPO";
+	private final static String DB_CAMPO_CLASIFICACION_PAR_JUG = "PARJUG";
+	private final static String DB_CAMPO_CLASIFICACION_PAR_GAN= "PARGAN";
+	private final static String DB_CAMPO_CLASIFICACION_PAR_PER = "PARPER";
+	private final static String DB_CAMPO_CLASIFICACION_PAR_EMP = "PAREMP";
+
+	private final static String DB_CAMPO_CLASIFICACION_GOLES_FAVOR = "GOLFAV";
+	private final static String DB_CAMPO_CLASIFICACION_GOLES_CONTRA = "GOLCON";
+	private final static String DB_CAMPO_CLASIFICACION_PUNTOS = "PUNTOS";
+
+	private final static String SENTENCIA_CREATE_TABLE_CLASIFICACION = "CREATE TABLE " + DB_TABLA_CLASIFICACION	+ " ("
+			+ DB_CAMPO_CLASIFICACION_POSICION	    + " INTEGER PRIMARY KEY, "
+			+ DB_CAMPO_CLASIFICACION_EQUIPO	        + " TEXT,"
+			+ DB_CAMPO_CLASIFICACION_PAR_JUG	    + " INTEGER,"
+			+ DB_CAMPO_CLASIFICACION_PAR_GAN	    + " INTEGER,"
+			+ DB_CAMPO_CLASIFICACION_PAR_PER	    + " INTEGER,"
+			+ DB_CAMPO_CLASIFICACION_PAR_EMP	    + " INTEGER,"
+			+ DB_CAMPO_CLASIFICACION_GOLES_FAVOR	+ " INTEGER,"
+			+ DB_CAMPO_CLASIFICACION_GOLES_CONTRA	+ " INTEGER,"
+			+ DB_CAMPO_CLASIFICACION_PUNTOS         + " INTEGER)";
+	private final static String SENTENCIA_DROP_TABLE_CLASIFICACION = "DROP TABLE IF EXISTS "
+			+ DB_TABLA_CLASIFICACION;
+	
 	/* VERSION DATABASE */
 	private final static int DB_VERSION = 3;
 
@@ -91,6 +107,7 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 		db.execSQL(SENTENCIA_CREATE_TABLE);
 		db.execSQL(SENTENCIA_CREATE_TABLE_EQUIPOS);
 		db.execSQL(SENTENCIA_CREATE_TABLE_PLANTILLA);
+		db.execSQL(SENTENCIA_CREATE_TABLE_CLASIFICACION);
 		this.cargarDB(db);
 	}
 
@@ -102,6 +119,8 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 		db.execSQL(SENTENCIA_DROP_TABLE);
 		db.execSQL(SENTENCIA_DROP_TABLE_EQUIPOS);
 		db.execSQL(SENTENCIA_DROP_TABLE_PLANTILLA);
+		db.execSQL(SENTENCIA_DROP_TABLE_CLASIFICACION);
+		
 		// Se crea la nueva versión de la tabla
 		onCreate(db);
 	}
@@ -120,6 +139,7 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 		}
 
 		refrescarJugadores(db);
+		refrescarClasificacion(db);
 	}
 
 	/* OPERACIONES PARA PARTIDOS */
@@ -236,8 +256,6 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	/* OPERACIONES PARA JUGADORES */
 	public void actualizarPlantilla() {
 		SQLiteDatabase db = getWritableDatabase();
-		//db.execSQL(SENTENCIA_DROP_TABLE_PLANTILLA);
-		//db.execSQL(SENTENCIA_CREATE_TABLE_PLANTILLA);
 		refrescarJugadores(db);
 	}
 	
@@ -360,4 +378,150 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 			progressDialog.dismiss();
 		}
 	}
+	
+	
+	/* OPERACIONES PARA CLASIFICACION */
+	public void actualizarClasificacion() {
+		SQLiteDatabase db = getWritableDatabase();
+		refrescarClasificacion(db);
+	}
+	
+	private void refrescarClasificacion(SQLiteDatabase db) {
+		LectorClasificacionTask task = new LectorClasificacionTask();
+		task.execute(db);
+	}
+	
+	public void guardarClasificacion(Clasificacion clas, SQLiteDatabase db) {
+		db.execSQL("INSERT INTO " + DB_TABLA_CLASIFICACION + " VALUES("
+				+ clas.getPosicion() + ", '" 
+				+ clas.getNombre() + "', "
+				+ clas.getPartidoJugados() + ", " 
+				+ clas.getPartidosGanados() + ", " 
+				+ clas.getPartidosPerdidos() + ", " 
+				+ clas.getPartidosEmpatados() + ", " 
+				+ clas.getGolesFavor() + ", " 
+				+ clas.getGolesContra() + ", " 
+				+ clas.getPuntos() + ")");
+	}
+	
+	public void actualizarDatosClasificacion(Clasificacion clas, SQLiteDatabase db) {
+		Log.w(LigaDBSQLite.class.getName(), "Upgrading clasificion ["+clas.toString()+"]");
+		
+		ContentValues content = new ContentValues();
+		content.put(DB_CAMPO_CLASIFICACION_EQUIPO, clas.getNombre());
+		content.put(DB_CAMPO_CLASIFICACION_PAR_JUG, clas.getPartidoJugados());
+		content.put(DB_CAMPO_CLASIFICACION_PAR_GAN, clas.getPartidosGanados());
+		content.put(DB_CAMPO_CLASIFICACION_PAR_PER, clas.getPartidosPerdidos());
+		content.put(DB_CAMPO_CLASIFICACION_PAR_EMP, clas.getPartidosEmpatados());
+		content.put(DB_CAMPO_CLASIFICACION_GOLES_FAVOR, clas.getGolesFavor());
+		content.put(DB_CAMPO_CLASIFICACION_GOLES_CONTRA, clas.getGolesContra());
+		content.put(DB_CAMPO_CLASIFICACION_PUNTOS, clas.getPuntos());
+
+		String whereClause = DB_CAMPO_CLASIFICACION_POSICION + "=="+ clas.getPosicion();
+		
+		db.update(DB_TABLA_CLASIFICACION, content, whereClause, null);
+
+		Log.w(LigaDBSQLite.class.getName(), "Completo...");
+
+	}
+
+	public Vector<Clasificacion> listaClasificacion() {
+		Vector<Clasificacion> clasificacion = new Vector<Clasificacion>();
+		SQLiteDatabase db = getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("SELECT " 
+				+ DB_CAMPO_CLASIFICACION_POSICION + ", " 
+				+ DB_CAMPO_CLASIFICACION_EQUIPO	+ ", " 
+				+ DB_CAMPO_CLASIFICACION_PAR_JUG + ", "
+				+ DB_CAMPO_CLASIFICACION_PAR_GAN + ", "
+				+ DB_CAMPO_CLASIFICACION_PAR_PER + ", "
+				+ DB_CAMPO_CLASIFICACION_PAR_EMP + ", "
+				+ DB_CAMPO_CLASIFICACION_GOLES_FAVOR + ", "
+				+ DB_CAMPO_CLASIFICACION_GOLES_CONTRA + ", "
+				+ DB_CAMPO_CLASIFICACION_PUNTOS
+				+ " FROM " + DB_TABLA_CLASIFICACION, null);
+
+		while (cursor.moveToNext()) {
+			Clasificacion clas = new Clasificacion();
+			clas.setPosicion(cursor.getInt(0));
+			clas.setNombre(cursor.getString(1));
+			clas.setPartidoJugados(cursor.getInt(2));
+			clas.setPartidosGanados(cursor.getInt(3));
+			clas.setPartidosPerdidos(cursor.getInt(4));
+			clas.setPartidosEmpatados(cursor.getInt(5));
+			clas.setGolesFavor(cursor.getInt(6));
+			clas.setGolesContra(cursor.getInt(7));
+			clas.setPuntos(cursor.getInt(8));
+			clasificacion.add(clas);
+		}
+
+		db.close();
+		return clasificacion;
+	}
+	
+	public void actualizarClasificacion(Clasificacion clas, SQLiteDatabase db){
+		if(!db.isOpen())
+			db = getWritableDatabase();
+		if(existeClasificacion(clas, db)){
+			this.actualizarDatosClasificacion(clas, db);
+		}else{
+			this.guardarClasificacion(clas, db);
+		}
+		db.close();
+	}
+
+	private boolean existeClasificacion(Clasificacion clas, SQLiteDatabase db) {
+		boolean exist = false;
+		Cursor cursor = db.rawQuery(
+				"SELECT " + DB_CAMPO_CLASIFICACION_POSICION + " FROM "
+						+ DB_TABLA_CLASIFICACION 
+						+ " WHERE "
+						+ DB_CAMPO_CLASIFICACION_POSICION + "==" + clas.getPosicion(), null);
+		
+		while (cursor.moveToNext()) {
+			exist = true;
+		}
+		return exist;
+	}
+
+	/* CLASES ASINCRONAS PARA CARGA DE DATOS REMOTOS */
+	private class LectorClasificacionTask extends
+			AsyncTask<SQLiteDatabase, Void, List<Clasificacion>> {
+		private ProgressDialog progressDialog;
+		private LectorClasificacion lectorClasificacion;
+		private SQLiteDatabase db;
+
+		protected List<Clasificacion> doInBackground(SQLiteDatabase... params) {
+			db = params[0];
+			lectorClasificacion = new LectorClasificacion();
+			List<Clasificacion> clasificacion = lectorClasificacion.obtenerClasificacion();
+			return clasificacion;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = new ProgressDialog(context);
+			progressDialog.setMessage("Obteniendo clasificacion...");
+			progressDialog.setIndeterminate(true);
+			progressDialog.show();
+		}
+
+		protected void onPostExecute(List<Clasificacion> result) {
+			super.onPostExecute(result);
+
+			// Cargamos los datos
+			List<Clasificacion> clasificacionHTTP = result;
+			for (Clasificacion clasificacion : clasificacionHTTP) {
+				actualizarClasificacion(clasificacion,db);
+			}
+			
+			if(context instanceof ClasificacionActivity){
+				((ClasificacionActivity) context).refrescarClasificacion();
+			}
+			progressDialog.hide();
+			progressDialog.dismiss();
+		}
+	}
+	
 }
