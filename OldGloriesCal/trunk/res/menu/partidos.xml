@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/partidos_config"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:icon="@drawable/ic_stat_filter"
         android:showAsAction="always"
         android:title="@string/action_settings">
     </item>

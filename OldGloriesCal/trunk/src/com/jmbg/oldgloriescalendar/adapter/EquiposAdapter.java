@@ -3,6 +3,7 @@ package com.jmbg.oldgloriescalendar.adapter;
 import java.util.Vector;
 
 import com.jmbg.oldgloriescalendar.R;
+import com.jmbg.oldgloriescalendar.data.Clasificacion;
 import com.jmbg.oldgloriescalendar.data.Equipo;
 
 import android.app.Activity;
@@ -48,8 +49,17 @@ public class EquiposAdapter extends BaseAdapter {
 		TextView equipo = (TextView) view.findViewById(R.id.equipo);
 		equipo.setText(this.equipos.elementAt(position).getNombre());
 
-		// TextView subtexto = (TextView)view.findViewById(R.id.subtexto);
-		// subtexto.setText(this.equipos.elementAt(position));
+		Clasificacion equipoClas = this.equipos.elementAt(position).getClasificacion();
+		
+		String textoClas = "";
+		if(equipoClas == null){
+			textoClas = "Sin datos de clasificacion...";
+		}else{
+			textoClas = equipoClas.getDatosClasificacion();
+		}
+			
+		TextView subtexto = (TextView)view.findViewById(R.id.subtexto);
+		subtexto.setText(textoClas);
 
 		String camiseta = this.equipos.elementAt(position).getCamiseta();
 		ImageView imagenCamiseta = (ImageView) view

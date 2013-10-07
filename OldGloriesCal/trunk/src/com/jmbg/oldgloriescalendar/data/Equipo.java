@@ -11,16 +11,17 @@ public class Equipo implements Serializable {
 
 	private String nombre;
 	private String camiseta;
+	private Clasificacion clasificacion;
 
 	public Equipo() {
 		super();
 	}
 
-	public Equipo(String nombre, String camiseta) {
+	public Equipo(String nombre, String camiseta, Clasificacion clasificacion) {
 		super();
 		this.nombre = nombre;
 		this.camiseta = camiseta;
-
+		this.clasificacion = clasificacion;
 	}
 
 	public String getNombre() {
@@ -39,9 +40,15 @@ public class Equipo implements Serializable {
 		this.camiseta = camiseta;
 	}
 
+	public Clasificacion getClasificacion() {
+		return clasificacion;
+	}
+	public void setClasificacion(Clasificacion clasificacion) {
+		this.clasificacion = clasificacion;
+	}
 	@Override
 	public String toString() {
-		return "Equipo [nombre=" + nombre + ", camiseta=" + camiseta;
+		return "Equipo [clasificacion="+clasificacion.toString()+ ", nombre=" + nombre + ", camiseta=" + camiseta+"]";
 	}
 
 }

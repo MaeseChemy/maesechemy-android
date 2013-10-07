@@ -246,6 +246,7 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 			Equipo equipo = new Equipo();
 			equipo.setNombre(cursor.getString(0));
 			equipo.setCamiseta(cursor.getString(1));
+			equipo.setClasificacion(obtenerClasificacionEquipo(equipo.getNombre(), db));
 			equipos.add(equipo);
 		}
 
@@ -425,6 +426,37 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 
 	}
 
+	private Clasificacion obtenerClasificacionEquipo(String nombre, SQLiteDatabase db) {
+		Clasificacion clas = null;
+		Cursor cursor = db.rawQuery("SELECT " 
+				+ DB_CAMPO_CLASIFICACION_POSICION + ", " 
+				+ DB_CAMPO_CLASIFICACION_EQUIPO	+ ", " 
+				+ DB_CAMPO_CLASIFICACION_PAR_JUG + ", "
+				+ DB_CAMPO_CLASIFICACION_PAR_GAN + ", "
+				+ DB_CAMPO_CLASIFICACION_PAR_PER + ", "
+				+ DB_CAMPO_CLASIFICACION_PAR_EMP + ", "
+				+ DB_CAMPO_CLASIFICACION_GOLES_FAVOR + ", "
+				+ DB_CAMPO_CLASIFICACION_GOLES_CONTRA + ", "
+				+ DB_CAMPO_CLASIFICACION_PUNTOS
+				+ " FROM " + DB_TABLA_CLASIFICACION
+				+ " WHERE "+ DB_CAMPO_CLASIFICACION_EQUIPO +" == '"+nombre+"'", null);
+
+		while (cursor.moveToNext()) {
+			clas = new Clasificacion();
+			clas.setPosicion(cursor.getInt(0));
+			clas.setNombre(cursor.getString(1));
+			clas.setPartidoJugados(cursor.getInt(2));
+			clas.setPartidosGanados(cursor.getInt(3));
+			clas.setPartidosPerdidos(cursor.getInt(4));
+			clas.setPartidosEmpatados(cursor.getInt(5));
+			clas.setGolesFavor(cursor.getInt(6));
+			clas.setGolesContra(cursor.getInt(7));
+			clas.setPuntos(cursor.getInt(8));
+		}
+
+		return clas;
+	}
+	
 	public Vector<Clasificacion> listaClasificacion() {
 		Vector<Clasificacion> clasificacion = new Vector<Clasificacion>();
 		SQLiteDatabase db = getReadableDatabase();

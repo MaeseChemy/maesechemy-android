@@ -22,6 +22,8 @@
     <!-- PREFERENCIAS -->
     <string name="action_settings">Configuracion</string>
     <string name="vista_mes">Vista Mes</string>
+    <string name="preferencias_partido_visible">Mostrar todas las jornadas o solo las restantes</string>
+    <string name="text_preferencias_partido_visible">Todas las Jornadas</string>
     <string name="title_activity_preferencias">Preferencias Partidos</string>
     <string name="preferencias_partido_local">Visitante/Local</string>
     <string name="text_preferencias_partido_local">Partidos como visitante o local</string>

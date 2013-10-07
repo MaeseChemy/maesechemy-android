@@ -31,9 +31,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:textSize="8pt"
-            android:textStyle="italic"
-            android:typeface="serif" />
+            android:textSize="5pt"
+            android:typeface="sans" />
     </LinearLayout>
 
 </LinearLayout>

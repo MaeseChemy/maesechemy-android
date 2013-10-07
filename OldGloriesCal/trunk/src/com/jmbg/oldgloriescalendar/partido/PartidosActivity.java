@@ -2,9 +2,7 @@ package com.jmbg.oldgloriescalendar.partido;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -30,11 +28,11 @@ public class PartidosActivity extends ListActivity {
 	private LigaDBSQLite liga;
 	private Vector<Partido> partidos;
 	private Vector<Partido> partidosFiltrados;
-	
-	
+
 	private int tipoLocal;
 	private int tipoHora;
 	private int tipoCampo;
+	private boolean mostrarTodosPartidos;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +44,16 @@ public class PartidosActivity extends ListActivity {
 		// setting the opacity (alpha)
 		background.setAlpha(50);
 
+		iniciarPreferencias();
+
 		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
-		// Fecha actual
-		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(new Date());
-		this.partidos = this.liga.listaPartidos(calendar);
+		this.partidos = this.liga.listaPartidos();
+
 		iniciarAdapterListView();
+
 	}
 
 	private void iniciarAdapterListView() {
-		iniciarPreferencias();
 		this.filtrarPartidos();
 		PartidosAdapter adapterScore = new PartidosAdapter(this,
 				this.partidosFiltrados);
@@ -68,6 +66,7 @@ public class PartidosActivity extends ListActivity {
 		this.tipoLocal = Integer.parseInt(pref.getString("local", "0"));
 		this.tipoHora = Integer.parseInt(pref.getString("horas", "0"));
 		this.tipoCampo = Integer.parseInt(pref.getString("campo", "0"));
+		this.mostrarTodosPartidos = pref.getBoolean("todosPartidos", false);
 	}
 
 	@Override
@@ -108,6 +107,7 @@ public class PartidosActivity extends ListActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constantes.BACK_PREF) {
+			iniciarPreferencias();
 			iniciarAdapterListView();
 		}
 	}
@@ -176,6 +176,19 @@ public class PartidosActivity extends ListActivity {
 					valido = true;
 				} else {
 					valido = false;
+				}
+			}
+			
+			if (valido) {
+				if(!mostrarTodosPartidos){
+					Date date = partido.getFecha();
+					Date fechaAct = new Date();
+					
+					if(fechaAct.getTime() > date.getTime()){
+						valido = false;
+					}else{
+						valido = true;
+					}
 				}
 			}
 			if (valido)

@@ -111,6 +111,15 @@ public class Clasificacion {
 				+ golesFavor + ", golesContra=" + golesContra + ", puntos="
 				+ puntos + "]";
 	}
+
+	public String getDatosClasificacion() {
+		String datos = "";
+		datos += "Posicion: "+getPosicion()+"\n";
+		datos += "Puntos: "+getPuntos()+"\n";
+		datos += "Partidos: J:"+getPartidoJugados()+ " G:"+getPartidosGanados() + " P:"+getPartidosPerdidos() + " E:"+getPartidosEmpatados()+"\n";
+		datos += "Goles: F:"+getGolesFavor()+ " F:"+getGolesContra()+"\n";
+		return datos;
+	}
 	
 	
 
