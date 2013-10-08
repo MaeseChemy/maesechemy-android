@@ -10,6 +10,8 @@ import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.adapter.PartidosAdapter;
 import com.jmbg.oldgloriescalendar.data.Partido;
 import com.jmbg.oldgloriescalendar.data.LigaDBSQLite;
+import com.jmbg.oldgloriescalendar.data.SaveSharedPreference;
+import com.jmbg.oldgloriescalendar.login.LoginActivity;
 import com.jmbg.oldgloriescalendar.util.Constantes;
 
 import android.os.Bundle;
@@ -34,11 +36,18 @@ public class PartidosActivity extends ListActivity {
 	private int tipoCampo;
 	private boolean mostrarTodosPartidos;
 
+	private String username;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_partidos);
 
+		username = SaveSharedPreference.getUserName(PartidosActivity.this);
+		if(username.length() == 0){
+			Intent iLogin = new Intent(this, LoginActivity.class);
+			startActivity(iLogin);
+		}
+		
 		Drawable background = getResources().getDrawable(
 				R.drawable.ic_background);
 		// setting the opacity (alpha)
@@ -96,6 +105,8 @@ public class PartidosActivity extends ListActivity {
 
 		Intent iDetalles = new Intent(this, PartidoDetailActivity.class);
 		iDetalles.putExtra("partido", partido);
+		iDetalles.putExtra("usuario", username);
+
 		startActivity(iDetalles);
 	}
 

@@ -60,14 +60,60 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:padding="5pt" />
+
+                    <RadioGroup
+                        android:id="@+id/map_radio_group_convocatoria"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:alpha="0.8"
+                        android:background="@drawable/box_clas"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <EditText
+                            android:id="@+id/texto_comentario_partidoConvocatoria"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Comentario" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <Button
+                                android:id="@+id/btn_apuntarse_partidoConvocatoria"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="anadirConvocatoria"
+                                android:text="Apuntarse" />
+
+                            <Button
+                                android:id="@+id/btn_apuntarse_partidoConvocatoria"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="borrarConvocatoria"
+                                android:text="Borrarse" />
+                        </LinearLayout>
+                    </RadioGroup>
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tab_tiempo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" 
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btn_refrescar_tiempo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="refrescarTiempo"
+                        android:text="Consultar Tiempo" />
 
                     <TextView
                         android:id="@+id/fecha_tiempo_textView"
@@ -76,14 +122,6 @@
                         android:gravity="center"
                         android:padding="5pt" />
 
-                    <!--
-                    <TextView
-                        android:id="@+id/descripcion_tiempo_textView"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:padding="5pt" />
-					  -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -114,6 +152,33 @@
                             android:layout_height="wrap_content"
                             android:padding="5pt" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab_convocatoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btn_refrescar_convocados"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="refrescarConvocados"
+                        android:text="Obtener Convocados" />
+
+                    <ListView
+                        android:id="@android:id/list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:drawSelectorOnTop="false" >
+                    </ListView>
+
+                    <TextView
+                        android:id="@android:id/empty"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_empty" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

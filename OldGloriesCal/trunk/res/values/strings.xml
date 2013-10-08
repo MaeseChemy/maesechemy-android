@@ -2,7 +2,7 @@
 <resources>
 
     <!-- ACTIVIDAD PRINCIPAL -->
-    <string name="app_name">Old Glories Calendar</string>
+    <string name="app_name">Old Glories Reloaded</string>
     <string name="main_partidos">Partidos</string>
     <string name="main_plantilla">Plantilla</string>
     <string name="main_equipos">Equipos</string>
@@ -51,10 +51,21 @@
     <string name="desc_icono_tr">Tarjetas Rojas</string>
     <string name="desc_icono_goles">Goles</string>
     <string name="desc_icono_dorsal">Icono Dorsal</string>
-    
+
     <!-- ACTIVIDAD CLASIFICACION -->
     <string name="title_activity_clasificacion">Clasificacion</string>
     <string name="texto_partidos_clasificacion">Partidos</string>
     <string name="texto_goles_clasificacion">Goles</string>
     <string name="texto_puntos_clasificacion">Puntos</string>
+
+    <!-- ACTIVDAD LOGIN -->
+    <string name="login_username">Usuario</string>
+    <string name="login_password">Contraseña</string>
+    <string name="action_sign_in_register">Acceder</string>
+    <string name="action_sign_in_invitado">Invitado</string>
+    <string name="login_progress_signing_in">Accediendo &#8230;</string>
+    <string name="error_incorrect_password">Password incorrecta</string>
+    <string name="error_field_required">Campo requerido</string>
+
+
 </resources>
