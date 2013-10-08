@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.jmbg.oldgloriescalendar.clasificacion.ClasificacionActivity;
+import com.jmbg.oldgloriescalendar.data.SaveSharedPreference;
 import com.jmbg.oldgloriescalendar.equipo.EquiposActivity;
+import com.jmbg.oldgloriescalendar.login.LoginActivity;
 import com.jmbg.oldgloriescalendar.mapa.MapaActivity;
 import com.jmbg.oldgloriescalendar.partido.PartidosActivity;
 import com.jmbg.oldgloriescalendar.planitlla.PlantillaActivity;
@@ -27,6 +29,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * Actividad principal de la aplicacion de calendario de partidos.
@@ -36,6 +39,7 @@ import android.view.View;
 public class MainActivity extends Activity {
 
 	private boolean notificaciones;
+	String username;
 	private final int CREATE_ALARM = 1234567;
 
 	@Override
@@ -43,7 +47,15 @@ public class MainActivity extends Activity {
 		Log.i(Constantes.TAG, "["+MainActivity.class.getName()+".onCreate] Creando actividad principal...");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		username = SaveSharedPreference.getUserName(MainActivity.this);
+		if(username.length() == 0){
+			Intent iLogin = new Intent(this, LoginActivity.class);
+			startActivity(iLogin);
+		}
 
+		TextView nombreUser = (TextView) findViewById(R.id.nombreUsuario_main);
+		nombreUser.setText("Bienvenido "+username);
 		Drawable background = getResources().getDrawable(
 				R.drawable.ic_background);
 		background.setAlpha(50);
@@ -66,6 +78,10 @@ public class MainActivity extends Activity {
 			Log.d(Constantes.TAG, "["+MainActivity.class.getName()+".onOptionsItemSelected] Main Config");
 			abrirPreferencias(null);
 			return true;
+		case R.id.main_logout:
+			Log.d(Constantes.TAG, "["+MainActivity.class.getName()+".onOptionsItemSelected] Saliendo...");
+			Intent iLogin = new Intent(this, LoginActivity.class);
+			startActivity(iLogin);
 		default:
 		}
 		return false;

@@ -5,7 +5,7 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_settings"/>
     -->
     <item
         android:id="@+id/main_config"
@@ -13,4 +13,11 @@
         android:showAsAction="always"
         android:title="@string/action_settings">
     </item>
+    <item
+        android:id="@+id/main_logout"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:showAsAction="always"
+        android:title="@string/action_settings">
+    </item>
+
 </menu>

@@ -6,9 +6,7 @@ import java.util.Vector;
 
 import com.jmbg.oldgloriescalendar.clasificacion.ClasificacionActivity;
 import com.jmbg.oldgloriescalendar.planitlla.PlantillaActivity;
-import com.jmbg.oldgloriescalendar.util.LectorClasificacion;
-import com.jmbg.oldgloriescalendar.util.LectorLiga;
-import com.jmbg.oldgloriescalendar.util.LectorPlantilla;
+import com.jmbg.oldgloriescalendar.util.LectorDatosLiga;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -23,7 +21,8 @@ import android.util.Log;
 public class LigaDBSQLite extends SQLiteOpenHelper {
 
 	private Context context;
-
+	private LectorDatosLiga lector;
+	
 	/* TABLA JORNADAS */
 	private final static String DB_TABLA = "PARTIDOS";
 	private final static String DB_CAMPO_JORNADA = "JORNADA";
@@ -99,7 +98,7 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	public LigaDBSQLite(Context context, String name, CursorFactory factory) {
 		super(context, name, factory, DB_VERSION);
 		this.context = context;
-
+		this.lector = new LectorDatosLiga(context);
 	}
 
 	@Override
@@ -126,14 +125,14 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	}
 
 	private void cargarDB(SQLiteDatabase db) {
-		LectorLiga lector = new LectorLiga(context);
-		List<Partido> partidosFichero = lector.obtenerPartidos();
+		
+		List<Partido> partidosFichero = this.lector.leerPartidos();
 
 		for (Partido partido : partidosFichero) {
 			this.guardarPartido(partido, db);
 		}
 
-		List<Equipo> equiposFichero = lector.obtenerEquipos();
+		List<Equipo> equiposFichero = this.lector.leerEquipos();
 		for (Equipo equipo : equiposFichero) {
 			this.guardarEquipo(equipo, db);
 		}
@@ -344,13 +343,11 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	private class LectorPlantillaTask extends
 			AsyncTask<SQLiteDatabase, Void, List<Jugador>> {
 		private ProgressDialog progressDialog;
-		private LectorPlantilla lectorPlantilla;
 		private SQLiteDatabase db;
 
 		protected List<Jugador> doInBackground(SQLiteDatabase... params) {
 			db = params[0];
-			lectorPlantilla = new LectorPlantilla();
-			List<Jugador> jugadores = lectorPlantilla.obtenerJugadores();
+			List<Jugador> jugadores = lector.leerPlantilla();
 			return jugadores;
 		}
 
@@ -520,13 +517,11 @@ public class LigaDBSQLite extends SQLiteOpenHelper {
 	private class LectorClasificacionTask extends
 			AsyncTask<SQLiteDatabase, Void, List<Clasificacion>> {
 		private ProgressDialog progressDialog;
-		private LectorClasificacion lectorClasificacion;
 		private SQLiteDatabase db;
 
 		protected List<Clasificacion> doInBackground(SQLiteDatabase... params) {
 			db = params[0];
-			lectorClasificacion = new LectorClasificacion();
-			List<Clasificacion> clasificacion = lectorClasificacion.obtenerClasificacion();
+			List<Clasificacion> clasificacion = lector.leerClasificacion();
 			return clasificacion;
 		}
 

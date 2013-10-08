@@ -7,6 +7,14 @@
     android:stretchColumns="*"
     tools:context=".MainActivity" >
 
+    <TextView
+        android:id="@+id/nombreUsuario_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12pt"
+        android:typeface="monospace" />
+
     <TableRow
         android:id="@+id/row1"
         android:layout_width="fill_parent"

@@ -12,7 +12,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class TiempoHttpClient {
 
-	private static String IMG_URL = "http://openweathermap.org/img/w/";
 	private static final String PETICION_TIEMPO = "http://api.openweathermap.org/data/2.5/forecast/daily?q="
 			+ Constantes.DIRECCION_POLIDEPORTIVO.replace(" ", "")
 			+ "&mode=json&units=metric&cnt=10";
@@ -47,10 +46,6 @@ public class TiempoHttpClient {
 		}
 		return null;
 
-	}
-
-	public String getImageURL(int id) {
-		return IMG_URL+id;
 	}
 
 }
