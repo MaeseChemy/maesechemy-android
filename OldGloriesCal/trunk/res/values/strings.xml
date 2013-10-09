@@ -9,12 +9,19 @@
     <string name="main_clasificacion">Clasificacion</string>
     <string name="main_campo">Campo</string>
 
-    <!-- ACTIVIDAD DE PARTIDOS -->
+    <!-- ACTIVIDAD PARTIDOS -->
     <string name="text_empty">Vacio</string>
     <string name="title_activity_partido_detail">Detalles Partido</string>
     <string name="title_activity_partidos">Partidos</string>
     <string name="desc_icono_local">Icono local/visitante</string>
-
+    <string name="texto_comentario_partido">Comentario</string>
+    <string name="texto_delegado_partido">¿Llevo delegado?</string>
+    <string name="texto_apuntarse_partido">Apuntarse</string>
+    <string name="texto_borrarse_partido">Borrarse</string>
+    <string name="texto_obtener_tiempo">Consultar Tiempo</string>
+    <string name="texto_obtener_convocados">Consultar Convocados</string>
+    <string name="texto_imagen_tiempo">Imagen tiempo</string>
+    
     <!-- ACTIVIDAD EQUIPOS -->
     <string name="title_activity_equipos">Equipos</string>
     <string name="title_activity_equipo_detail">Detalle Equipo</string>
@@ -66,6 +73,5 @@
     <string name="login_progress_signing_in">Accediendo &#8230;</string>
     <string name="error_incorrect_password">Password incorrecta</string>
     <string name="error_field_required">Campo requerido</string>
-
 
 </resources>
