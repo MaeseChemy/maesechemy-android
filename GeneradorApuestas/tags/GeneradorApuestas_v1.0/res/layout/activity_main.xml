@@ -1,0 +1,108 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_bolas"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <TabHost
+        android:id="@+id/apuestas_tabHost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:id="@+id/tab_euromillones"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_generar_euromillones"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:background="@android:drawable/alert_light_frame"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/btn_generar_apuesta_euromillones"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button"
+                            android:onClick="generarApuestaEuromillones"
+                            android:text="@string/generar_apuestas_euromillones" />
+
+                        <Spinner
+                            android:id="@+id/numero_apuestas_euromillones_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/list_euromillones"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/alert_light_frame"
+                        android:drawSelectorOnTop="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:id="@+id/tab_primitiva"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_generar_primitiva"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:background="@android:drawable/alert_light_frame"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/btn_generar_apuesta_primitiva"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button"
+                            android:onClick="generarApuestaPrimitiva"
+                            android:text="@string/generar_apuestas_primitiva" />
+
+                        <Spinner
+                            android:id="@+id/numero_apuestas_primitiva_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/list_primitiva"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/alert_light_frame"
+                        android:drawSelectorOnTop="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+</LinearLayout>
