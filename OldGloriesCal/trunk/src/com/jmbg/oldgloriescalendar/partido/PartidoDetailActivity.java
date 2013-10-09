@@ -32,6 +32,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -250,9 +251,10 @@ public class PartidoDetailActivity extends ListActivity {
 			String jornada = partido.getJornada();
 			EditText comentario = (EditText) findViewById(R.id.texto_comentario_partidoConvocatoria);
 			String textoComentario = comentario.getText().toString();
-
+			CheckBox boxDelegado = (CheckBox) findViewById(R.id.check_delegado_partido);
+			boolean delegadoOk = boxDelegado.isChecked();
 			return addConv
-					.addConvocatoria(jornada, username, textoComentario);
+					.addConvocatoria(jornada, username, textoComentario, delegadoOk);
 		}
 
 		@Override

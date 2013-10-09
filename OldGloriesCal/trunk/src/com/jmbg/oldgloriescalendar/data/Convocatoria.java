@@ -5,16 +5,19 @@ public class Convocatoria {
 	private String jornada;
 	private String jugador;
 	private String comentario;
+	private boolean delegado;
 
 	public Convocatoria() {
 		super();
 	}
 
-	public Convocatoria(String jornada, String jugador, String comentario) {
+	public Convocatoria(String jornada, String jugador, String comentario,
+			boolean delegado) {
 		super();
 		this.jornada = jornada;
 		this.jugador = jugador;
 		this.comentario = comentario;
+		this.delegado = delegado;
 	}
 
 	public String getJornada() {
@@ -39,6 +42,14 @@ public class Convocatoria {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+
+	public boolean getDelegado() {
+		return delegado;
+	}
+
+	public void setDelegado(Boolean delegado) {
+		this.delegado = delegado;
 	}
 
 }

@@ -47,9 +47,12 @@ public class ConvocatoriaAdapter extends BaseAdapter {
 		TextView jugador = (TextView) view.findViewById(R.id.jugador);
 		jugador.setText(this.convocatoria.elementAt(position).getJugador());
 
+		TextView delegado = (TextView) view.findViewById(R.id.delegado);
+		delegado.setText("Lleva delegado: " + ((this.convocatoria.elementAt(position).getDelegado())?"Si":"No"));
+		
 		TextView comentario = (TextView) view.findViewById(R.id.comentario);
-		comentario.setText(this.convocatoria.elementAt(position).getComentario());
-
+		comentario.setText("Comentario: "+ this.convocatoria.elementAt(position).getComentario());
+		
 		return view;
 
 	}

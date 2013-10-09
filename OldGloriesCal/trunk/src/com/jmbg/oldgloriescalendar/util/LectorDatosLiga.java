@@ -63,6 +63,7 @@ public class LectorDatosLiga {
 		this.partidos = new ArrayList<Partido>();
 		this.equipos = new ArrayList<Equipo>();
 		this.clasificacion = new ArrayList<Clasificacion>();
+		this.plantilla = new ArrayList<Jugador>();
 		this.convocatoriaJornada = new ArrayList<Convocatoria>();
 	}
 

@@ -101,7 +101,7 @@ public class PeticionConvocatoria {
 	}
 
 	public boolean addConvocatoria(String jornada, String username,
-			String comentario) {
+			String comentario, boolean delegado) {
 
 		HttpURLConnection con = null;
 		InputStream is = null;
@@ -117,6 +117,8 @@ public class PeticionConvocatoria {
 			params.add(new BasicNameValuePair("jornada", jornada));
 			params.add(new BasicNameValuePair("jugador", username));
 			params.add(new BasicNameValuePair("comentario", comentario));
+			params.add(new BasicNameValuePair("delegado", (delegado?"1":"0")));
+
 
 			OutputStream os = con.getOutputStream();
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(

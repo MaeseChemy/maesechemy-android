@@ -10,7 +10,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!--
      The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended.
+     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -60,7 +60,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.partido.PartidosActivity"
             android:label="@string/title_activity_partidos"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.MainActivity" />
@@ -68,7 +69,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.partido.PreferenciasPartidoActivity"
             android:label="@string/title_activity_preferencias"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.partido.PartidosActivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.partido.PartidosActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.partido.PartidosActivity" />
@@ -76,7 +78,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.partido.PartidoDetailActivity"
             android:label="@string/title_activity_partido_detail"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.partido.PartidosActivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.partido.PartidosActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.partido.PartidosActivity" />
@@ -86,7 +89,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.equipo.EquiposActivity"
             android:label="@string/title_activity_equipos"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.MainActivity" />
@@ -95,6 +99,7 @@
             android:name="com.jmbg.oldgloriescalendar.equipo.EquipoDetailActivity"
             android:label="@string/title_activity_equipo_detail"
             android:parentActivityName="com.jmbg.oldgloriescalendar.EquiposActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -105,7 +110,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.mapa.MapaActivity"
             android:label="@string/title_activity_mapa"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.MainActivity" />
@@ -113,7 +119,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.mapa.PreferenciasMapaActivity"
             android:label="@string/title_activity_preferencias_capas"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.mapa.MapaActivityivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.mapa.MapaActivityivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.mapa.MapaActivityivity" />
@@ -121,7 +128,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.planitlla.PlantillaActivity"
             android:label="@string/title_activity_plantilla"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.MainActivity" />
@@ -129,7 +137,8 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.clasificacion.ClasificacionActivity"
             android:label="@string/title_activity_clasificacion"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity" >
+            android:parentActivityName="com.jmbg.oldgloriescalendar.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmbg.oldgloriescalendar.MainActivity" />

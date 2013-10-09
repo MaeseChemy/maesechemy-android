@@ -12,6 +12,7 @@ import com.jmbg.oldgloriescalendar.data.Convocatoria;
 public class ConvocatoriaJSON {
 	public final static String CONVOCATORIA_JUGADOR = "jugador";
 	public final static String CONVOCATORIA_COMENTARIO = "comentario";
+	public final static String CONVOCATORIA_DELEGADO = "delegado";
 	public final static String WEATHER_CONDITIONS = "weather";
 
 
@@ -24,10 +25,12 @@ public class ConvocatoriaJSON {
 			JSONObject objeto = arrayList.getJSONObject(i);
 			String jugador = objeto.getString(CONVOCATORIA_JUGADOR);
 			String comentario = objeto.getString(CONVOCATORIA_COMENTARIO);
+			boolean delegado = (((objeto.getString(CONVOCATORIA_DELEGADO)).equals("0"))?false:true);
 			Convocatoria convocatoria = new Convocatoria();
 			convocatoria.setJornada(jornada);
 			convocatoria.setJugador(jugador);
 			convocatoria.setComentario(comentario);
+			convocatoria.setDelegado(delegado);
 			
 			listaConvocatoria.add(convocatoria);
 		}
