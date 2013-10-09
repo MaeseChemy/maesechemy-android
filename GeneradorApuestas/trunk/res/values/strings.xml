@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Generador Apuestas</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="generar_apuestas_euromillones">Generar Euromillones</string>
+	<string name="generar_apuestas_primitiva">Generar Primitiva</string>
+</resources>
