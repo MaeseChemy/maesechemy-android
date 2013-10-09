@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/icon"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="15pt"/>
 
     <TextView
         android:id="@+id/subtittle"
@@ -26,6 +26,6 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/tittle"
         android:layout_toRightOf="@id/icon"
-        android:gravity="center"/>
+        android:gravity="left"/>
 
 </RelativeLayout>
