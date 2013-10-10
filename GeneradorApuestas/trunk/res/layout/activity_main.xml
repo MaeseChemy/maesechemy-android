@@ -48,7 +48,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/button"
                             android:onClick="generarApuestaEuromillones"
-                            android:text="@string/generar_apuestas_euromillones" />
+                            android:text="@string/generar_apuestas" />
 
                         <Spinner
                             android:id="@+id/numero_apuestas_euromillones_spinner"
@@ -85,7 +85,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/button"
                             android:onClick="generarApuestaPrimitiva"
-                            android:text="@string/generar_apuestas_primitiva" />
+                            android:text="@string/generar_apuestas" />
 
                         <Spinner
                             android:id="@+id/numero_apuestas_primitiva_spinner"

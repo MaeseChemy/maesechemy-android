@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.gmv.generadorapuestas.utils.Constantes;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,8 +75,12 @@ public class ApuestaAdapter extends BaseAdapter {
 		for(int numero : numeros){
 			TextView numeroView = new TextView(actividad);
 			numeroView.setText(Integer.toString(numero));
+			numeroView.setTextSize(25);
+			numeroView.setTypeface(Typeface.SANS_SERIF);
 			RadioGroup numeroContent = new RadioGroup(actividad);
 			numeroContent.setGravity(Gravity.CENTER);
+			numeroContent.setVerticalGravity(Gravity.CENTER);
+			numeroContent.setHorizontalGravity(Gravity.CENTER);
 			switch (tipoApuesta) {
 				case Constantes.ID_EUROMILLONES:
 					numeroContent.setBackgroundResource(R.drawable.bola_azul);
@@ -95,8 +100,12 @@ public class ApuestaAdapter extends BaseAdapter {
 		for(int estrella : estrellas){
 			TextView estrellaView = new TextView(actividad);
 			estrellaView.setText(Integer.toString(estrella));
+			estrellaView.setTextSize(25);
+			estrellaView.setTypeface(Typeface.SANS_SERIF);
 			RadioGroup estrellaContent = new RadioGroup(actividad);
 			estrellaContent.setGravity(Gravity.CENTER);
+			estrellaContent.setVerticalGravity(Gravity.CENTER);
+			estrellaContent.setHorizontalGravity(Gravity.CENTER);
 			estrellaContent.setBackgroundResource(R.drawable.estrella_amarilla);
 			estrellaContent.addView(estrellaView);
 			
