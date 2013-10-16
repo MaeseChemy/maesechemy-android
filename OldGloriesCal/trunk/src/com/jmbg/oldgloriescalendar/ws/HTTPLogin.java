@@ -1,4 +1,4 @@
-package com.jmbg.oldgloriescalendar.util;
+package com.jmbg.oldgloriescalendar.ws;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

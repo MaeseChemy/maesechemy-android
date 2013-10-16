@@ -19,10 +19,10 @@ import com.jmbg.oldgloriescalendar.dao.entities.Partido;
 import com.jmbg.oldgloriescalendar.dao.entities.SaveSharedPreference;
 import com.jmbg.oldgloriescalendar.dao.entities.Weather;
 import com.jmbg.oldgloriescalendar.util.Constantes;
-import com.jmbg.oldgloriescalendar.util.LectorDatosLiga;
-import com.jmbg.oldgloriescalendar.util.PeticionConvocatoria;
-import com.jmbg.oldgloriescalendar.util.TiempoHttpClient;
-import com.jmbg.oldgloriescalendar.util.WeatherJSON;
+import com.jmbg.oldgloriescalendar.ws.LectorDatosLiga;
+import com.jmbg.oldgloriescalendar.ws.PeticionConvocatoria;
+import com.jmbg.oldgloriescalendar.ws.TiempoHttpClient;
+import com.jmbg.oldgloriescalendar.ws.data.WeatherJSON;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
