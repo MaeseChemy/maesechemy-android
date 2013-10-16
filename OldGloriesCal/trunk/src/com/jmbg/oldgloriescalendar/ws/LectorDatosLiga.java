@@ -1,4 +1,4 @@
-package com.jmbg.oldgloriescalendar.util;
+package com.jmbg.oldgloriescalendar.ws;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,6 +31,8 @@ import com.jmbg.oldgloriescalendar.dao.entities.Convocatoria;
 import com.jmbg.oldgloriescalendar.dao.entities.Equipo;
 import com.jmbg.oldgloriescalendar.dao.entities.Jugador;
 import com.jmbg.oldgloriescalendar.dao.entities.Partido;
+import com.jmbg.oldgloriescalendar.util.Constantes;
+import com.jmbg.oldgloriescalendar.ws.data.ConvocatoriaJSON;
 
 public class LectorDatosLiga {
 

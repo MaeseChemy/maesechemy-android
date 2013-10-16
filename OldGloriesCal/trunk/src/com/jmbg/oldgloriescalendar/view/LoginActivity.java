@@ -4,7 +4,7 @@ import com.jmbg.oldgloriescalendar.MainActivity;
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.dao.entities.SaveSharedPreference;
 import com.jmbg.oldgloriescalendar.util.Constantes;
-import com.jmbg.oldgloriescalendar.util.HTTPLogin;
+import com.jmbg.oldgloriescalendar.ws.HTTPLogin;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

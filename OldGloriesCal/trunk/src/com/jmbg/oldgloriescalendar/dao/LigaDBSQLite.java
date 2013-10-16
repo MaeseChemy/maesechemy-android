@@ -8,9 +8,9 @@ import com.jmbg.oldgloriescalendar.dao.entities.Clasificacion;
 import com.jmbg.oldgloriescalendar.dao.entities.Equipo;
 import com.jmbg.oldgloriescalendar.dao.entities.Jugador;
 import com.jmbg.oldgloriescalendar.dao.entities.Partido;
-import com.jmbg.oldgloriescalendar.util.LectorDatosLiga;
 import com.jmbg.oldgloriescalendar.view.ClasificacionActivity;
 import com.jmbg.oldgloriescalendar.view.PlantillaActivity;
+import com.jmbg.oldgloriescalendar.ws.LectorDatosLiga;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;

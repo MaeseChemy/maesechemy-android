@@ -1,4 +1,4 @@
-package com.jmbg.oldgloriescalendar.util;
+package com.jmbg.oldgloriescalendar.ws.data;
 
 import java.util.Date;
 import java.util.HashMap;
