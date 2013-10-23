@@ -73,7 +73,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmbg.oldgloriescalendar.partido.PartidosActivity" />
+                android:value="com.jmbg.oldgloriescalendar.view.PartidosActivity" />
         </activity>
         <activity
             android:name="com.jmbg.oldgloriescalendar.view.PartidoDetailActivity"
@@ -82,7 +82,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmbg.oldgloriescalendar.partido.PartidosActivity" />
+                android:value="com.jmbg.oldgloriescalendar.view.PartidosActivity" />
         </activity>
 
         <!-- ACTIVIDAD DE EQUIPOS -->
@@ -96,14 +96,14 @@
                 android:value="com.jmbg.oldgloriescalendar.MainActivity" />
         </activity>
         <activity
-            android:name="cocom.jmbg.oldgloriescalendar.view.EquipoDetailActivity"
+            android:name="com.jmbg.oldgloriescalendar.view.EquipoDetailActivity"
             android:label="@string/title_activity_equipo_detail"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.EquiposActivity"
+            android:parentActivityName="com.jmbg.oldgloriescalendar.view.EquiposActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Dialog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmbg.oldgloriescalendar.EquiposActivity" />
+                android:value="com.jmbg.oldgloriescalendar.view.EquiposActivity" />
         </activity>
 
         <!-- ACTIVIDAD DE MAPA -->
@@ -119,11 +119,11 @@
         <activity
             android:name="com.jmbg.oldgloriescalendar.config.PreferenciasMapaActivity"
             android:label="@string/title_activity_preferencias_capas"
-            android:parentActivityName="com.jmbg.oldgloriescalendar.mapa.MapaActivityivity"
+            android:parentActivityName="com.jmbg.oldgloriescalendar.view.MapaActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmbg.oldgloriescalendar.mapa.MapaActivityivity" />
+                android:value="com.jmbg.oldgloriescalendar.view.MapaActivity" />
         </activity>
         <activity
             android:name="com.jmbg.oldgloriescalendar.view.PlantillaActivity"
