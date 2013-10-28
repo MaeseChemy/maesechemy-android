@@ -3,8 +3,16 @@ package com.jmbg.oldgloriescalendar.util;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Constantes {
-	public static final String INVITADO = "Invitado";
 	public static final String TAG = "OGC";
+    public static final String TAG_INTENT = "OGC_GCMIntentService";
+	
+	public static final String SENDER_ID = "129772070612";
+	public static final String PROPERTY_REG_ID = "registration_id";
+	public enum NotificationTypes {UPD_PLANTILLA, UPD_CLASIFICACION ,PROX_PARTIDO};
+
+	
+	public static final String INVITADO = "Invitado";
+
 	public static final String EQUIPO = "OLD GLORIES RELOADED";
 	public static final String FICHERO_PARTIDOS = "listadoliga.txt";
 	public static final String FICHERO_EQUIPOS = "equiposliga.txt";
