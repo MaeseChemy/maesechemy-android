@@ -21,4 +21,5 @@ public class SaveSharedPreference {
 	public static String getUserName(Context ctx) {
 		return getSharedPreferences(ctx).getString(PREF_USER_NAME, "");
 	}
+	
 }
