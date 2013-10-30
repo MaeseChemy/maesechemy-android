@@ -102,8 +102,8 @@ public class GCMIntentService extends GCMBaseIntentService {
         Intent notificationIntent = null;
         String subMessage = "";
         String action = "";
-        
-    	switch (notif) {
+    
+        switch (notif) {
 		case PROX_PARTIDO:
 			icon = R.drawable.ic_campo;
 			notificationIntent = new Intent(context, PartidoDetailActivity.class);
@@ -117,7 +117,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 								+ Constantes.EQUIPO);
 				notificationIntent.putExtra("partido", partido);
 				action = "Ver datos del partido";
-			}else{
+							}else{
 				validNotif = false;
 			}
 			break;
@@ -150,13 +150,12 @@ public class GCMIntentService extends GCMBaseIntentService {
     
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void generateNotificationJelly(Context context, Intent notificationIntent, int icon, String message, String subMessage, String action){
-        long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
     	String title = context.getString(R.string.app_name);
     	
     	PendingIntent intent =
-                PendingIntent.getActivity(context, 0, notificationIntent, 0);
+                PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     	
     	Builder builder = new Notification.Builder(this);
     	builder.setSmallIcon(R.drawable.ic_launcher);
