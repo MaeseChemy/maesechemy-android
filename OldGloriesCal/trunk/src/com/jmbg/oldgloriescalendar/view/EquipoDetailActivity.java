@@ -33,7 +33,7 @@ public class EquipoDetailActivity extends Activity {
 
 		this.setTitle(equipo);
 
-		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null,true);
 		// Fecha actual
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());

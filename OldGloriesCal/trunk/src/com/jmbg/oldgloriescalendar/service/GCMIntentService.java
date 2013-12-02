@@ -194,7 +194,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
     
     private Partido findPartido(String jornada){
-    	LigaDBSQLite liga = new LigaDBSQLite(this, "DBCalendar", null);
+    	LigaDBSQLite liga = new LigaDBSQLite(this, "DBCalendar", null, false);
     	Vector<Partido> partidos = liga.listaPartidos();
     	
 		for (Partido partido : partidos) {

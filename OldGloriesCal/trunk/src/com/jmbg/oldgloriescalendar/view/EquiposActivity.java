@@ -29,7 +29,7 @@ public class EquiposActivity extends ListActivity {
 		// setting the opacity (alpha)
 		background.setAlpha(50);
 		
-		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null, true);
 		this.equipos = this.liga.listaEquipos();
 
 		EquiposAdapter adapterScore = new EquiposAdapter(this, this.equipos);

@@ -19,6 +19,8 @@ import com.jmbg.oldgloriescalendar.view.PartidosActivity;
 import com.jmbg.oldgloriescalendar.view.PlantillaActivity;
 import com.jmbg.oldgloriescalendar.ws.HTTPRegId;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,12 +28,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Actividad principal de la aplicacion de calendario de partidos.
@@ -47,8 +51,11 @@ public class MainActivity extends Activity {
 	private GoogleCloudMessaging gcm;
 	private String regid;
 
-	static final String EXTRA_MESSAGE = "notif_message";
+	private final static String EXTRA_MESSAGE = "notif_message";
 	
+	private int intentos;
+	private final static int MAX_INTENTOS = 3;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i(Constantes.TAG, "[" + MainActivity.class.getName()
@@ -166,13 +173,14 @@ public class MainActivity extends Activity {
 	 * usuario.
 	 */
 	private void iniciarPreferencias() {
+		intentos = 0;
 		Log.d(Constantes.TAG,
 				"["
 						+ MainActivity.class.getName()
 						+ ".onOptionsItemSelected] Iniciando preferencias principales de la app...");
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		notificaciones = pref.getBoolean("notificaciones", false);
+
 		Log.d(Constantes.TAG, "[" + MainActivity.class.getName()
 				+ ".onOptionsItemSelected] Valor de notificaciones = "
 				+ notificaciones);
@@ -189,19 +197,49 @@ public class MainActivity extends Activity {
 
 		gcm = GoogleCloudMessaging.getInstance(this);
 		regid = getRegistrationId(this);
-		if (notificaciones) {
-			if (regid == null || regid.equals("")) {
-				RegisterGCM registerGCM = new RegisterGCM();
-				registerGCM.execute(true);
-			}
 
-		}else{
-			if (regid != null && !regid.equals("")) {
-				RegisterGCM registerGCM = new RegisterGCM();
-				registerGCM.execute(false);
-			}
+		notificaciones = pref.getBoolean("notificaciones", false);
+		discoverDevice();
+
+	}
+
+	@SuppressWarnings("unused")
+	private boolean checkConnectivity() {
+		boolean enabled = true;
+
+		ConnectivityManager connectivityManager = (ConnectivityManager) this
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+		if ((info == null || !info.isConnected() || !info.isAvailable())) {
+			enabled = false;
 		}
+		return enabled;
+	}
 
+	private void discoverDevice() {
+		if(intentos <= MAX_INTENTOS){
+			if (notificaciones) {
+				if (regid == null || regid.equals("")) {
+					Toast.makeText(this, "Activando notificaciones: Itento: "+ intentos, Toast.LENGTH_LONG).show();
+					RegisterGCM registerGCM = new RegisterGCM();
+					registerGCM.execute(true);
+				}
+			} else {
+				if (regid != null && !regid.equals("")) {
+					Toast.makeText(this, "Desactivando notificaciones: Itento: "+ intentos, Toast.LENGTH_LONG).show();
+					RegisterGCM registerGCM = new RegisterGCM();
+					registerGCM.execute(false);
+				}
+			}
+		}else{
+			Toast.makeText(this, "No se pudo realizar la accion, intentelo de nuevo...", Toast.LENGTH_LONG).show();
+			SharedPreferences pref = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			Editor editor = pref.edit();
+			editor.putBoolean("notificaciones", !notificaciones);
+			editor.commit();
+		}
 	}
 
 	private String getRegistrationId(Context context) {
@@ -234,14 +272,16 @@ public class MainActivity extends Activity {
 	 */
 	private void sendRegistrationIdToBackend(boolean registration, String regid) {
 		HTTPRegId regIdActions = new HTTPRegId();
-		if(registration)
+		if (registration)
 			regIdActions.doRegisterRegId(this.username, regid);
-		else{
+		else {
 			regIdActions.doUnRegisterRegId(this.username, regid);
 		}
 	}
 
 	public class RegisterGCM extends AsyncTask<Boolean, Void, String> {
+		private boolean discoverOk;
+
 		@Override
 		protected String doInBackground(Boolean... params) {
 			boolean doRegister = params[0];
@@ -250,21 +290,30 @@ public class MainActivity extends Activity {
 				if (gcm == null) {
 					gcm = GoogleCloudMessaging.getInstance(MainActivity.this);
 				}
-				if(doRegister){
+				if (doRegister) {
 					regid = gcm.register(Constantes.SENDER_ID);
 					sendRegistrationIdToBackend(true, regid);
-					msg = "Device registered, registration ID=" + regid;
-				}else{
+					Log.d(Constantes.TAG, "[" + RegisterGCM.class.getName()
+							+ ".doInBackground] Device registered, registration ID=" + regid);
+					msg = "Activacion de notificaciones correcto";
+				} else {
 					String oldRegid = regid;
 					regid = "";
 					sendRegistrationIdToBackend(false, oldRegid);
-					msg = "Device registered, registration ID=" + regid;
 					gcm.unregister();
+					Log.d(Constantes.TAG, "[" + RegisterGCM.class.getName()
+							+ ".doInBackground] Device imregistered, registration ID=" + oldRegid);
+					msg = "Desactivacion de notificaciones correcto";
+
 				}
-				
+
 				storeRegistrationId(MainActivity.this, regid);
+				discoverOk = true;
 			} catch (IOException ex) {
 				msg = "Error :" + ex.getMessage();
+				Log.e(Constantes.TAG, "[" + RegisterGCM.class.getName()
+						+ ".doInBackground] Error =" + msg);
+				discoverOk = false;
 				// If there is an error, don't just keep trying to register.
 				// Require the user to click a button again, or perform
 				// exponential back-off.
@@ -272,9 +321,16 @@ public class MainActivity extends Activity {
 			return msg;
 		}
 
-        @Override
-        protected void onPostExecute(String msg) {
-           // mDisplay.append(msg + "\n");
-        }
+		@Override
+		protected void onPostExecute(String msg) {
+			// mDisplay.append(msg + "\n");
+			Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+			if (!discoverOk){
+				intentos++;
+				discoverDevice();
+			}else{
+				intentos = 0;
+			}
+		}
 	}
 }

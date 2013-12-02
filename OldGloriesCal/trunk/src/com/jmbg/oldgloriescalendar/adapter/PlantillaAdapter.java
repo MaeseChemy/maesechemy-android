@@ -62,6 +62,9 @@ public class PlantillaAdapter extends BaseAdapter {
 		case 1:
 			dorsal.setImageResource(R.drawable.ic_dorsal1);
 			break;
+		case 2:
+			dorsal.setImageResource(R.drawable.ic_dorsal2);
+			break;
 		case 3:
 			dorsal.setImageResource(R.drawable.ic_dorsal3);
 			break;
@@ -99,6 +102,7 @@ public class PlantillaAdapter extends BaseAdapter {
 			dorsal.setImageResource(R.drawable.ic_dorsal23);
 			break;
 		default:
+			dorsal.setImageResource(R.drawable.ic_dorsal1);
 			break;
 		}
 		return view;

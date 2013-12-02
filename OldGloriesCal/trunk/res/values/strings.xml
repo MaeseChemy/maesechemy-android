@@ -21,7 +21,7 @@
     <string name="texto_obtener_tiempo">Consultar Tiempo</string>
     <string name="texto_obtener_convocados">Consultar Convocados</string>
     <string name="texto_imagen_tiempo">Imagen tiempo</string>
-    
+
     <!-- ACTIVIDAD EQUIPOS -->
     <string name="title_activity_equipos">Equipos</string>
     <string name="title_activity_equipo_detail">Detalle Equipo</string>
@@ -73,5 +73,13 @@
     <string name="login_progress_signing_in">Accediendo &#8230;</string>
     <string name="error_incorrect_password">Password incorrecta</string>
     <string name="error_field_required">Campo requerido</string>
+    <string name="title_activity_main_loading">MainLoadingActivity</string>
+    <string name="hello_world">Hello world!</string>
 
+        <!-- Refresh ListView -->
+    <string name="ptr_pull_to_refresh">Desliza para actualizar</string>
+    <string name="ptr_release_to_refresh">Suelta para actualizar</string>
+    <string name="ptr_refreshing">Actualizando...</string>
+    <string name="ptr_last_updated">Actualizado: %1$s</string>
+    
 </resources>

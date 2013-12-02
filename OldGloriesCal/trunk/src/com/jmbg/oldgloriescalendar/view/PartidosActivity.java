@@ -55,7 +55,7 @@ public class PartidosActivity extends ListActivity {
 
 		iniciarPreferencias();
 
-		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null, true);
 		this.partidos = this.liga.listaPartidos();
 
 		iniciarAdapterListView();

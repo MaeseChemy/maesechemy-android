@@ -6,12 +6,19 @@
     android:orientation="vertical"
     tools:context=".PlantillaActivity" >
 
-    <ListView
+<!--     <ListView -->
+<!--         android:id="@android:id/list" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="fill_parent" -->
+<!--         android:drawSelectorOnTop="false" > -->
+<!--     </ListView> -->
+
+    <com.jmbg.oldgloriescalendar.view.PullToRefreshListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:drawSelectorOnTop="false" >
-    </ListView>
+    </com.jmbg.oldgloriescalendar.view.PullToRefreshListView>
 
     <TextView
         android:id="@android:id/empty"
