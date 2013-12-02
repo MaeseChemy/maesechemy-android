@@ -7,6 +7,7 @@ import com.jmbg.oldgloriescalendar.adapter.ClasificacionAdapter;
 import com.jmbg.oldgloriescalendar.dao.LigaDBSQLite;
 import com.jmbg.oldgloriescalendar.dao.entities.Clasificacion;
 import com.jmbg.oldgloriescalendar.util.Constantes;
+import com.jmbg.oldgloriescalendar.view.PullToRefreshListView.OnRefreshListener;
 
 import android.os.Bundle;
 import android.app.ListActivity;
@@ -20,14 +21,29 @@ public class ClasificacionActivity extends ListActivity {
 	private Vector<Clasificacion> clasificacion;
 	private LigaDBSQLite liga;
 
+	private PullToRefreshListView lv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_clasificacion);
 		// Show the Up button in the action bar.
 		
-		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null, true);
 		
+		lv = (PullToRefreshListView) getListView();
+		lv.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				Log.d(Constantes.TAG, "["+PlantillaActivity.class.getName()+".setOnRefreshListener] Main Refresh");
+				liga.actualizarClasificacion();
+				lv.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						lv.onRefreshComplete();
+					}
+				}, 2000);
+			}
+		});
 		refrescarClasificacion();
 	}
 

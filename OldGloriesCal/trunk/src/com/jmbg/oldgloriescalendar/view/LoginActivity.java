@@ -1,6 +1,6 @@
 package com.jmbg.oldgloriescalendar.view;
 
-import com.jmbg.oldgloriescalendar.MainActivity;
+import com.jmbg.oldgloriescalendar.MainLoadingActivity;
 import com.jmbg.oldgloriescalendar.R;
 import com.jmbg.oldgloriescalendar.dao.entities.SaveSharedPreference;
 import com.jmbg.oldgloriescalendar.util.Constantes;
@@ -228,8 +228,11 @@ public class LoginActivity extends Activity {
 		else
 			SaveSharedPreference.setUserName(this, Constantes.INVITADO);
 
-		Intent iMain = new Intent(this, MainActivity.class);
-		startActivity(iMain);
+//		Intent iMain = new Intent(this, MainActivity.class);
+//		startActivity(iMain);
+		
+		Intent iLoading = new Intent(this, MainLoadingActivity.class);
+		startActivity(iLoading);
 	}
 	
     private String formatearNombre(String source){

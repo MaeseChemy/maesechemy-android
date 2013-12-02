@@ -40,7 +40,7 @@ public class ServicioFechaPartido extends Service {
 		Log.i(Constantes.TAG, "[" + ServicioFechaPartido.class.getName()
 				+ ".onCreate] Creando servicio de notificacion de partidos...");
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null, false);
 		// Fecha actual
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(new Date());

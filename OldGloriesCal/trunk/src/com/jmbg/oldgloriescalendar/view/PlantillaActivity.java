@@ -6,6 +6,7 @@ import com.jmbg.oldgloriescalendar.adapter.PlantillaAdapter;
 import com.jmbg.oldgloriescalendar.dao.LigaDBSQLite;
 import com.jmbg.oldgloriescalendar.dao.entities.Jugador;
 import com.jmbg.oldgloriescalendar.util.Constantes;
+import com.jmbg.oldgloriescalendar.view.PullToRefreshListView.OnRefreshListener;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,14 +19,28 @@ public class PlantillaActivity extends ListActivity {
 	private Vector<Jugador> plantilla;
 	private LigaDBSQLite liga;
 
+	private PullToRefreshListView lv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plantilla);
 		// Show the Up button in the action bar.
 		
-		this.liga = new LigaDBSQLite(this, "DBCalendar", null);
-		
+		this.liga = new LigaDBSQLite(this, "DBCalendar", null, true);
+		lv = (PullToRefreshListView) getListView();
+		lv.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				Log.d(Constantes.TAG, "["+PlantillaActivity.class.getName()+".setOnRefreshListener] Main Refresh");
+				liga.actualizarPlantilla();
+				lv.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						lv.onRefreshComplete();
+					}
+				}, 2000);
+			}
+		});
 		refrescarJugadores();
 	}
 
