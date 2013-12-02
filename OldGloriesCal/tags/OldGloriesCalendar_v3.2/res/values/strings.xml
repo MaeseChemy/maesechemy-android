@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ACTIVIDAD PRINCIPAL -->
+    <string name="app_name">Old Glories Reloaded</string>
+    <string name="main_partidos">Partidos</string>
+    <string name="main_plantilla">Plantilla</string>
+    <string name="main_equipos">Equipos</string>
+    <string name="main_clasificacion">Clasificacion</string>
+    <string name="main_campo">Campo</string>
+
+    <!-- ACTIVIDAD PARTIDOS -->
+    <string name="text_empty">Vacio</string>
+    <string name="title_activity_partido_detail">Detalles Partido</string>
+    <string name="title_activity_partidos">Partidos</string>
+    <string name="desc_icono_local">Icono local/visitante</string>
+    <string name="texto_comentario_partido">Comentario</string>
+    <string name="texto_delegado_partido">¿Llevo delegado?</string>
+    <string name="texto_apuntarse_partido">Apuntarse</string>
+    <string name="texto_borrarse_partido">Borrarse</string>
+    <string name="texto_obtener_tiempo">Consultar Tiempo</string>
+    <string name="texto_obtener_convocados">Consultar Convocados</string>
+    <string name="texto_imagen_tiempo">Imagen tiempo</string>
+    
+    <!-- ACTIVIDAD EQUIPOS -->
+    <string name="title_activity_equipos">Equipos</string>
+    <string name="title_activity_equipo_detail">Detalle Equipo</string>
+
+    <!-- PREFERENCIAS -->
+    <string name="action_settings">Configuracion</string>
+    <string name="vista_mes">Vista Mes</string>
+    <string name="preferencias_partido_visible">Mostrar todas las jornadas o solo las restantes</string>
+    <string name="text_preferencias_partido_visible">Todas las Jornadas</string>
+    <string name="title_activity_preferencias">Preferencias Partidos</string>
+    <string name="preferencias_partido_local">Visitante/Local</string>
+    <string name="text_preferencias_partido_local">Partidos como visitante o local</string>
+    <string name="preferencias_partido_horas">Hora</string>
+    <string name="text_preferencias_partido_horas">Hora del partido</string>
+    <string name="preferencias_partido_campo">Campo</string>
+    <string name="text_preferencias_partido_campo">Campo del partido</string>
+    <string name="title_activity_preferencias_capas">Preferencias Capas</string>
+    <string name="preferencias_mapa_layer">Capas</string>
+    <string name="text_preferencias_mapa_layer">Cambiar el tipo de capa del mapa</string>
+    <string name="title_activity_preferencias_main">Preferencias</string>
+    <string name="preferencias_main_notificaciones">Notificaciones</string>
+    <string name="text_preferencias_main_notificaciones">Activar/Desactivar notificaciones</string>
+
+    <!-- ACTIVIDAD MAPA -->
+    <string name="title_activity_mapa">Mapa</string>
+    <string name="map_texto_desc_btn_ruta">Obtener ruta</string>
+    <string name="map_texto_desc_btn_centrar_campo">Centrar mapa en campo</string>
+    <string name="map_texto_desc_btn_layer">Cambio de capa del mapa</string>
+
+    <!-- ACTIVIDAD PLANTILLA -->
+    <string name="action_update_data">Refrescar</string>
+    <string name="title_activity_plantilla">Plantilla</string>
+    <string name="desc_icono_ta">Tarjetas Amarillas</string>
+    <string name="desc_icono_tr">Tarjetas Rojas</string>
+    <string name="desc_icono_goles">Goles</string>
+    <string name="desc_icono_dorsal">Icono Dorsal</string>
+
+    <!-- ACTIVIDAD CLASIFICACION -->
+    <string name="title_activity_clasificacion">Clasificacion</string>
+    <string name="texto_partidos_clasificacion">Partidos</string>
+    <string name="texto_goles_clasificacion">Goles</string>
+    <string name="texto_puntos_clasificacion">Puntos</string>
+
+    <!-- ACTIVDAD LOGIN -->
+    <string name="login_username">Usuario</string>
+    <string name="login_password">Contraseña</string>
+    <string name="action_sign_in_register">Acceder</string>
+    <string name="action_sign_in_invitado">Invitado</string>
+    <string name="login_progress_signing_in">Accediendo &#8230;</string>
+    <string name="error_incorrect_password">Password incorrecta</string>
+    <string name="error_field_required">Campo requerido</string>
+
+</resources>
