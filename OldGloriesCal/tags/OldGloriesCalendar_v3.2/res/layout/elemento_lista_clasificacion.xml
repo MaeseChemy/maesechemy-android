@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="2dp" >
+
+    <!-- #Posicion|Equipo|PJ|PG|PE|PP|F|C|PT -->
+
+    <RadioGroup
+        android:id="@+id/map_radio_group_position"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:alpha="0.8"
+        android:background="@drawable/box_clas"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/texto_posicion_clasificacion"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:typeface="sans" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/blanco"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/texto_nombre_equipo_clasificacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioGroup
+                android:id="@+id/map_radio_group_partidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:background="@drawable/box_clas"
+                android:gravity="left"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/texto_partidos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/texto_partidos_clasificacion"
+                    android:textSize="8pt"
+                    android:textStyle="italic"
+                    android:typeface="serif" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/texto_par_jug_clasificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/texto_par_gan_clasificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/texto_par_per_clasificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/texto_par_emp_clasificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textSize="6pt" />
+                </LinearLayout>
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/map_radio_group_goles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:background="@drawable/box_clas"
+                android:gravity="left"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/texto_goles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:singleLine="true"
+                    android:text="@string/texto_goles_clasificacion"
+                    android:textSize="8pt"
+                    android:textStyle="italic"
+                    android:typeface="serif" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/texto_goles_favor_clasificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/texto_goles_contra_clasificacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textSize="6pt" />
+                </LinearLayout>
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/map_radio_group_puntos"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:alpha="0.8"
+                android:background="@drawable/box_clas"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/texto_puntos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/texto_puntos_clasificacion"
+                    android:textSize="8pt"
+                    android:textStyle="italic"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/texto_puntos_clasificacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="8pt"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
