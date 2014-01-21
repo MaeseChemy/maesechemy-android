@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:background="@drawable/btn_lightgrey"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/pot_date"
+        style="@style/PrimaryFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:text="Fecha" />
+
+    <TextView
+        android:id="@+id/pot_value"
+        style="@style/SecundaryFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="Bote" />
+
+    <LinearLayout
+        android:id="@+id/layout_prizes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_clas"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:gravity="center|left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/pot_bet"
+            style="@style/SecundaryFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="Bet" />
+
+        <TextView
+            android:id="@+id/pot_won"
+            style="@style/SecundaryFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="Won" />
+    </LinearLayout>
+
+</LinearLayout>
