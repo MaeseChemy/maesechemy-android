@@ -71,8 +71,11 @@ public class PotAdapter extends ArrayAdapter<Pot> {
 		
 		holder.txtPotDate.setText(item.getPotDate());
 		holder.txtPotValue.setText(Float.toString(item.getPotValue()) + " €");
-		holder.txtPotBet.setText("Apostado\t: " +Float.toString(item.getPotBet()) + " €");
-		holder.txtPotWon.setText("Ganado\t: " +Float.toString(item.getPotWon()) + " €");
+		holder.txtPotBet.setText("Apo.: " +Float.toString(item.getPotBet()) + " €");
+		if(item.getPotValid() == Pot.POT_INVALID)
+			holder.txtPotWon.setText("Gan.: " +Float.toString(item.getPotWon()) + " €");
+		else
+			holder.txtPotWon.setText("Gan.: -");
 		return v;
 	}
 
