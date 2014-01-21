@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">10dp</dimen>
+    <dimen name="activity_vertical_margin">10dp</dimen>
+
+    <dimen name="header_layout_height">46dp</dimen>
+    
+    <dimen name="header_image_height">36dp</dimen>
+    <dimen name="header_image_width">36dp</dimen>
+
+    <!-- Grid Icon Dimensions -->
+    <dimen name="grid_cell_vertical_space">50dp</dimen>
+    <dimen name="grid_cell_horizontal_space">10dp</dimen>
+        
+    <dimen name="image_grid_height">80dp</dimen>
+    <dimen name="image_grid_width">80dp</dimen>
+
+</resources>

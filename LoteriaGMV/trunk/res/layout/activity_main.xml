@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_middle"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <include
+        android:id="@+id/headerWithButtons"
+        android:layout_height="@dimen/header_layout_height"
+        layout="@layout/main_action_bar" />
+
+    <TextView
+        android:id="@+id/nameMainMenu"
+        style="@style/HeaderFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:text="Opciones" />
+
+    <LinearLayout
+        android:id="@+id/layoutGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
+
+        <GridView
+            android:id="@+id/gridButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:columnWidth="150dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/grid_cell_vertical_space" 
+            android:background="@drawable/border">
+        </GridView>
+    </LinearLayout>
+
+</LinearLayout>
