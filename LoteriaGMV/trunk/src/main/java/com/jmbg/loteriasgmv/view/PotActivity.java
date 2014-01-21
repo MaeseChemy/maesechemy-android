@@ -240,7 +240,7 @@ public class PotActivity extends ListActivity {
 	
 	private void setCurrentPot(){
 		if(this.currentPot != null)
-			this.currentPotTextView.setText("Bote Actual: "+Float.toString(this.currentPot.getPotValue()) + " €");
+			this.currentPotTextView.setText("Bote Actual: "+Float.toString(this.currentPot.getPotValue() - this.currentPot.getPotBet()) + " €");
 		else
 			this.currentPotTextView.setText(getResources().getString(R.string.not_current_pot));
 	}
