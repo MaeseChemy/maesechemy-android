@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.jmbg.loteriasgmv.dao.entities.Bet;
 import com.jmbg.loteriasgmv.dao.entities.Participant;
 import com.jmbg.loteriasgmv.dao.entities.Pot;
 
@@ -35,6 +36,7 @@ public class LotGMVDBAdapter extends AbstractDBAdapter {
 	        //Se ejecuta la sentencia SQL de creación de las tablas
 			db.execSQL(Pot.SQL_CREATE);
 			db.execSQL(Participant.SQL_CREATE);
+			db.execSQL(Bet.SQL_CREATE);
 		}
 		
 		/**
@@ -46,6 +48,7 @@ public class LotGMVDBAdapter extends AbstractDBAdapter {
 	        // Eliminamos las tablas
 			db.execSQL("DROP TABLE IF EXISTS " + Pot.TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + Participant.TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + Bet.TABLE_NAME);
 		}
 	}	
 }

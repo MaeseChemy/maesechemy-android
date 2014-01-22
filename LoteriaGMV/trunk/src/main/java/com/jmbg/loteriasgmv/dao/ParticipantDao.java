@@ -18,6 +18,7 @@ public class ParticipantDao extends AbstractDao<Participant> {
 		entity.setId(cursor.getInt(cursor.getColumnIndex(Participant._ID)));
 		entity.setParticipantName(cursor.getString(cursor.getColumnIndex(Participant.FIELD_PARTICIPANT_NAME)));
 		entity.setParticipantFund(cursor.getFloat(cursor.getColumnIndex(Participant.FIELD_PARTICIPANT_FUND)));
+		entity.setParticipantImageURL(cursor.getBlob(cursor.getColumnIndex(Participant.FIELD_PARTICIPANT_IMG_URL)));
 
 		return entity;
 	}
@@ -29,6 +30,7 @@ public class ParticipantDao extends AbstractDao<Participant> {
 		contentValues.put(Participant._ID, entity.getId());
 		contentValues.put(Participant.FIELD_PARTICIPANT_NAME, entity.getParticipantName());
 		contentValues.put(Participant.FIELD_PARTICIPANT_FUND, entity.getParticipantFund());
+		contentValues.put(Participant.FIELD_PARTICIPANT_IMG_URL, entity.getParticipantImageURL());
 
 		return contentValues;
 	}

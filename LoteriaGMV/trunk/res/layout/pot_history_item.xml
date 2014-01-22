@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal|center_vertical"
     android:layout_margin="@dimen/activity_horizontal_margin"
     android:background="@drawable/btn_lightgrey"
-    android:gravity="center"
     android:orientation="horizontal" >
 
     <TextView
@@ -13,17 +11,20 @@
         style="@style/PrimaryFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:background="@drawable/border"
-        android:gravity="center"
         android:text="Fecha" />
 
     <TextView
         android:id="@+id/pot_value"
-        style="@style/SecundaryFont"
+        style="@style/PrimaryFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_alignLeft="@+id/pot_date"
+        android:layout_below="@+id/pot_date"
+        android:layout_marginLeft="10dp"
         android:gravity="center"
         android:text="Bote" />
 
@@ -31,8 +32,9 @@
         android:id="@+id/layout_prizes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/box_clas"
-        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/box_shape"
         android:gravity="center|left"
         android:orientation="vertical" >
 
@@ -55,4 +57,4 @@
             android:text="Won" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
