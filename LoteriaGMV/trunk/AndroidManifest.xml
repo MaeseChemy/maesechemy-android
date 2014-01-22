@@ -19,7 +19,7 @@
 
     <!--
      The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended.
+     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -48,6 +48,10 @@
         </activity>
         <activity
             android:name="com.jmbg.loteriasgmv.view.ParticipantActivity"
+            android:label="@string/title_activity_pot_main" >
+        </activity>
+        <activity
+            android:name="com.jmbg.loteriasgmv.view.BetActivity"
             android:label="@string/title_activity_pot_main" >
         </activity>
     </application>
