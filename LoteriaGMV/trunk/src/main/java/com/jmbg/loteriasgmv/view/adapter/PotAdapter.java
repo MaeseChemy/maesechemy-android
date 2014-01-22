@@ -1,5 +1,6 @@
 package com.jmbg.loteriasgmv.view.adapter;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.jmbg.loteriasgmv.R;
@@ -31,6 +32,7 @@ public class PotAdapter extends ArrayAdapter<Pot> {
 		this.context = context;
 		this.textViewResourceId = textViewResourceId;
 		this.items = items;
+		Collections.sort(this.items);
 	}
 
 	public int getCount() {

@@ -58,7 +58,7 @@ public class GridAdapter extends BaseAdapter {
 		textGrid.setText(ae.getActivityName());
 		
 		if(!ae.isVisibility()){
-			view.setVisibility(View.INVISIBLE);
+			view.setVisibility(View.GONE);
 		}
 		return view;
 	}

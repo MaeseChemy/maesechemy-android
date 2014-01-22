@@ -1,6 +1,7 @@
 package com.jmbg.loteriasgmv.util;
 
 import com.jmbg.loteriasgmv.R;
+import com.jmbg.loteriasgmv.view.ParticipantActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,8 @@ public class ParticipantsActivityElement extends ActivityElement {
 	}
 	@Override
 	public Intent getIntent() {
-		return null;
+		Intent intent = new Intent(context, ParticipantActivity.class);
+		return intent;
 	}
 
 }

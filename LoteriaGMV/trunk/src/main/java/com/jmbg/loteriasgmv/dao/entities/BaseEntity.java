@@ -8,10 +8,11 @@ public interface BaseEntity extends BaseColumns {
 	public static final String CURRENT_TIME = "HH:mm:ss";
 	
 	/** SQLite format for CURRENT_DATE */
-	public static final String CURRENT_DATE = "yyyy-MM-dd";
+	public static final String CURRENT_DATE = "dd/MM/yyyy";
 	
 	/** SQLite format for CURRENT_TIMESTAMP */
 	public static final String CURRENT_TIMESTAMP = CURRENT_DATE + " " + CURRENT_TIME;
+	public static final String CURRENT_DAY = CURRENT_DATE;
 	
 	public String getTableName();
 	
