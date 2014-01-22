@@ -1,16 +1,17 @@
 package com.jmbg.loteriasgmv.view;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import com.jmbg.loteriasgmv.R;
 import com.jmbg.loteriasgmv.dao.LotGMVDBAdapter;
-import com.jmbg.loteriasgmv.dao.PotDao;
-import com.jmbg.loteriasgmv.dao.entities.Pot;
+import com.jmbg.loteriasgmv.dao.ParticipantDao;
+import com.jmbg.loteriasgmv.dao.entities.Participant;
 import com.jmbg.loteriasgmv.util.LogManager;
 import com.jmbg.loteriasgmv.view.PullToRefreshListView.OnRefreshListener;
-import com.jmbg.loteriasgmv.view.adapter.PotAdapter;
+import com.jmbg.loteriasgmv.view.adapter.ParticipantAdapter;
 import com.jmbg.loteriasgmv.ws.LectorDatosWS;
 
 import android.os.AsyncTask;
@@ -24,36 +25,33 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class PotActivity extends ListActivity {
+public class ParticipantActivity extends ListActivity {
 
 	private LogManager LOG = LogManager.getLogger(this.getClass());
 
 	// ASYNC TASKS
-	private PotHistoryDBTask potHistoryDBTask;
-	private PotHistoryWSTask potHistoryWSTask;
+	private ParticipantHistoryDBTask participantHistoryDBTask;
+	private ParticipantHistoryWSTask participantHistoryWSTask;
 
 	// LIST
 	private PullToRefreshListView lv;
-	private List<Pot> potHistory;
-	private PotAdapter adapter;
+	private List<Participant> participantHistory;
+	private ParticipantAdapter adapter;
 
 	// DAO
-	private PotDao potDao;
+	private ParticipantDao participantDao;
 	private LotGMVDBAdapter lotGMVDBAdapter;
 
 	public ProgressDialog progress;
 
-	private Pot currentPot;
-	private TextView currentPotTextView;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pot);
+		setContentView(R.layout.activity_participant);
 
 		try {
 			lotGMVDBAdapter = new LotGMVDBAdapter(getBaseContext());
-			potDao = new PotDao(lotGMVDBAdapter);
+			participantDao = new ParticipantDao(lotGMVDBAdapter);
 
 		} catch (NumberFormatException e) {
 			LOG.error("Error with the package name: " + e.getMessage());
@@ -64,9 +62,9 @@ public class PotActivity extends ListActivity {
 			LOG.debug("Error with the application version name: " + e);
 		}
 
-		this.potHistory = new ArrayList<Pot>();
-		this.adapter = new PotAdapter(this, R.layout.pot_history_item,
-				potHistory);
+		this.participantHistory = new ArrayList<Participant>();
+		this.adapter = new ParticipantAdapter(this, R.layout.participant_item,
+				participantHistory);
 
 		lv = (PullToRefreshListView) getListView();
 		lv.setShowLastUpdatedText(true);
@@ -82,77 +80,73 @@ public class PotActivity extends ListActivity {
 		lv.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				runGetPotWSTask();
+				runGetParticipantWSTask();
 			}
 		});
 
 		registerForContextMenu(lv);
-
-		this.currentPotTextView = (TextView) findViewById(R.id.currentPotValueText);
-
+		
 		// Obtenemos los datos
-		runGetPotDBTask();
+		runGetParticipantDBTask();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		// getMenuInflater().inflate(R.menu.pot_main, menu);
+		// getMenuInflater().inflate(R.menu.participant_main, menu);
 		return true;
 	}
 
-	public void runGetPotDBTask() {
-		if (potHistoryDBTask == null
-				|| potHistoryDBTask.getStatus().equals(
+	public void runGetParticipantDBTask() {
+		if (participantHistoryDBTask == null
+				|| participantHistoryDBTask.getStatus().equals(
 						AsyncTask.Status.FINISHED)) {
 			LOG.debug("Creating new chatGetTask...");
-			potHistoryDBTask = new PotHistoryDBTask();
-			potHistoryDBTask.execute();
+			participantHistoryDBTask = new ParticipantHistoryDBTask();
+			participantHistoryDBTask.execute();
 		}
 	}
 
-	public void runGetPotWSTask() {
-		if (potHistoryWSTask == null
-				|| potHistoryWSTask.getStatus().equals(
+	public void runGetParticipantWSTask() {
+		if (participantHistoryWSTask == null
+				|| participantHistoryWSTask.getStatus().equals(
 						AsyncTask.Status.FINISHED)) {
 			LOG.debug("Creating new chatGetTask...");
-			potHistoryWSTask = new PotHistoryWSTask();
-			potHistoryWSTask.execute();
+			participantHistoryWSTask = new ParticipantHistoryWSTask();
+			participantHistoryWSTask.execute();
 		}
 	}
 
-	private class PotHistoryWSTask extends AsyncTask<Void, Integer, List<Pot>> {
+	private class ParticipantHistoryWSTask extends AsyncTask<Void, Integer, List<Participant>> {
 
 		@Override
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
-			progress = new ProgressDialog(PotActivity.this);
+			progress = new ProgressDialog(ParticipantActivity.this);
 			progress.setTitle(getResources().getString(R.string.app_name));
-			progress.setMessage("Obteniendo historico de botes del servidor");
+			progress.setMessage("Obteniendo participantes del servidor");
 			progress.show();
 		}
 
 		@Override
-		protected List<Pot> doInBackground(Void... params) {
-			LectorDatosWS lector = new LectorDatosWS(PotActivity.this);
-			LOG.debug("Getting from server pot history...");
-			List<Pot> potHistoryList = lector.readPotHistory();
-			Collections.sort(potHistoryList, Collections.reverseOrder());
-			return potHistoryList;
+		protected List<Participant> doInBackground(Void... params) {
+			LectorDatosWS lector = new LectorDatosWS(ParticipantActivity.this);
+			LOG.debug("Getting from server participant history...");
+			List<Participant> participantList = lector.readParticipant();
+			Collections.sort(participantList);
+			return participantList;
 		}
 
 		@Override
-		protected void onPostExecute(List<Pot> result) {
+		protected void onPostExecute(List<Participant> result) {
 			// Refresh DB
-			potDao.removeAll();
-			potDao.save(result);
+			participantDao.removeAll();
+			participantDao.save(result);
 
 			// Refresh list
 			adapter.clear();
-			for (Pot pot : result) {
-				if (pot.getPotValid() == Pot.POT_VALID)
-					currentPot = pot;
-				adapter.add(pot);
+			for (Participant participant : result) {
+				adapter.add(participant);
 			}
 			adapter.notifyDataSetChanged();
 
@@ -163,52 +157,49 @@ public class PotActivity extends ListActivity {
 					lv.onRefreshComplete();
 				}
 			}, 2000);
-
-			setCurrentPot();
+			
 			progress.dismiss();
 		}
 	}
 
-	private class PotHistoryDBTask extends AsyncTask<Void, Integer, List<Pot>> {
+	private class ParticipantHistoryDBTask extends AsyncTask<Void, Integer, List<Participant>> {
 
 		@Override
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
-			progress = new ProgressDialog(PotActivity.this);
+			progress = new ProgressDialog(ParticipantActivity.this);
 			progress.setTitle(getResources().getString(R.string.app_name));
-			progress.setMessage("Obteniendo historico de botes");
+			progress.setMessage("Obteniendo participantes");
 			progress.show();
 		}
 
 		@Override
-		protected List<Pot> doInBackground(Void... params) {
-			List<Pot> potHistoryList = new ArrayList<Pot>();
+		protected List<Participant> doInBackground(Void... params) {
+			List<Participant> participantList = new ArrayList<Participant>();
 
 			try {
 				LOG.debug("Running thread: " + Thread.currentThread().getName());
-				potHistoryList = getPotHistoryList();
-				LOG.debug("Pot history list: "
-						+ (potHistoryList == null ? 0 : potHistoryList.size()));
-				Collections.sort(potHistoryList, Collections.reverseOrder());
-				return potHistoryList;
+				participantList = getParticipantHistoryList();
+				LOG.debug("Participant history list: "
+						+ (participantList == null ? 0 : participantList.size()));
+				Collections.sort(participantList);
+				return participantList;
 			} catch (Exception e) {
 				LOG.error("Error reading chat history: " + e.getMessage());
 				LOG.debug("Error reading chat history", e);
 
-				return potHistoryList;
+				return participantList;
 			}
 
 		}
 
 		@Override
-		protected void onPostExecute(List<Pot> result) {
+		protected void onPostExecute(List<Participant> result) {
 			progress.dismiss();
 			if (result.size() != 0) {
 				adapter.clear();
-				for (Pot pot : result) {
-					if (pot.getPotValid() == Pot.POT_VALID)
-						currentPot = pot;
-					adapter.add(pot);
+				for (Participant participant : result) {
+					adapter.add(participant);
 				}
 				adapter.notifyDataSetChanged();
 
@@ -219,35 +210,24 @@ public class PotActivity extends ListActivity {
 						lv.onRefreshComplete();
 					}
 				}, 2000);
-				setCurrentPot();
 			} else {
-				runGetPotWSTask();
+				runGetParticipantWSTask();
 			}
 		}
 	}
 
-	private ArrayList<Pot> getPotHistoryList() {
-		ArrayList<Pot> potHistoryList = new ArrayList<Pot>();
+	private ArrayList<Participant> getParticipantHistoryList() {
+		ArrayList<Participant> participantHistoryList = new ArrayList<Participant>();
 
 		try {
-			potHistoryList = (ArrayList<Pot>) potDao.findAll();
-			return potHistoryList;
+			participantHistoryList = (ArrayList<Participant>) participantDao.findAll();
+			return participantHistoryList;
 		} catch (Exception e) {
-			LOG.error("Error reading Pot History: " + e.getMessage());
-			LOG.debug("Error reading Pot History", e);
+			LOG.error("Error reading Participant History: " + e.getMessage());
+			LOG.debug("Error reading Participant History", e);
 		}
 
-		return potHistoryList;
-	}
-
-	private void setCurrentPot() {
-		if (this.currentPot != null)
-			this.currentPotTextView.setText("Bote Actual: "
-					+ Float.toString(this.currentPot.getPotValue()
-							- this.currentPot.getPotBet()) + " €");
-		else
-			this.currentPotTextView.setText(getResources().getString(
-					R.string.not_current_pot));
+		return participantHistoryList;
 	}
 
 }

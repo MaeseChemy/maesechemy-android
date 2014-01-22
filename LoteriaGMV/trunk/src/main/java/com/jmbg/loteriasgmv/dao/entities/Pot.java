@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Pot extends AbstractEntity implements
-		PotBaseColumns{
+		PotBaseColumns, Comparable<Pot>{
 	
 	public final static int POT_VALID = 1;
 	public final static int POT_INVALID = 0;
@@ -34,7 +34,7 @@ public class Pot extends AbstractEntity implements
 			+ FIELD_POT_VALID + " INTEGER" + "); "
 			+ "CREATE INDEX IF NOT EXISTS IDX_" + TABLE_NAME + "_" + FIELD_POT_DATE + " ON TABLE_NAME (" + FIELD_POT_DATE + ");";
 
-	private static SimpleDateFormat sdf = new SimpleDateFormat(AbstractEntity.CURRENT_TIMESTAMP);
+	private static SimpleDateFormat sdf = new SimpleDateFormat(AbstractEntity.CURRENT_DATE);
 	
 	public Pot() {}
 
@@ -121,6 +121,12 @@ public class Pot extends AbstractEntity implements
 	
 	public void setPotValid(int potValid) {
 		this.potValid = potValid;
+	}
+
+	@Override
+	public int compareTo(Pot another) {
+		int compare = this.getPotDateAsDate().compareTo(another.getPotDateAsDate());
+		return compare; 
 	}
 
 }
