@@ -19,13 +19,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import com.jmbg.loteriasgmv.dao.entities.AbstractEntity;
 import com.jmbg.loteriasgmv.dao.entities.Bet;
 import com.jmbg.loteriasgmv.dao.entities.Participant;
 import com.jmbg.loteriasgmv.dao.entities.Pot;
 import com.jmbg.loteriasgmv.util.LogManager;
 
-import android.content.ContentValues;
 import android.content.Context;
 
 public class LectorDatosWS {
@@ -34,6 +32,7 @@ public class LectorDatosWS {
 
 	private LogManager LOG = LogManager.getLogger(this.getClass());
 
+	@SuppressWarnings(value = { "unused" })
 	private Context context;
 
 	private List<Pot> potHistory;
@@ -146,6 +145,8 @@ public class LectorDatosWS {
 			return URL_FILE_PARTICIPANT;
 		case POT_FILE:
 			return URL_FILE_POT;
+		case BET_FILE:
+			return URL_FILE_BET;
 		default:
 			return "";
 		}
@@ -245,9 +246,11 @@ public class LectorDatosWS {
 		String date = campos[0].trim();
 		String type = campos[1].trim();
 		String imagePath = campos[2].trim();
+		String active = campos[3].trim();
 
 		bet.setBetDate(date);
 		bet.setBetType(type);
+		bet.setBetActive(Integer.parseInt(active));
 
 		DefaultHttpClient mHttpClient = new DefaultHttpClient();
 		HttpGet mHttpGet = new HttpGet(URL_BASE + "/" + imagePath);

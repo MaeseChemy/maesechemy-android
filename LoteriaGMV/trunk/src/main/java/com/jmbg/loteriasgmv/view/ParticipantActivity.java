@@ -1,7 +1,6 @@
 package com.jmbg.loteriasgmv.view;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ParticipantActivity extends ListActivity {
@@ -62,6 +61,14 @@ public class ParticipantActivity extends ListActivity {
 			LOG.debug("Error with the application version name: " + e);
 		}
 
+		Button buttonRefresh = (Button) findViewById(R.id.refreshButton);
+		buttonRefresh.setVisibility(View.VISIBLE);
+		buttonRefresh.setOnClickListener(new View.OnClickListener() {
+		    public void onClick(View v) {
+		       runGetParticipantWSTask();
+		    }
+		});
+		
 		this.participantHistory = new ArrayList<Participant>();
 		this.adapter = new ParticipantAdapter(this, R.layout.participant_item,
 				participantHistory);
@@ -132,9 +139,9 @@ public class ParticipantActivity extends ListActivity {
 		protected List<Participant> doInBackground(Void... params) {
 			LectorDatosWS lector = new LectorDatosWS(ParticipantActivity.this);
 			LOG.debug("Getting from server participant history...");
-			List<Participant> participantList = lector.readParticipant();
-			Collections.sort(participantList);
-			return participantList;
+			List<Participant> participantHistory = lector.readParticipant();
+			Collections.sort(participantHistory);
+			return participantHistory;
 		}
 
 		@Override
@@ -175,20 +182,20 @@ public class ParticipantActivity extends ListActivity {
 
 		@Override
 		protected List<Participant> doInBackground(Void... params) {
-			List<Participant> participantList = new ArrayList<Participant>();
+			participantHistory = new ArrayList<Participant>();
 
 			try {
 				LOG.debug("Running thread: " + Thread.currentThread().getName());
-				participantList = getParticipantHistoryList();
+				participantHistory = getParticipantHistoryList();
 				LOG.debug("Participant history list: "
-						+ (participantList == null ? 0 : participantList.size()));
-				Collections.sort(participantList);
-				return participantList;
+						+ (participantHistory == null ? 0 : participantHistory.size()));
+				Collections.sort(participantHistory);
+				return participantHistory;
 			} catch (Exception e) {
 				LOG.error("Error reading chat history: " + e.getMessage());
 				LOG.debug("Error reading chat history", e);
 
-				return participantList;
+				return participantHistory;
 			}
 
 		}

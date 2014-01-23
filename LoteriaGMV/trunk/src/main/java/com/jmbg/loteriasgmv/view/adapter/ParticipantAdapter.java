@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 public class ParticipantAdapter extends ArrayAdapter<Participant> {
 
-	@SuppressWarnings("unused")
 	private Context context;
 	private int textViewResourceId;
 	private List<Participant> items;

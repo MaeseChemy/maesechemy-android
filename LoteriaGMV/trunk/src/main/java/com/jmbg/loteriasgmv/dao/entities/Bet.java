@@ -7,6 +7,9 @@ import java.util.Date;
 public class Bet extends AbstractEntity implements BetBaseColumns,
 		Comparable<Bet> {
 
+	public final static int BET_ACTIVE = 1;
+	public final static int BET_INACTIVE = 0;
+
 	/** Fecha del bote */
 	private String betDate;
 
@@ -16,10 +19,14 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 	/** **/
 	private byte[] betImage;
 
+	/** **/
+	private int betActive;
+
 	public static final String SQL_CREATE = "CREATE TABLE " + TABLE_NAME + " ("
 			+ _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FIELD_BET_DATE
-			+ " TEXT, " + FIELD_BET_TYPE + " TEXT, " + FIELD_BET_IMG + " BLOB"
-			+ "); " + "CREATE INDEX IF NOT EXISTS IDX_" + TABLE_NAME + "_"
+			+ " TEXT, " + FIELD_BET_TYPE + " TEXT, " + FIELD_BET_IMG
+			+ " BLOB, " + FIELD_BET_ACTIVE + " INTEGER" + "); "
+			+ "CREATE INDEX IF NOT EXISTS IDX_" + TABLE_NAME + "_"
 			+ FIELD_BET_DATE + " ON TABLE_NAME (" + FIELD_BET_DATE + ");";
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
@@ -28,16 +35,17 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 	public Bet() {
 	}
 
-	public Bet(String betDate, String betType, byte[] betImage) {
+	public Bet(String betDate, String betType, byte[] betImage, int betActive) {
 		super();
 		this.betDate = betDate;
 		this.betType = betType;
 		this.betImage = betImage;
+		this.betActive = betActive;
 	}
 
 	@Override
 	public String getTableName() {
-		return ParticipantBaseColumns.TABLE_NAME;
+		return BetBaseColumns.TABLE_NAME;
 	}
 
 	@Override
@@ -49,6 +57,8 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 		sb.append("[").append("betType").append("=").append(this.betType)
 				.append("]");
 		sb.append("[").append("betImage").append("=").append(this.betImage)
+				.append("]");
+		sb.append("[").append("betActive").append("=").append(this.betActive)
 				.append("]");
 		return sb.toString();
 	}
@@ -90,9 +100,18 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 		this.betType = betType;
 	}
 
+	public int getBetActive() {
+		return betActive;
+	}
+
+	public void setBetActive(int betActive) {
+		this.betActive = betActive;
+	}
+
 	@Override
 	public int compareTo(Bet another) {
-		int compare = this.getBetDate().compareTo(another.getBetDate());
+		int compare = this.getBetDate().compareTo(
+				another.getBetDate());
 		return compare;
 	}
 

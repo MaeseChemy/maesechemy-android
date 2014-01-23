@@ -5,15 +5,16 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_middle"
     android:orientation="vertical"
-    tools:context=".PotActivity" >
+    tools:context=".BetActivity" >
 
     <include
         android:id="@+id/headerWithButtons"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/header_layout_height"
         layout="@layout/main_action_bar" />
 
     <TextView
-        android:id="@+id/nameMainMenu"
+        android:id="@+id/nameBetMenu"
         style="@style/HeaderFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,50 +23,68 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="Bote" />
+        android:text="Apuestas Activas" />
 
-    <TextView
-        android:id="@+id/currentPotValueText"
-        style="@style/SubHeaderFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="Bote Actual" 
-        android:background="@drawable/box_clas"/>
-
-    <TextView
-        android:id="@+id/currentPotValueText"
-        style="@style/PrimaryFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|left"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="Historico del Bote: " />
     <LinearLayout
-        android:id="@+id/layoutList"
+        android:id="@+id/layout_check_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:background="@android:drawable/alert_light_frame"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/PrimaryFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:text="Ver todas: " />
+
+        <CheckBox
+            android:id="@+id/bet_checkbox_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeGrid" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/layoutGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:gravity="center_horizontal|center_vertical"
-        android:orientation="horizontal"
+        android:gravity="center|top"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingTop="@dimen/activity_vertical_margin" >
 
-        <com.jmbg.loteriasgmv.view.PullToRefreshListView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:drawSelectorOnTop="false" >
-        </com.jmbg.loteriasgmv.view.PullToRefreshListView>
+        <GridView
+            android:id="@+id/gridActiveBets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="@dimen/activity_horizontal_margin"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/activity_vertical_margin"
+            android:visibility="visible" />
+
+        <GridView
+            android:id="@+id/gridAllBets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="@dimen/activity_horizontal_margin"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/activity_vertical_margin"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>
