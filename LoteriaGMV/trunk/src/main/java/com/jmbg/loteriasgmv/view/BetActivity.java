@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.Menu;
 import android.view.View;
@@ -87,7 +88,12 @@ public class BetActivity extends Activity {
 		gridviewActiveBets.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				//TODO:
+				Bet selectBet = adapterValidBets.getItem(position);
+				
+                // Sending image id to BetFullImageActivity
+                Intent i = new Intent(getApplicationContext(), BetFullImageActivity.class);
+                i.putExtra("bet_image", selectBet.getBetImage());
+                startActivity(i);
 			}
 			
 		});
@@ -99,7 +105,12 @@ public class BetActivity extends Activity {
 		gridviewAllBets.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				//TODO:
+				Bet selectBet = adapterAllBets.getItem(position);
+				
+                // Sending image id to BetFullImageActivity
+                Intent i = new Intent(getApplicationContext(), BetFullImageActivity.class);
+                i.putExtra("bet_image", selectBet.getBetImage());
+                startActivity(i);
 			}
 			
 		});
