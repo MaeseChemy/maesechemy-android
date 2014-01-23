@@ -62,13 +62,10 @@
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
 
-                        <CheckBox
-                            android:id="@+id/check_aletoriedad_euromillones"
+                        <Spinner
+                            android:id="@+id/tipo_aleatoriedad_euromillones_spinner"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5pt"
-                            android:layout_marginRight="5pt"
-                            android:text="Aleatoriedad por movimiento" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <ListView
@@ -114,13 +111,10 @@
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
 
-                        <CheckBox
-                            android:id="@+id/check_aletoriedad_primitiva"
+                        <Spinner
+                            android:id="@+id/tipo_aleatoriedad_primitiva_spinner"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5pt"
-                            android:layout_marginRight="5pt"
-                            android:text="Aleatoriedad por movimiento" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <ListView

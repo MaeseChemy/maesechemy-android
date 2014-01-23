@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import com.jmbg.genapuestas.generadores.GeneradorEuromillones;
+import com.jmbg.genapuestas.generadores.GeneradorPrimitiva;
 import com.jmbg.genapuestas.utils.Constantes;
 
 import android.os.AsyncTask;
@@ -20,7 +22,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -34,13 +35,22 @@ public class MainActivity extends Activity implements SensorEventListener {
 	private Spinner spinnerEuromillones;
 	private Spinner spinnerPrimitiva;
 
-	private CheckBox checkAletoriedadEuromillones;
-	private CheckBox checkAletoriedadPrimitiva;
+	private Spinner spinnerTipoAleatoriedadEuromillones;
+	private Spinner spinnerTipoAleatoriedadPrimitiva;
 
-	
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
+
 	private List<Integer> numerosAleatorios;
+
+	private enum TipoAleatoriedad {
+		RANDOM_JAVA, RANDOM_RANDOM_ORG, RANDOM_ACELEROMETRO
+	};
+
+	private TipoAleatoriedad aleatoriedadEuromillones;
+	private TipoAleatoriedad aleatoriedadPrimitiva;
+
+	private Vector<Apuesta> apuestas;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +60,14 @@ public class MainActivity extends Activity implements SensorEventListener {
 		Drawable background = getResources()
 				.getDrawable(R.drawable.fondo_bolas);
 		background.setAlpha(50);
-		
+
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		mAccelerometer = mSensorManager	.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		
+		mAccelerometer = mSensorManager
+				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+		aleatoriedadEuromillones = TipoAleatoriedad.RANDOM_JAVA;
+		aleatoriedadPrimitiva = TipoAleatoriedad.RANDOM_JAVA;
+
 		TabHost tabHost = (TabHost) findViewById(R.id.apuestas_tabHost);
 		tabHost.setup();
 
@@ -70,8 +84,6 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 		this.listaEuromillones = (ListView) findViewById(R.id.list_euromillones);
 		this.listaPrimitiva = (ListView) findViewById(R.id.list_primitiva);
-		this.checkAletoriedadEuromillones = (CheckBox) findViewById(R.id.check_aletoriedad_euromillones);
-		this.checkAletoriedadPrimitiva = (CheckBox) findViewById(R.id.check_aletoriedad_primitiva);
 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				this, R.array.numeros_array,
@@ -83,6 +95,18 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 		this.spinnerPrimitiva = (Spinner) findViewById(R.id.numero_apuestas_primitiva_spinner);
 		this.spinnerPrimitiva.setAdapter(adapter);
+
+		ArrayAdapter<CharSequence> adapterAleatoriedad = ArrayAdapter
+				.createFromResource(this, R.array.tipo_aleatoriedad,
+						android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		this.spinnerTipoAleatoriedadEuromillones = (Spinner) findViewById(R.id.tipo_aleatoriedad_euromillones_spinner);
+		this.spinnerTipoAleatoriedadEuromillones
+				.setAdapter(adapterAleatoriedad);
+
+		this.spinnerTipoAleatoriedadPrimitiva = (Spinner) findViewById(R.id.tipo_aleatoriedad_primitiva_spinner);
+		this.spinnerTipoAleatoriedadPrimitiva.setAdapter(adapterAleatoriedad);
 	}
 
 	@Override
@@ -92,32 +116,84 @@ public class MainActivity extends Activity implements SensorEventListener {
 		return true;
 	}
 
+	private TipoAleatoriedad verificarTipoAleatoriedadEuromillones() {
+		String tipoApuesta = this.spinnerTipoAleatoriedadEuromillones
+				.getSelectedItem().toString();
+		if (tipoApuesta.equals("Normal")) {
+			return TipoAleatoriedad.RANDOM_JAVA;
+		} else if (tipoApuesta.equals("Random.org")) {
+			return TipoAleatoriedad.RANDOM_RANDOM_ORG;
+		} else if (tipoApuesta.equals("Acelerometro")) {
+			return TipoAleatoriedad.RANDOM_ACELEROMETRO;
+		} else {
+			return TipoAleatoriedad.RANDOM_JAVA;
+		}
+	}
+
+	private TipoAleatoriedad verificarTipoAleatoriedadPrimitiva() {
+		String tipoApuesta = this.spinnerTipoAleatoriedadPrimitiva
+				.getSelectedItem().toString();
+		if (tipoApuesta.equals("Normal")) {
+			return TipoAleatoriedad.RANDOM_JAVA;
+		} else if (tipoApuesta.equals("Random.org")) {
+			return TipoAleatoriedad.RANDOM_RANDOM_ORG;
+		} else if (tipoApuesta.equals("Acelerometro")) {
+			return TipoAleatoriedad.RANDOM_ACELEROMETRO;
+		} else {
+			return TipoAleatoriedad.RANDOM_JAVA;
+		}
+	}
+
 	public void generarApuestaEuromillones(View view) {
 		this.numerosAleatorios = new ArrayList<Integer>();
-		if(this.checkAletoriedadEuromillones.isChecked()){
-			mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+		aleatoriedadEuromillones = verificarTipoAleatoriedadEuromillones();
+		switch (aleatoriedadEuromillones) {
+		case RANDOM_ACELEROMETRO:
+			mSensorManager.registerListener(this, mAccelerometer,
+					SensorManager.SENSOR_DELAY_GAME);
 			GenNumAlTask task = new GenNumAlTask(Constantes.ID_EUROMILLONES);
 			task.execute();
-		}else{
-			generarApuestaEuromillonesFinish(false);
-		}
-	
-	}
-	public void generarApuestaEuromillonesFinish(boolean move) {
+			break;
+		case RANDOM_JAVA:
+			generarApuestaEuromillonesFinish(TipoAleatoriedad.RANDOM_JAVA);
+			break;
+		case RANDOM_RANDOM_ORG:
+			generarApuestaEuromillonesFinish(TipoAleatoriedad.RANDOM_RANDOM_ORG);
+			break;
+		default:
+			break;
 
-			mSensorManager.unregisterListener(this);
-		
+		}
+	}
+
+	public void generarApuestaEuromillonesFinish(TipoAleatoriedad aleatoriedad) {
+		mSensorManager.unregisterListener(this);
 		int numApuest = Integer.parseInt(this.spinnerEuromillones
 				.getSelectedItem().toString());
 
-		Vector<Apuesta> apuestas = new Vector<Apuesta>();
+		apuestas = new Vector<Apuesta>();
 		for (int i = 0; i < numApuest; i++) {
 			Apuesta apuesta;
-			if(move)
-				apuesta = new Apuesta(Constantes.ID_EUROMILLONES, numerosAleatorios);
-			else
+			switch (aleatoriedad) {
+			case RANDOM_ACELEROMETRO:
+				apuesta = new Apuesta(Constantes.ID_EUROMILLONES,
+						numerosAleatorios);
+				break;
+			case RANDOM_JAVA:
 				apuesta = new Apuesta(Constantes.ID_EUROMILLONES);
-			apuestas.add(apuesta);
+				break;
+			case RANDOM_RANDOM_ORG:
+				GenNumAlRandomTask taskRan = new GenNumAlRandomTask(
+						Constantes.ID_EUROMILLONES, numApuest);
+				taskRan.execute();
+				apuesta = null;
+				return;
+			default:
+				apuesta = new Apuesta(Constantes.ID_EUROMILLONES);
+				break;
+			}
+			if (apuesta != null)
+				apuestas.add(apuesta);
 		}
 		this.listaEuromillones.setVisibility(View.VISIBLE);
 		ApuestaAdapter adapterAp = new ApuestaAdapter(MainActivity.this,
@@ -128,28 +204,55 @@ public class MainActivity extends Activity implements SensorEventListener {
 
 	public void generarApuestaPrimitiva(View view) {
 		this.numerosAleatorios = new ArrayList<Integer>();
-		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-		if(this.checkAletoriedadPrimitiva.isChecked()){
+		aleatoriedadPrimitiva = verificarTipoAleatoriedadPrimitiva();
+		switch (aleatoriedadPrimitiva) {
+		case RANDOM_ACELEROMETRO:
+			mSensorManager.registerListener(this, mAccelerometer,
+					SensorManager.SENSOR_DELAY_GAME);
 			GenNumAlTask task = new GenNumAlTask(Constantes.ID_PRIMITIVA);
 			task.execute();
-		}else{
-			generarApuestaPrimitivaFinish(false);
+			break;
+		case RANDOM_JAVA:
+			generarApuestaPrimitivaFinish(TipoAleatoriedad.RANDOM_JAVA);
+			break;
+		case RANDOM_RANDOM_ORG:
+			generarApuestaPrimitivaFinish(TipoAleatoriedad.RANDOM_RANDOM_ORG);
+			break;
+		default:
+			break;
 		}
 	}
-	public void generarApuestaPrimitivaFinish(boolean move) {
+
+	public void generarApuestaPrimitivaFinish(TipoAleatoriedad aleatoriedad) {
 		mSensorManager.unregisterListener(this);
 		int numApuest = Integer.parseInt(this.spinnerPrimitiva
 				.getSelectedItem().toString());
-
-		Vector<Apuesta> apuestas = new Vector<Apuesta>();
+		GenNumAlRandomTask taskRan = null;
+		apuestas = new Vector<Apuesta>();
 		for (int i = 0; i < numApuest; i++) {
 			Apuesta apuesta;
-			if(move)
-				apuesta = new Apuesta(Constantes.ID_PRIMITIVA, numerosAleatorios);
-			else
+			switch (aleatoriedad) {
+			case RANDOM_ACELEROMETRO:
+				apuesta = new Apuesta(Constantes.ID_PRIMITIVA,
+						numerosAleatorios);
+				break;
+			case RANDOM_JAVA:
 				apuesta = new Apuesta(Constantes.ID_PRIMITIVA);
+				break;
+			case RANDOM_RANDOM_ORG:
+				taskRan = new GenNumAlRandomTask(Constantes.ID_PRIMITIVA,
+						numApuest);
+				taskRan.execute();
 
-			apuestas.add(apuesta);
+				apuesta = null;
+				return;
+			default:
+				apuesta = new Apuesta(Constantes.ID_PRIMITIVA);
+				break;
+			}
+			if (apuesta != null)
+				apuestas.add(apuesta);
+
 		}
 		this.listaPrimitiva.setVisibility(View.VISIBLE);
 		ApuestaAdapter adapterAp = new ApuestaAdapter(MainActivity.this,
@@ -162,35 +265,36 @@ public class MainActivity extends Activity implements SensorEventListener {
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		switch(event.sensor.getType()){
+		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
 			float x = event.values[0];
 			float y = event.values[1];
 			float z = event.values[2];
 
-			//int result = Math.abs((int) ((x * y) - z));
+			// int result = Math.abs((int) ((x * y) - z));
 			int result = Math.abs(functionZ(x, y, z));
-			
+
 			if (!numerosAleatorios.contains(result)) {
-				Log.d("Generador","Numeros generado: "+ result);
+				Log.d("Generador", "Numeros generado: " + result);
 				numerosAleatorios.add(result);
 			}
 			break;
 		}
 
 	}
-	
-	private int functionZ(float a, float b, float c){
-		int x = (int) ((((b - a)*c)/2) + (((b + a))/2));
+
+	private int functionZ(float a, float b, float c) {
+		int x = (int) ((((b - a) * c) / 2) + (((b + a)) / 2));
 		return x;
 	}
 
 	public class GenNumAlTask extends AsyncTask<Void, Integer, Void> {
 		private ProgressDialog progressDialog;
 		private int idApuesta;
-		
+
 		public GenNumAlTask(int idApuesta) {
 			this.idApuesta = idApuesta;
 		}
@@ -200,7 +304,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 			while (numerosAleatorios.size() < Constantes.NUMEROS_ALEATORIOS) {
 				publishProgress((numerosAleatorios.size() * 100)
 						/ Constantes.NUMEROS_ALEATORIOS);
-				if (isCancelled()) break;
+				if (isCancelled())
+					break;
 			}
 			return null;
 		}
@@ -226,15 +331,94 @@ public class MainActivity extends Activity implements SensorEventListener {
 			progressDialog.dismiss();
 			switch (this.idApuesta) {
 			case Constantes.ID_EUROMILLONES:
-				generarApuestaEuromillonesFinish(true);
+				generarApuestaEuromillonesFinish(TipoAleatoriedad.RANDOM_ACELEROMETRO);
 				break;
 			case Constantes.ID_PRIMITIVA:
-				generarApuestaPrimitivaFinish(true);
+				generarApuestaPrimitivaFinish(TipoAleatoriedad.RANDOM_ACELEROMETRO);
 				break;
 			}
 		}
-		
+	}
 
+	public class GenNumAlRandomTask extends AsyncTask<Void, Integer, Void> {
+		private ProgressDialog progressDialog;
+		private int idApuesta;
+		private int totApuestas;
+
+		private List<List<Integer>> numeros;
+		private List<List<Integer>> estrellas;
+
+		public GenNumAlRandomTask(int idApuesta, int totApuestas) {
+			this.idApuesta = idApuesta;
+			this.totApuestas = totApuestas;
+
+			this.numeros = new ArrayList<List<Integer>>();
+			this.estrellas = new ArrayList<List<Integer>>();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			switch (this.idApuesta) {
+			case Constantes.ID_EUROMILLONES:
+				for (int i = 0; i < this.totApuestas; i++) {
+					numeros.add(GeneradorEuromillones.generarNumerosRest());
+					estrellas.add(GeneradorEuromillones.generarEstrellasRest());
+					publishProgress(((i+1) * 100) / this.totApuestas);
+				}
+
+				break;
+			case Constantes.ID_PRIMITIVA:
+				for (int i = 0; i < this.totApuestas; i++) {
+					numeros.add(GeneradorPrimitiva.generarNumerosRest());
+					publishProgress(((i+1) * 100) / this.totApuestas);
+				}
+				break;
+			}
+			return null;
+		}
+
+		protected void onProgressUpdate(Integer... progress) {
+			progressDialog.setProgress(progress[0]);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			progressDialog = new ProgressDialog(MainActivity.this);
+			progressDialog.setMessage("Solicitando numeros a random.org");
+			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.show();
+		}
+
+		protected void onPostExecute(Void result) {
+			progressDialog.hide();
+			progressDialog.dismiss();
+			switch (this.idApuesta) {
+			case Constantes.ID_EUROMILLONES:
+				for (int i = 0; i < this.totApuestas; i++) {
+					apuestas.add(new Apuesta(Constantes.ID_EUROMILLONES,
+							numeros.get(i), estrellas.get(i)));
+				}
+				listaEuromillones.setVisibility(View.VISIBLE);
+				ApuestaAdapter adapterEur = new ApuestaAdapter(
+						MainActivity.this, apuestas);
+				listaEuromillones.setAdapter(adapterEur);
+				break;
+			case Constantes.ID_PRIMITIVA:
+				for (int i = 0; i < this.totApuestas; i++) {
+					apuestas.add(new Apuesta(Constantes.ID_EUROMILLONES,
+							numeros.get(i), new ArrayList<Integer>()));
+				}
+				listaPrimitiva.setVisibility(View.VISIBLE);
+				ApuestaAdapter adapterPri = new ApuestaAdapter(
+						MainActivity.this, apuestas);
+				listaPrimitiva.setAdapter(adapterPri);
+
+				break;
+			}
+		}
 	}
 
 }

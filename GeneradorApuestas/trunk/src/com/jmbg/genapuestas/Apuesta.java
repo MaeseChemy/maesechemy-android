@@ -49,8 +49,24 @@ public class Apuesta {
 		case Constantes.ID_PRIMITIVA:
 			this.numerosPrimitiva = GeneradorPrimitiva.generarNumeros(numerosAleatorios);
 		}
-
 	}
+	
+	public Apuesta(int tipoApuesta, List<Integer> numeros, List<Integer> estrellas) {
+		this.tipoApuesta = tipoApuesta;
+		this.numerosEuromillones = new ArrayList<Integer>();
+		this.estrellasEuromillones = new ArrayList<Integer>();
+		
+		this.numerosPrimitiva = new ArrayList<Integer>();
+		
+		switch(this.tipoApuesta){
+		case Constantes.ID_EUROMILLONES:
+			this.numerosEuromillones = numeros;
+			this.estrellasEuromillones = estrellas;
+		case Constantes.ID_PRIMITIVA:
+			this.numerosPrimitiva = numeros;
+		}
+	}
+	
 	public List<Integer> getEstrellas() {
 		switch(this.tipoApuesta){
 			case Constantes.ID_EUROMILLONES:

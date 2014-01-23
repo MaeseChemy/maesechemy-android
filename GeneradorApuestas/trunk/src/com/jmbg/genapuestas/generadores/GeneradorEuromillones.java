@@ -4,13 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GeneradorEuromillones {
+import com.jmbg.genapuestas.restRandom.RandomRest;
 
+public class GeneradorEuromillones {
+	
+	public static int MAX_NUM = 50;
+	public static int MIN_NUM = 1;
+	
+	public static int MAX_EST = 11;
+	public static int MIN_EST = 1;
+	
+	public static int NUMEROS_APUESTA = 5;
+	public static int ESTRELLAS_APUESTA = 2;
 
 	public static List<Integer> generarNumeros() {
 		List<Integer> numeros = new ArrayList<Integer>();
-		for (int i = 0; i < 5; i++) {
-			int number = (int) (Math.random() * 50 + 1);
+		for (int i = 0; i < NUMEROS_APUESTA; i++) {
+			int number = (int) (Math.random() * MAX_NUM + MIN_NUM);
 			if (numeros.contains(number))
 				i--;
 			else
@@ -22,8 +32,8 @@ public class GeneradorEuromillones {
 
 	public static List<Integer> generarEstrellas() {
 		List<Integer> estrellas = new ArrayList<Integer>();
-		for (int i = 0; i < 2; i++) {
-			int star = (int) (Math.random() * 11 + 1);
+		for (int i = 0; i < ESTRELLAS_APUESTA; i++) {
+			int star = (int) (Math.random() * MAX_EST + MIN_EST);
 			if (estrellas.contains(star))
 				i--;
 			else
@@ -33,11 +43,33 @@ public class GeneradorEuromillones {
 		return estrellas;
 	}
 
+	public static List<Integer> generarNumerosRest(){
+		List<Integer> numeros;
+		try {
+			numeros = RandomRest.generarNumerosAleatorios(MIN_NUM, MAX_NUM, NUMEROS_APUESTA);
+			Collections.sort(numeros);
+			return numeros;
+		} catch (Exception e) {
+			return generarNumeros();
+		}
+	}
+	
+	public static List<Integer> generarEstrellasRest(){
+		List<Integer> numeros;
+		try {
+			numeros = RandomRest.generarNumerosAleatorios(MIN_EST, MAX_EST, ESTRELLAS_APUESTA);
+			Collections.sort(numeros);
+			return numeros;
+		} catch (Exception e) {
+			return generarEstrellas();
+		}
+	}
+	
 	public static List<Integer> generarNumeros(List<Integer> numerosAleatorios) {
 		List<Integer> numeros = new ArrayList<Integer>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < NUMEROS_APUESTA; i++) {
 			int indexNumber = (int) (Math.random() * numerosAleatorios.size());
-			int number = (numerosAleatorios.get(indexNumber) % 50 )+1;
+			int number = (numerosAleatorios.get(indexNumber) % MAX_NUM )+MIN_NUM;
 			if (numeros.contains(number))
 				i--;
 			else
@@ -50,9 +82,9 @@ public class GeneradorEuromillones {
 	public static List<Integer> generarEstrellas(List<Integer> numerosAleatorios) {
 		List<Integer> estrellas = new ArrayList<Integer>();
 		
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < ESTRELLAS_APUESTA; i++) {
 			int indexStar = (int) (Math.random() * numerosAleatorios.size());
-			int star = (numerosAleatorios.get(indexStar) % 11 )+1;
+			int star = (numerosAleatorios.get(indexStar) % MAX_EST )+MIN_EST;
 			if (estrellas.contains(star))
 				i--;
 			else
