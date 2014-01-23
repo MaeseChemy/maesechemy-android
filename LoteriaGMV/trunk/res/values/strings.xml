@@ -9,10 +9,16 @@
     <string name="category_prize">Premio</string>
     <string name="category_pot">Bote</string>
     <string name="category_participants">Participantes</string>
-    <string name="title_activity_pot_main">PotActivity</string>
 
     <!-- POT ACTIVITY -->
+    <string name="title_activity_pot">Bote</string>
     <string name="not_current_pot">No hay bote!</string>
+
+    <!-- PARTICIPANT ACTIVITY -->
+    <string name="title_activity_participants">Participantes</string>
+    
+    <!-- BETS ACTIVITY -->
+    <string name="title_activity_bets">Apuestas</string>
     
     <!-- Refresh ListView -->
     <string name="ptr_pull_to_refresh">Desliza para actualizar</string>

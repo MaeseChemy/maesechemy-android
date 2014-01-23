@@ -21,6 +21,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -64,6 +65,14 @@ public class PotActivity extends ListActivity {
 			LOG.debug("Error with the application version name: " + e);
 		}
 
+		Button buttonRefresh = (Button) findViewById(R.id.refreshButton);
+		buttonRefresh.setVisibility(View.VISIBLE);
+		buttonRefresh.setOnClickListener(new View.OnClickListener() {
+		    public void onClick(View v) {
+		       runGetPotWSTask();
+		    }
+		});
+		
 		this.potHistory = new ArrayList<Pot>();
 		this.adapter = new PotAdapter(this, R.layout.pot_history_item,
 				potHistory);

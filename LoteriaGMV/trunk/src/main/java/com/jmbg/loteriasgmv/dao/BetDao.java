@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.jmbg.loteriasgmv.dao.entities.Bet;
-import com.jmbg.loteriasgmv.dao.entities.Participant;
 
 public class BetDao extends AbstractDao<Bet> {
 
@@ -23,7 +22,8 @@ public class BetDao extends AbstractDao<Bet> {
 				.getColumnIndex(Bet.FIELD_BET_TYPE)));
 		entity.setBetImage(cursor.getBlob(cursor
 				.getColumnIndex(Bet.FIELD_BET_IMG)));
-
+		entity.setBetActive(cursor.getInt(cursor
+				.getColumnIndex(Bet.FIELD_BET_ACTIVE)));
 		return entity;
 	}
 
@@ -35,7 +35,7 @@ public class BetDao extends AbstractDao<Bet> {
 		contentValues.put(Bet.FIELD_BET_DATE, entity.getBetDate());
 		contentValues.put(Bet.FIELD_BET_TYPE, entity.getBetType());
 		contentValues.put(Bet.FIELD_BET_IMG, entity.getBetImage());
-
+		contentValues.put(Bet.FIELD_BET_ACTIVE, entity.getBetActive());
 		return contentValues;
 	}
 

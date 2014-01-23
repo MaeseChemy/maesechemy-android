@@ -1,5 +1,6 @@
 package com.jmbg.loteriasgmv.view.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jmbg.loteriasgmv.R;
@@ -23,13 +24,11 @@ public class BetAdapter extends ArrayAdapter<Bet> {
 
 	public static class ViewHolder {
 		public ImageView imageBet;
-		public TextView txtBetName;
-		public TextView txtBetFund;
-		public ImageView imageFundBet;
+		public TextView txtBetType;
+		public TextView txtBetDate;
 	}
 
-	public BetAdapter(Context context, int textViewResourceId,
-			List<Bet> items) {
+	public BetAdapter(Context context, int textViewResourceId, List<Bet> items) {
 		super(context, textViewResourceId, items);
 		this.context = context;
 		this.textViewResourceId = textViewResourceId;
@@ -58,16 +57,14 @@ public class BetAdapter extends ArrayAdapter<Bet> {
 		v = vi.inflate(textViewResourceId, null);
 
 		holder = new ViewHolder();
-		holder.imageBet = (ImageView) v
-				.findViewById(R.id.participant_image);
-		holder.txtBetName = (TextView) v
-				.findViewById(R.id.participant_name);
-		holder.txtBetFund = (TextView) v
-				.findViewById(R.id.participant_fund);
-		holder.imageFundBet = (ImageView) v
-				.findViewById(R.id.participant_image_fund);
+		holder.imageBet = (ImageView) v.findViewById(R.id.bet_image);
+		holder.txtBetType = (TextView) v.findViewById(R.id.bet_type);
 
 		Bet item = this.items.get(position);
+
+		holder.imageBet.setImageBitmap(BitmapFactory.decodeByteArray(
+				item.getBetImage(), 0, item.getBetImage().length));
+		holder.txtBetType.setText(item.getBetType() + "\n[" + item.getBetDate() + "]");
 
 		return v;
 	}

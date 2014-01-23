@@ -1,7 +1,7 @@
 package com.jmbg.loteriasgmv.util;
 
 import com.jmbg.loteriasgmv.R;
-import com.jmbg.loteriasgmv.dao.entities.Bet;
+import com.jmbg.loteriasgmv.view.BetActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,7 @@ public class BetActivityElement extends ActivityElement {
 	}
 	@Override
 	public Intent getIntent() {
-		Intent intent = new Intent(context, Bet.class);
+		Intent intent = new Intent(context, BetActivity.class);
 		return intent;
 	}
 
