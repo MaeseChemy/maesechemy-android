@@ -22,6 +22,7 @@ import org.apache.http.util.EntityUtils;
 import com.jmbg.loteriasgmv.dao.entities.Bet;
 import com.jmbg.loteriasgmv.dao.entities.Participant;
 import com.jmbg.loteriasgmv.dao.entities.Pot;
+import com.jmbg.loteriasgmv.dao.entities.Price;
 import com.jmbg.loteriasgmv.util.LogManager;
 
 import android.content.Context;
@@ -44,9 +45,13 @@ public class LectorDatosWS {
 
 	private List<Bet> bets;
 	private final static String URL_FILE_BET = URL_BASE + "/bets.txt";
+	
+	private List<Price> prices;
+	private final static String URL_FILE_PRICE = URL_BASE + "/loteria_res.txt";
+
 
 	public enum TypeFile {
-		POT_FILE, PARTICIPANT_FILE, BET_FILE
+		POT_FILE, PARTICIPANT_FILE, BET_FILE, PRICE_FILE
 	}
 
 	public LectorDatosWS(Context context) {
@@ -54,6 +59,7 @@ public class LectorDatosWS {
 		this.potHistory = new ArrayList<Pot>();
 		this.participants = new ArrayList<Participant>();
 		this.bets = new ArrayList<Bet>();
+		this.prices = new ArrayList<Price>();
 	}
 
 	public List<Pot> readPotHistory() {
@@ -72,6 +78,12 @@ public class LectorDatosWS {
 		this.bets.clear();
 		readFile(TypeFile.BET_FILE);
 		return this.bets;
+	}
+	
+	public List<Price> readPrice(){
+		this.prices.clear();
+		readFile(TypeFile.PRICE_FILE);
+		return this.prices;
 	}
 
 	private void readFile(TypeFile typeFile) {
@@ -133,6 +145,10 @@ public class LectorDatosWS {
 			if (bet != null)
 				this.bets.add(bet);
 			break;
+		case PRICE_FILE:
+			Price price = generatePrice(line);
+			if (price != null)
+				this.prices.add(price);
 		default:
 			break;
 
@@ -147,6 +163,8 @@ public class LectorDatosWS {
 			return URL_FILE_POT;
 		case BET_FILE:
 			return URL_FILE_BET;
+		case PRICE_FILE:
+			return URL_FILE_PRICE;
 		default:
 			return "";
 		}
@@ -245,11 +263,13 @@ public class LectorDatosWS {
 
 		String date = campos[0].trim();
 		String type = campos[1].trim();
-		String imagePath = campos[2].trim();
-		String active = campos[3].trim();
+		String numbers = campos[2].trim();
+		String imagePath = campos[3].trim();
+		String active = campos[4].trim();
 
 		bet.setBetDate(date);
 		bet.setBetType(type);
+		bet.setBetNumbers(numbers);
 		bet.setBetActive(Integer.parseInt(active));
 
 		DefaultHttpClient mHttpClient = new DefaultHttpClient();
@@ -274,5 +294,73 @@ public class LectorDatosWS {
 		LOG.debug("Bet [" + bet.toString() + "]");
 
 		return bet;
+	}
+	
+	/**
+	 * Genera un objeto Pot a partir de una linea; TYPE|FECHA_SORTEO|NUMEROS|FECHA_SIG_SORTEO|BOTE_SIG_SORTEO
+	 * 
+	 * @param linea
+	 *            Datos del bote
+	 * @return Objeto Pot con los datos del mismo o null en caso de que la linea
+	 *         no sea valida.
+	 */
+	private Price generatePrice(String line) {
+		LOG.debug("Creating Price of line [" + line + "]");
+
+		Price price = new Price();
+		String campos[] = line.split("\\|");
+
+		String type = campos[0].trim();
+		String date = campos[1].trim();
+		String numbers = campos[2].trim();
+		String next_date = campos[3].trim();
+		String next_pot = campos[4].trim();
+
+		price.setPriceType(type);
+		price.setPriceDate(convertPriceDate(date));
+		price.setPriceNumbers(numbers);
+		price.setPriceNextDate(convertPriceDate(next_date));
+		price.setPriceNextPot(Integer.parseInt(next_pot));
+
+		LOG.debug("Price [" + price.toString() + "]");
+
+		return price;
+	}
+	
+	private String convertPriceDate(String date){
+		//jueves 23 de enero de 2014
+		String campos[] = date.split(" ");
+		//20/01/2014
+		String convertDate = campos[1] + "/" + getPriceMonth(campos[3]) + "/" + campos[5];
+		
+		return convertDate;
+	}
+	
+	private String getPriceMonth(String nameMonth){
+		if(nameMonth.equals("enero")){
+			return "01";
+		}else if(nameMonth.equals("febrero")){
+			return "02";
+		}else if(nameMonth.equals("marzo")){
+			return "03";
+		}else if(nameMonth.equals("abril")){
+			return "04";
+		}else if(nameMonth.equals("mayo")){
+			return "05";
+		}else if(nameMonth.equals("junio")){
+			return "06";
+		}else if(nameMonth.equals("julio")){
+			return "07";
+		}else if(nameMonth.equals("agosto")){
+			return "08";
+		}else if(nameMonth.equals("septiembre")){
+			return "09";
+		}else if(nameMonth.equals("noviembre")){
+			return "10";
+		}else if(nameMonth.equals("diciembre")){
+			return "11";
+		}else{
+			return "12";
+		}
 	}
 }

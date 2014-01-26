@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.jmbg.loteriasgmv.dao.entities.Bet;
 import com.jmbg.loteriasgmv.dao.entities.Participant;
 import com.jmbg.loteriasgmv.dao.entities.Pot;
+import com.jmbg.loteriasgmv.dao.entities.Price;
 
 public class LotGMVDBAdapter extends AbstractDBAdapter {
 
@@ -37,6 +38,7 @@ public class LotGMVDBAdapter extends AbstractDBAdapter {
 			db.execSQL(Pot.SQL_CREATE);
 			db.execSQL(Participant.SQL_CREATE);
 			db.execSQL(Bet.SQL_CREATE);
+			db.execSQL(Price.SQL_CREATE);
 		}
 		
 		/**
@@ -49,6 +51,7 @@ public class LotGMVDBAdapter extends AbstractDBAdapter {
 			db.execSQL("DROP TABLE IF EXISTS " + Pot.TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + Participant.TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + Bet.TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + Price.TABLE_NAME);
 		}
 	}	
 }
