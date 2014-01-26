@@ -12,6 +12,7 @@ public class PriceDialog extends Activity {
 
 	private String priceDate;
 	private String priceType;
+	private String priceNumbers;
 	
 	private String betData;
 	
@@ -25,6 +26,7 @@ public class PriceDialog extends Activity {
         // Selected image id
         this.priceDate = i.getExtras().getString("priceDate");
         this.priceType = i.getExtras().getString("priceType");
+        this.priceNumbers = i.getExtras().getString("priceNumbers");
         this.betData = i.getExtras().getString("betData");
 		
 		// set the custom dialog components - text, image and button
@@ -32,8 +34,10 @@ public class PriceDialog extends Activity {
 		type.setText(priceType);
 		TextView date = (TextView) findViewById(R.id.dialog_text_bet_date);
 		date.setText(priceDate);
-		TextView numbers = (TextView) findViewById(R.id.dialog_text_bet);
-		numbers.setText(betData);
+		TextView numbers = (TextView) findViewById(R.id.dialog_text_bet_numbers);
+		numbers.setText(priceNumbers);
+		TextView bet = (TextView) findViewById(R.id.dialog_text_bet);
+		bet.setText(betData);
 	}
 
 	@Override
