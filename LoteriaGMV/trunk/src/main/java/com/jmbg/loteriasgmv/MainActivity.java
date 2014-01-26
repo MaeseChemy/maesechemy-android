@@ -8,7 +8,7 @@ import com.jmbg.loteriasgmv.util.ActivityElement;
 import com.jmbg.loteriasgmv.util.BetActivityElement;
 import com.jmbg.loteriasgmv.util.ParticipantsActivityElement;
 import com.jmbg.loteriasgmv.util.PotActivityElement;
-import com.jmbg.loteriasgmv.util.PrizeActivityElement;
+import com.jmbg.loteriasgmv.util.PriceActivityElement;
 import com.jmbg.loteriasgmv.view.adapter.GridAdapter;
 
 import android.os.Bundle;
@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 		
 		//Actividades principales
 		ActivityElement bets = new BetActivityElement(this);
-		ActivityElement awards = new PrizeActivityElement(this);
+		ActivityElement awards = new PriceActivityElement(this);
 		ActivityElement pot = new PotActivityElement(this);
 		ActivityElement participants = new ParticipantsActivityElement(this);
 

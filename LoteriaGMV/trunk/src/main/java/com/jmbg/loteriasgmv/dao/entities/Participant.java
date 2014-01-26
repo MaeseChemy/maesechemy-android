@@ -26,7 +26,7 @@ public class Participant extends AbstractEntity implements
 			+ FIELD_PARTICIPANT_NAME + ");";
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
-			AbstractEntity.CURRENT_TIMESTAMP);
+			AbstractEntity.CURRENT_DATE);
 
 	public Participant() {
 	}

@@ -2,7 +2,14 @@ package com.jmbg.loteriasgmv.dao.entities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.jmbg.loteriasgmv.util.Ball;
+import com.jmbg.loteriasgmv.util.Ticket;
+import com.jmbg.loteriasgmv.util.Ball.TypeBall;
+import com.jmbg.loteriasgmv.util.Ticket.TypeTicket;
 
 public class Bet extends AbstractEntity implements BetBaseColumns,
 		Comparable<Bet> {
@@ -16,6 +23,7 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 	/** Cantidad del bote */
 	private String betType;
 
+	private String betNumbers;
 	/** **/
 	private byte[] betImage;
 
@@ -24,21 +32,24 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 
 	public static final String SQL_CREATE = "CREATE TABLE " + TABLE_NAME + " ("
 			+ _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FIELD_BET_DATE
-			+ " TEXT, " + FIELD_BET_TYPE + " TEXT, " + FIELD_BET_IMG
-			+ " BLOB, " + FIELD_BET_ACTIVE + " INTEGER" + "); "
-			+ "CREATE INDEX IF NOT EXISTS IDX_" + TABLE_NAME + "_"
-			+ FIELD_BET_DATE + " ON TABLE_NAME (" + FIELD_BET_DATE + ");";
+			+ " TEXT, " + FIELD_BET_TYPE + " TEXT, " + FIELD_BET_NUMBERS
+			+ " TEXT, " + FIELD_BET_IMG + " BLOB, " + FIELD_BET_ACTIVE
+			+ " INTEGER" + "); " + "CREATE INDEX IF NOT EXISTS IDX_"
+			+ TABLE_NAME + "_" + FIELD_BET_DATE + " ON TABLE_NAME ("
+			+ FIELD_BET_DATE + ");";
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
-			AbstractEntity.CURRENT_TIMESTAMP);
+			AbstractEntity.CURRENT_DATE);
 
 	public Bet() {
 	}
 
-	public Bet(String betDate, String betType, byte[] betImage, int betActive) {
+	public Bet(String betDate, String betType, String betNumbers,
+			byte[] betImage, int betActive) {
 		super();
 		this.betDate = betDate;
 		this.betType = betType;
+		this.betNumbers = betNumbers;
 		this.betImage = betImage;
 		this.betActive = betActive;
 	}
@@ -55,6 +66,8 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 		sb.append("[").append("betDate").append("=").append(this.betDate)
 				.append("]");
 		sb.append("[").append("betType").append("=").append(this.betType)
+				.append("]");
+		sb.append("[").append("betNumbers").append("=").append(this.betNumbers)
 				.append("]");
 		sb.append("[").append("betImage").append("=").append(this.betImage)
 				.append("]");
@@ -100,6 +113,14 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 		this.betType = betType;
 	}
 
+	public String getBetNumbers() {
+		return betNumbers;
+	}
+
+	public void setBetNumbers(String betNumbers) {
+		this.betNumbers = betNumbers;
+	}
+
 	public int getBetActive() {
 		return betActive;
 	}
@@ -110,9 +131,50 @@ public class Bet extends AbstractEntity implements BetBaseColumns,
 
 	@Override
 	public int compareTo(Bet another) {
-		int compare = this.getBetDate().compareTo(
-				another.getBetDate());
+		int compare = this.getBetDateAsDate().compareTo(
+				another.getBetDateAsDate());
 		return compare;
+	}
+
+	public List<Ticket> getTickets() {
+		List<Ticket> listTickets = new ArrayList<Ticket>();
+		String listBets[] = getBetNumbers().split("_");
+		for (String sigleBet : listBets) {
+			listTickets.add(generateTicket(sigleBet));
+		}
+		return listTickets;
+	}
+
+	private Ticket generateTicket(String numbers) {
+		Ticket ticket = new Ticket();
+		String campos[] = numbers.split("-");
+
+		List<Ball> balls = new ArrayList<Ball>();
+		for (String campo : campos) {
+			Ball ball = new Ball();
+			String number = "-1";
+			if (campo.contains("N")) {
+				ball.setTypeBall(TypeBall.NUMBER);
+				number = campo.replace("N", "");
+			} else if (campo.contains("E")) {
+				ball.setTypeBall(TypeBall.STAR);
+				number = campo.replace("E", "");
+			}
+			ball.setNumber(Integer.parseInt(number));
+			balls.add(ball);
+		}
+
+		ticket.setNumbers(balls);
+		ticket.setDate(getBetDate());
+
+		if (this.getBetType() == "Euromillones") {
+			ticket.setType(TypeTicket.EUROMILLONES);
+		} else if (this.getBetType() == "Primitiva") {
+			ticket.setType(TypeTicket.PRIMITIVA);
+		} else {
+			ticket.setType(TypeTicket.OTHER);
+		}
+		return ticket;
 	}
 
 }

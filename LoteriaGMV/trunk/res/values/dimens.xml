@@ -11,6 +11,9 @@
     <dimen name="photo_height">50dp</dimen>
     <dimen name="photo_width">50dp</dimen>
     
+    <dimen name="price_type_photo_height">70dp</dimen>
+    <dimen name="price_type_photo_width">70dp</dimen>
+    
     <dimen name="bet_height">250dp</dimen>
     <dimen name="bet_width">250dp</dimen>
     

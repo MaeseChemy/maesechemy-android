@@ -136,7 +136,7 @@ public class PotActivity extends ListActivity {
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
 			progress = new ProgressDialog(PotActivity.this);
-			progress.setTitle(getResources().getString(R.string.app_name));
+			progress.setTitle(getResources().getString(R.string.category_pot));
 			progress.setMessage("Obteniendo historico de botes del servidor");
 			progress.show();
 		}
@@ -184,7 +184,7 @@ public class PotActivity extends ListActivity {
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
 			progress = new ProgressDialog(PotActivity.this);
-			progress.setTitle(getResources().getString(R.string.app_name));
+			progress.setTitle(getResources().getString(R.string.category_pot));
 			progress.setMessage("Obteniendo historico de botes");
 			progress.show();
 		}

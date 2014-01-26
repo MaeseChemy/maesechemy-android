@@ -204,7 +204,7 @@ public class BetActivity extends Activity {
 			LOG.debug("<-- onPreExecute");
 			progress = new ProgressDialog(BetActivity.this);
 			progress.setTitle(getResources().getString(R.string.title_activity_bets));
-			progress.setMessage("Obteniendo bets");
+			progress.setMessage("Obteniendo apuestas");
 			progress.show();
 		}
 

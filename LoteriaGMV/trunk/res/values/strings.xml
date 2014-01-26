@@ -16,10 +16,13 @@
 
     <!-- PARTICIPANT ACTIVITY -->
     <string name="title_activity_participants">Participantes</string>
-    
+
     <!-- BETS ACTIVITY -->
     <string name="title_activity_bets">Apuestas</string>
-    
+
+    <!-- PRICES ACTIVITY -->
+    <string name="title_activity_prices">Premios</string>
+
     <!-- Refresh ListView -->
     <string name="ptr_pull_to_refresh">Desliza para actualizar</string>
     <string name="ptr_release_to_refresh">Suelta para actualizar</string>

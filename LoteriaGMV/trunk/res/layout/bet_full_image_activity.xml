@@ -3,9 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
- 
-    <ImageView android:id="@+id/full_image_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
- 
+
+    <include
+        android:id="@+id/headerWithButtons"
+        android:layout_height="@dimen/header_layout_height"
+        layout="@layout/main_action_bar" />
+
+    <ImageView
+        android:id="@+id/full_image_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
 </LinearLayout>

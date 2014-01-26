@@ -130,7 +130,7 @@ public class ParticipantActivity extends ListActivity {
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
 			progress = new ProgressDialog(ParticipantActivity.this);
-			progress.setTitle(getResources().getString(R.string.app_name));
+			progress.setTitle(getResources().getString(R.string.category_participants));
 			progress.setMessage("Obteniendo participantes del servidor");
 			progress.show();
 		}
@@ -175,7 +175,7 @@ public class ParticipantActivity extends ListActivity {
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
 			progress = new ProgressDialog(ParticipantActivity.this);
-			progress.setTitle(getResources().getString(R.string.app_name));
+			progress.setTitle(getResources().getString(R.string.category_participants));
 			progress.setMessage("Obteniendo participantes");
 			progress.show();
 		}
