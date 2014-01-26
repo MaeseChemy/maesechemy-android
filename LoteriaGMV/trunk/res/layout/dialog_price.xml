@@ -51,6 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha" />
+
+        <TextView
+            android:id="@+id/dialog_text_bet_numbers"
+            style="@style/SubHeaderFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numeros" />
+       
     </LinearLayout>
 
     <LinearLayout

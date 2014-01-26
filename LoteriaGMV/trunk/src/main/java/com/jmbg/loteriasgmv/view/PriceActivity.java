@@ -166,6 +166,10 @@ public class PriceActivity extends ListActivity {
 
 		@Override
 		protected void onPostExecute(List<Price> result) {
+			// Refresh DB
+			priceDao.removeAll();
+			priceDao.save(result);
+			
 			adapter.clear();
 			for (Price price : result) {
 				adapter.add(price);
@@ -245,6 +249,8 @@ public class PriceActivity extends ListActivity {
             Intent i = new Intent(getApplicationContext(), PriceDialog.class);
             i.putExtra("priceDate", price.getPriceDate());
             i.putExtra("priceType", price.getPriceType());
+            i.putExtra("priceNumbers", ticketPrice.toString());
+            
             i.putExtra("betData", sb.toString());
             startActivity(i);
 		}
