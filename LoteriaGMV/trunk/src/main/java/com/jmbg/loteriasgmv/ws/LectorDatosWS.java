@@ -129,29 +129,30 @@ public class LectorDatosWS {
 	}
 
 	private void generateRegister(String line, TypeFile typeFile) {
-		switch (typeFile) {
-		case PARTICIPANT_FILE:
-			Participant participant = generateParticipant(line);
-			if (participant != null)
-				this.participants.add(participant);
-			break;
-		case POT_FILE:
-			Pot pot = generatePot(line);
-			if (pot != null)
-				this.potHistory.add(pot);
-			break;
-		case BET_FILE:
-			Bet bet = generateBet(line);
-			if (bet != null)
-				this.bets.add(bet);
-			break;
-		case PRICE_FILE:
-			Price price = generatePrice(line);
-			if (price != null)
-				this.prices.add(price);
-		default:
-			break;
-
+		if(line != null && line.length()!=0){
+			switch (typeFile) {
+			case PARTICIPANT_FILE:
+				Participant participant = generateParticipant(line);
+				if (participant != null)
+					this.participants.add(participant);
+				break;
+			case POT_FILE:
+				Pot pot = generatePot(line);
+				if (pot != null)
+					this.potHistory.add(pot);
+				break;
+			case BET_FILE:
+				Bet bet = generateBet(line);
+				if (bet != null)
+					this.bets.add(bet);
+				break;
+			case PRICE_FILE:
+				Price price = generatePrice(line);
+				if (price != null)
+					this.prices.add(price);
+			default:
+				break;
+			}
 		}
 	}
 
