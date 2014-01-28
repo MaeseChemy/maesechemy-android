@@ -45,17 +45,17 @@ public class BetActivity extends Activity {
 	private LotGMVDBAdapter lotGMVDBAdapter;
 
 	public ProgressDialog progress;
-	
+
 	private GridView gridviewActiveBets;
 	private GridView gridviewAllBets;
 	private CheckBox checkSeeAllBets;
 	private TextView txtNameMenu;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bet);
-		
+
 		this.bets = new ArrayList<Bet>();
 		try {
 			lotGMVDBAdapter = new LotGMVDBAdapter(getBaseContext());
@@ -69,78 +69,94 @@ public class BetActivity extends Activity {
 					+ e.getMessage());
 			LOG.debug("Error with the application version name: " + e);
 		}
-		
+
 		checkSeeAllBets = (CheckBox) findViewById(R.id.bet_checkbox_all);
 		txtNameMenu = (TextView) findViewById(R.id.nameBetMenu);
-		
+
 		Button buttonRefresh = (Button) findViewById(R.id.refreshButton);
 		buttonRefresh.setVisibility(View.VISIBLE);
 		buttonRefresh.setOnClickListener(new View.OnClickListener() {
-		    public void onClick(View v) {
-		       runGetBetWSTask();
-		    }
+			public void onClick(View v) {
+				runGetBetWSTask();
+			}
 		});
-		
+
 		this.adapterValidBets = new BetAdapter(this, R.layout.bet_item,
-				new ArrayList<Bet>()); 
+				new ArrayList<Bet>());
 		gridviewActiveBets = (GridView) findViewById(R.id.gridActiveBets);
-		gridviewActiveBets.setAdapter(this.adapterValidBets);	
+		gridviewActiveBets.setAdapter(this.adapterValidBets);
 		gridviewActiveBets.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
 				Bet selectBet = adapterValidBets.getItem(position);
-				
-                // Sending image id to BetFullImageActivity
-                Intent i = new Intent(getApplicationContext(), BetFullImageActivity.class);
-                i.putExtra("bet_image", selectBet.getBetImage());
-                startActivity(i);
+
+				// Sending image id to BetFullImageActivity
+				Intent i = new Intent(getApplicationContext(),
+						BetFullImageActivity.class);
+				i.putExtra("bet_image", selectBet.getBetImage());
+				startActivity(i);
 			}
-			
+
 		});
-		
+
 		this.adapterAllBets = new BetAdapter(this, R.layout.bet_item,
 				new ArrayList<Bet>());
 		gridviewAllBets = (GridView) findViewById(R.id.gridAllBets);
-		gridviewAllBets.setAdapter(this.adapterAllBets);	
+		gridviewAllBets.setAdapter(this.adapterAllBets);
 		gridviewAllBets.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
 				Bet selectBet = adapterAllBets.getItem(position);
-				
-                // Sending image id to BetFullImageActivity
-                Intent i = new Intent(getApplicationContext(), BetFullImageActivity.class);
-                i.putExtra("bet_image", selectBet.getBetImage());
-                startActivity(i);
+
+				// Sending image id to BetFullImageActivity
+				Intent i = new Intent(getApplicationContext(),
+						BetFullImageActivity.class);
+				i.putExtra("bet_image", selectBet.getBetImage());
+				startActivity(i);
 			}
-			
+
 		});
+
+		// get intent data
+		Intent i = getIntent();
+
+		boolean forceUpdate;
+		if (i.getExtras() != null)
+			forceUpdate = i.getExtras().getBoolean("forceUpdate");
+		else
+			forceUpdate = false;
 		
-		runGetBetDBTask();
+		if (forceUpdate) 
+			runGetBetWSTask();
+		else 
+			runGetBetDBTask();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.bet, menu);
+		// getMenuInflater().inflate(R.menu.bet, menu);
 		return true;
 	}
-	
-	public void changeGrid(View view){
-		if(checkSeeAllBets.isChecked()){
+
+	public void changeGrid(View view) {
+		if (checkSeeAllBets.isChecked()) {
 			txtNameMenu.setText("Historico de Apuestas");
 			gridviewAllBets.setVisibility(View.VISIBLE);
 			gridviewActiveBets.setVisibility(View.GONE);
-		}else{
+		} else {
 			txtNameMenu.setText("Apuestas Activas");
 			gridviewAllBets.setVisibility(View.GONE);
 			gridviewActiveBets.setVisibility(View.VISIBLE);
 		}
-		
+
 	}
+
 	public void runGetBetDBTask() {
 		if (betDBTask == null
-				|| betDBTask.getStatus().equals(
-						AsyncTask.Status.FINISHED)) {
+				|| betDBTask.getStatus().equals(AsyncTask.Status.FINISHED)) {
 			LOG.debug("Creating new chatGetTask...");
 			betDBTask = new BetDBTask();
 			betDBTask.execute();
@@ -149,8 +165,7 @@ public class BetActivity extends Activity {
 
 	public void runGetBetWSTask() {
 		if (betWSTask == null
-				|| betWSTask.getStatus().equals(
-						AsyncTask.Status.FINISHED)) {
+				|| betWSTask.getStatus().equals(AsyncTask.Status.FINISHED)) {
 			LOG.debug("Creating new chatGetTask...");
 			betWSTask = new BetWSTask();
 			betWSTask.execute();
@@ -163,7 +178,8 @@ public class BetActivity extends Activity {
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
 			progress = new ProgressDialog(BetActivity.this);
-			progress.setTitle(getResources().getString(R.string.title_activity_bets));
+			progress.setTitle(getResources().getString(
+					R.string.title_activity_bets));
 			progress.setMessage("Obteniendo apuestas del servidor");
 			progress.show();
 		}
@@ -188,7 +204,7 @@ public class BetActivity extends Activity {
 			adapterValidBets.clear();
 			for (Bet bet : result) {
 				adapterAllBets.add(bet);
-				if(bet.getBetActive() == Bet.BET_ACTIVE)
+				if (bet.getBetActive() == Bet.BET_ACTIVE)
 					adapterValidBets.add(bet);
 			}
 			adapterAllBets.notifyDataSetChanged();
@@ -203,7 +219,8 @@ public class BetActivity extends Activity {
 		protected void onPreExecute() {
 			LOG.debug("<-- onPreExecute");
 			progress = new ProgressDialog(BetActivity.this);
-			progress.setTitle(getResources().getString(R.string.title_activity_bets));
+			progress.setTitle(getResources().getString(
+					R.string.title_activity_bets));
 			progress.setMessage("Obteniendo apuestas");
 			progress.show();
 		}
@@ -236,7 +253,7 @@ public class BetActivity extends Activity {
 				adapterValidBets.clear();
 				for (Bet bet : result) {
 					adapterAllBets.add(bet);
-					if(bet.getBetActive() == Bet.BET_ACTIVE)
+					if (bet.getBetActive() == Bet.BET_ACTIVE)
 						adapterValidBets.add(bet);
 				}
 				adapterAllBets.notifyDataSetChanged();

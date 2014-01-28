@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.Menu;
 import android.view.View;
@@ -99,8 +100,19 @@ public class PotActivity extends ListActivity {
 
 		this.currentPotTextView = (TextView) findViewById(R.id.currentPotValueText);
 
-		// Obtenemos los datos
-		runGetPotDBTask();
+		// get intent data
+		Intent i = getIntent();
+
+		boolean forceUpdate;
+		if (i.getExtras() != null)
+			forceUpdate = i.getExtras().getBoolean("forceUpdate");
+		else
+			forceUpdate = false;
+		
+		if(forceUpdate)
+			runGetPotWSTask();
+		else
+			runGetPotDBTask();
 	}
 
 	@Override
