@@ -106,7 +106,19 @@ public class PriceActivity extends ListActivity {
 
 		registerForContextMenu(lv);
 
-		runGetPriceDBTask();
+		// get intent data
+		Intent i = getIntent();
+
+		boolean forceUpdate;
+		if (i.getExtras() != null)
+			forceUpdate = i.getExtras().getBoolean("forceUpdate");
+		else
+			forceUpdate = false;
+		
+		if (forceUpdate) 
+			runGetPriceWSTask();
+		else 
+			runGetPriceDBTask();
 	}
 
 	@Override
@@ -169,7 +181,7 @@ public class PriceActivity extends ListActivity {
 			// Refresh DB
 			priceDao.removeAll();
 			priceDao.save(result);
-			
+
 			adapter.clear();
 			for (Price price : result) {
 				adapter.add(price);
@@ -236,9 +248,11 @@ public class PriceActivity extends ListActivity {
 				for (Ticket ticket : ticketsBet) {
 					List<Ball> hits = ticket.hitNumber(ticketPrice);
 					if (hits.size() == 0) {
-						sb.append("Apuesta\n  [" + ticket.toString() + "]\n  Aciertos: Ningun acierto...\n");
+						sb.append("Apuesta\n  [" + ticket.toString()
+								+ "]\n  Aciertos: Ningun acierto...\n");
 					} else {
-						sb.append("Apuesta\n  [" + ticket.toString() + "]\n  Aciertos: ");
+						sb.append("Apuesta\n  [" + ticket.toString()
+								+ "]\n  Aciertos: ");
 						for (Ball ball : hits) {
 							sb.append(ball.toString() + " ");
 						}
@@ -246,13 +260,13 @@ public class PriceActivity extends ListActivity {
 					}
 				}
 			}
-            Intent i = new Intent(getApplicationContext(), PriceDialog.class);
-            i.putExtra("priceDate", price.getPriceDate());
-            i.putExtra("priceType", price.getPriceType());
-            i.putExtra("priceNumbers", ticketPrice.toString());
-            
-            i.putExtra("betData", sb.toString());
-            startActivity(i);
+			Intent i = new Intent(getApplicationContext(), PriceDialog.class);
+			i.putExtra("priceDate", price.getPriceDate());
+			i.putExtra("priceType", price.getPriceType());
+			i.putExtra("priceNumbers", ticketPrice.toString());
+
+			i.putExtra("betData", sb.toString());
+			startActivity(i);
 		}
 	}
 
