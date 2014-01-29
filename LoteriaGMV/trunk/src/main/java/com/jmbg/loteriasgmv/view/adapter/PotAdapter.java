@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 public class PotAdapter extends ArrayAdapter<Pot> {
 
-	@SuppressWarnings("unused")
 	private Context context;
 	private int textViewResourceId;
 	private List<Pot> items;
