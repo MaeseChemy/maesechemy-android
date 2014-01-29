@@ -1,6 +1,5 @@
 package com.jmbg.loteriasgmv.view.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jmbg.loteriasgmv.R;

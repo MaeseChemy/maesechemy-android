@@ -38,13 +38,15 @@ public class LectorDatosWS {
 
 	private List<Pot> potHistory;
 	private final static String URL_FILE_POT = URL_BASE + "/pot.txt";
+	private final static int MAX_POT = 50;
 
 	private List<Participant> participants;
 	private final static String URL_FILE_PARTICIPANT = URL_BASE
 			+ "/participants.txt";
-
+	
 	private List<Bet> bets;
 	private final static String URL_FILE_BET = URL_BASE + "/bets.txt";
+	private final static int MAX_BET = 10;
 	
 	private List<Price> prices;
 	private final static String URL_FILE_PRICE = URL_BASE + "/loteria_res.txt";
@@ -107,7 +109,7 @@ public class LectorDatosWS {
 				while ((line = br.readLine()) != null) {
 					// Descartamos la cabecera
 					if (numLine != 0)
-						this.generateRegister(line, typeFile);
+						this.generateRegister(numLine, line, typeFile);
 					numLine++;
 				}
 
@@ -128,7 +130,7 @@ public class LectorDatosWS {
 		}
 	}
 
-	private void generateRegister(String line, TypeFile typeFile) {
+	private void generateRegister(int numLine, String line, TypeFile typeFile) {
 		if(line != null && line.length()!=0){
 			switch (typeFile) {
 			case PARTICIPANT_FILE:
@@ -137,14 +139,18 @@ public class LectorDatosWS {
 					this.participants.add(participant);
 				break;
 			case POT_FILE:
-				Pot pot = generatePot(line);
-				if (pot != null)
-					this.potHistory.add(pot);
+				if(numLine <= MAX_POT){
+					Pot pot = generatePot(line);
+					if (pot != null)
+						this.potHistory.add(pot);
+				}
 				break;
 			case BET_FILE:
+				if(numLine <= MAX_BET){
 				Bet bet = generateBet(line);
-				if (bet != null)
-					this.bets.add(bet);
+					if (bet != null )
+						this.bets.add(bet);
+				}
 				break;
 			case PRICE_FILE:
 				Price price = generatePrice(line);

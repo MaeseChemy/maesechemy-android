@@ -83,7 +83,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			
+
 			<!-- plugin para generar dinamicamente versiones en AndroidManifest -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

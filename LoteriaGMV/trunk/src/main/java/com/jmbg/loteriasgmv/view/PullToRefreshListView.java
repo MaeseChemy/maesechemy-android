@@ -2,7 +2,6 @@ package com.jmbg.loteriasgmv.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.*;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.*;
@@ -295,12 +294,14 @@ public class PullToRefreshListView extends ListView{
                         case RELEASE_TO_REFRESH:
                             setState(State.REFRESHING);
                             bounceBackHeader();
-
                             break;
-
                         case PULL_TO_REFRESH:
                             resetHeader();
                             break;
+					case REFRESHING:
+						break;
+					default:
+						break;
                     }
                 }
                 break;
