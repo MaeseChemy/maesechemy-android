@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:background="@drawable/btn_lightgrey"
+    android:orientation="vertical" >
+
+    <!-- <ImageView -->
+    <!-- android:id="@+id/price_image" -->
+    <!-- android:layout_width="@dimen/price_type_photo_width" -->
+    <!-- android:layout_height="@dimen/price_type_photo_width" -->
+    <!-- android:layout_alignParentLeft="true" -->
+    <!-- android:layout_centerVertical="true" -->
+    <!-- android:layout_marginLeft="20dp" -->
+    <!-- android:src="@drawable/ic_contact_picture" /> -->
+    <TextView
+        android:id="@+id/price_type"
+        style="@style/HeaderFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="Fecha" />
+
+        <TextView
+        android:id="@+id/price_date"
+        style="@style/SubHeaderFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="Fecha" />
+    
+    <TextView
+        android:id="@+id/price_numbers"
+        style="@style/PrimaryFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="Numeros" />
+
+    <TextView
+        android:id="@+id/price_next_date"
+        style="@style/SecundaryFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="Siguiente sorteo" />
+
+    <TextView
+        android:id="@+id/price_next_pot"
+        style="@style/SecundaryFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="Bote" />
+
+</LinearLayout>
