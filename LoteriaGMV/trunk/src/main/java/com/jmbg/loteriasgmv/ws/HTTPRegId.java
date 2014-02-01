@@ -73,9 +73,9 @@ public class HTTPRegId {
 					logstatus = json_data.getInt("registerstatus");
 
 					if (logstatus == 1) {
-						return false;
-					} else {
 						return true;
+					} else {
+						return false;
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -149,9 +149,9 @@ public class HTTPRegId {
 					logstatus = json_data.getInt("unregisterstatus");
 
 					if (logstatus == 1) {
-						return false;
-					} else {
 						return true;
+					} else {
+						return false;
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
