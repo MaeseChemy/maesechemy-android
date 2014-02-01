@@ -18,6 +18,7 @@ import com.jmbg.loteriasgmv.ws.HTTPRegId;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings.Secure;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -115,6 +116,7 @@ public class MainActivity extends Activity {
 				try {
 					String newRegid = gcm.register(Constantes.SENDER_ID);
 					if(!regid.equals(newRegid)){
+						regid=newRegid;
 						Toast.makeText(this,
 								"Cambio de Registration ID: Itento: " + intentos,
 								Toast.LENGTH_LONG).show();
@@ -138,18 +140,22 @@ public class MainActivity extends Activity {
 	 * since the device sends upstream messages to a server that echoes back the
 	 * message using the 'from' address in the message.
 	 */
-	private void sendRegistrationIdToBackend(boolean registration, String regid) {
+	private boolean sendRegistrationIdToBackend(boolean registration, String regid) {
 		HTTPRegId regIdActions = new HTTPRegId();
 		if (registration)
-			regIdActions.doRegisterRegId(getDeviceImei(), regid);
+			return regIdActions.doRegisterRegId(getDeviceImei(), regid);
 		else {
-			regIdActions.doUnRegisterRegId(getDeviceImei(), regid);
+			return regIdActions.doUnRegisterRegId(getDeviceImei(), regid);
 		}
 	}
 
 	private String getDeviceImei() {
 		TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-		return tm.getDeviceId();
+		String imei = tm.getDeviceId();
+		if(imei == null || imei.length() == 0){
+			imei = Secure.getString(getApplicationContext().getContentResolver(), Secure.ANDROID_ID); 
+		}
+		return imei;
 	}
 
 	private String getRegistrationId(Context context) {
@@ -187,23 +193,44 @@ public class MainActivity extends Activity {
 				}
 				if (doRegister) {
 					regid = gcm.register(Constantes.SENDER_ID);
-					sendRegistrationIdToBackend(true, regid);
-					LOG.debug("["
-							+ RegisterGCM.class.getName()
-							+ ".doInBackground] Device registered, registration ID="
-							+ regid);
-					msg = "Activacion de notificaciones correcto";
+					boolean register = sendRegistrationIdToBackend(true, regid);
+					if(register){
+						LOG.debug("["
+								+ RegisterGCM.class.getName()
+								+ ".doInBackground] Device registered, registration ID="
+								+ regid);
+						msg = "Activacion de notificaciones correcto";
+						discoverOk = true;
+					}else{
+						LOG.debug("["
+								+ RegisterGCM.class.getName()
+								+ ".doInBackground] Device not registered, setting registration ID=null");
+						msg = "Activacion de notificaciones incorrecto";
+						regid = "";
+						discoverOk = false;
+					}
+	
 				} else {
 					String oldRegid = regid;
-					regid = "";
-					sendRegistrationIdToBackend(false, oldRegid);
-					gcm.unregister();
-					Log.d(Constantes.TAG,
-							"["
-									+ RegisterGCM.class.getName()
-									+ ".doInBackground] Device imregistered, registration ID="
-									+ oldRegid);
-					msg = "Desactivacion de notificaciones correcto";
+					boolean unregister = sendRegistrationIdToBackend(false, oldRegid);
+					if(unregister){
+						gcm.unregister();	
+						Log.d(Constantes.TAG,
+								"["
+										+ RegisterGCM.class.getName()
+										+ ".doInBackground] Device unregistered, registration ID="
+										+ oldRegid);
+						msg = "Desactivacion de notificaciones correcto";
+						discoverOk = true;
+						regid = "";
+					}else{
+						Log.d(Constantes.TAG,
+								"["
+										+ RegisterGCM.class.getName()
+										+ ".doInBackground] Device not unregistered");
+						msg = "Desactivacion de notificaciones correcto";
+						discoverOk = true;
+					}
 
 				}
 

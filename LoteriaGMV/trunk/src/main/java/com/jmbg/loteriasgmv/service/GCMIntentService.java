@@ -82,7 +82,13 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	private void generateNotification(Context context, String typeMessage,
 			String message) {
-		NotificationTypes notif = NotificationTypes.valueOf(typeMessage);
+		NotificationTypes notif;
+		try{
+			notif = NotificationTypes.valueOf(typeMessage);
+		}catch (IllegalArgumentException iae){
+			LOG.info("Problem with notification type, setting default value: " + iae.getMessage());
+			notif = NotificationTypes.UPD_OTHER;
+		}
 		String text = message;
 
 		int icon;
@@ -123,6 +129,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 			contentIntent = PendingIntent.getActivity(context,
 					notificationIdByTypeGCM(notif), notificationIntent, 0);
 			break;
+		case UPD_OTHER:
 		default:
 			icon = R.drawable.ic_launcher;
 			title = typeMessage;
@@ -142,10 +149,15 @@ public class GCMIntentService extends GCMBaseIntentService {
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(idIcon).setContentTitle(title)
-				.setStyle(new NotificationCompat.BigTextStyle().bigText(text))
-				.setContentText(text).setOnlyAlertOnce(true)
-				.setDefaults(Notification.DEFAULT_ALL);
+				this)
+		.setSmallIcon(idIcon)
+		.setContentTitle(title)
+		.setStyle(new NotificationCompat.BigTextStyle()
+		.bigText(text))
+		.setContentText(text)
+		.setOnlyAlertOnce(true)
+		.setAutoCancel(true)
+		.setDefaults(Notification.DEFAULT_ALL);
 
 		mBuilder.setContentIntent(contentIntent);
 		mNotificationManager.notify(notificationIdByTypeGCM(notif),
