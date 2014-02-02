@@ -338,9 +338,20 @@ public class LectorDatosWS {
 		//jueves 23 de enero de 2014
 		String campos[] = date.split(" ");
 		//20/01/2014
-		String convertDate = campos[1] + "/" + getPriceMonth(campos[3]) + "/" + campos[5];
+		String convertDate = getPriceDay(campos[1]) + "/" + getPriceMonth(campos[3]) + "/" + campos[5];
 		
 		return convertDate;
+	}
+	
+	private String getPriceDay(String dayMonth){
+		int number = Integer.parseInt(dayMonth);
+		String result = "";
+		if(number < 10){
+			result = "0" + number;
+		}else{
+			result = dayMonth;
+		}
+		return result;
 	}
 	
 	private String getPriceMonth(String nameMonth){
