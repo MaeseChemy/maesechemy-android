@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   	<!-- Primary colours -->	
+	<color name="red">#E60000</color>
+	<color name="warm_grey_medium">#AEA79F</color>
+	<color name="white">#FFFFFF</color>
+	<color name="black">#000000</color>
+	<color name="dark_grey">#525252</color>
+	
+	<!-- Secondary colours -->
+	<color name="red_violet">#9C2AA0</color>
+	<color name="aubergine">#5E2750</color>
+	<color name="aqua_blue">#00B0CA</color>
+	<color name="turquoise">#007C92</color>
+	<color name="spring_green">#A8B400</color>
+	<color name="green">#005D05</color>
+	<color name="lemon_yellow">#FECB00</color>
+	<color name="fresh_orange">#EB9700</color>
+	<color name="dark_red">#BD0000</color>
+
+</resources>
