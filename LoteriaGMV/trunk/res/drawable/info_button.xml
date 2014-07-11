@@ -1,9 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true"
-          android:drawable="@drawable/menu_info_pressed" /> <!-- pressed -->
-    <item android:state_focused="true"
-          android:drawable="@drawable/menu_info_selected" /> <!-- focused -->
-    <item android:state_enabled="true"
-          android:drawable="@drawable/menu_info_active" /> <!-- enabled -->
-    <item android:drawable="@drawable/menu_info_standard" /> <!-- default -->
-</selector>
