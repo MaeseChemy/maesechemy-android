@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Apuestas GMV</string>
+    <string name="action_settings">Configuracion</string>
+
+    <!-- LOADING STRINGS -->
+    <string name="loading_app_name_upper">APUESTAS GMV</string>
+    <string name="loading_text">Cargando</string>
+
+    <!-- HOME STRING -->
+    <string name="current_pot">Bote Actual</string>
+    <string name="current_bets">Apuestas Activas</string>
+    <string name="current_week_pot">Bote Semanal:&#160;</string>
+    <string name="current_week_bet">Apuesta Semanal:&#160;</string>
+    <string name="current_pot_rest">Bote Restante:&#160;</string>
+
+    <!-- CATEGORIES -->
+    <string name="category_home">Inicio</string>
+    <string name="category_bets">Apuestas</string>
+    <string name="category_pot">Bote</string>
+    <string name="category_prices">Premios</string>
+    <string name="category_participants">Participantes</string>
+    <string name="category_bets_grid">APUESTAS</string>
+    <string name="category_pot_grid">BOTE</string>
+    <string name="category_prices_grid">PREMIOS</string>
+    <string name="category_participants_grid">PARTICIPANTES</string>
+
+    <!-- BET ACTIVITY -->
+    <string name="bet_current">Apuestas Activas</string>
+    <string name="bet_history">Historico de Apuestas</string>
+
+    <!-- PARTICIPANTS ACTIVITY -->
+    <string name="participants">Participantes</string>
+
+    <!-- POT ACTIVITY -->
+    <string name="pot_current">Bote Actual</string>
+    <string name="pot_history">Historico del Bote</string>
+    <string name="pot_current_pot">Bote Actual</string>
+    <string name="pot_week_pot">Bote Semanal:&#160;</string>
+    <string name="pot_week_bet">Apuesta Semanal:&#160;</string>
+    <string name="pot_week_won">Premio Ganado:&#160;</string>
+
+    <!-- PRICES ACTIVITY -->
+    <string name="prices">Últimos Premios</string>
+
+    <!-- DESCRIPTION IMAGES STRINGS -->
+    <string name="desc_img_logo">Logo de la app</string>
+
+</resources>

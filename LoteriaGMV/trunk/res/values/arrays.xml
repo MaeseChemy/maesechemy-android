@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MENUS ARRAYS -->
+    <string-array name="categories">
+        <item>@string/category_home</item>
+        <item>@string/category_bets</item>
+        <item>@string/category_pot</item>
+        <item>@string/category_prices</item>
+        <item>@string/category_participants</item>
+    </string-array>
+
+</resources>

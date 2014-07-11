@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="250dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/galery_element_background"
+    android:padding="1dp" >
+
+    <ImageView
+        android:id="@+id/bet_image"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/black_trans"
+        android:orientation="vertical" 
+        android:padding="3dp" >
+
+        <TextView
+            android:id="@+id/bet_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/bet_subTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</FrameLayout>
