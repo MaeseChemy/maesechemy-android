@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="apuestasgmvtheme_color">#ff0000</color>
+
+    <!-- Primary colours -->
+    <color name="red">#FF0000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="purple">#8904B1</color>
+    <color name="grey">#848484</color>
+    <color name="green">#31B404</color>
+    
+    <!-- Transparent colours -->
+    <color name="red_trans">#88FF0000</color>
+    <color name="white_trans">#88FFFFFF</color>
+    <color name="black_trans">#88000000</color>
+    <color name="purple_trans">#888904B1</color>
+    <color name="grey_trans">#88848484</color>
+    <color name="green_trans">#8831B404</color>
+
+</resources>
