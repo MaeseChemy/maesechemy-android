@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".PriceDialog" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_layout_height"
+        android:background="@drawable/gradient_top_bar"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:layout_width="@dimen/header_image_width"
+            android:layout_height="@dimen/header_image_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/appName"
+            style="@style/HeaderAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="Consulta Premio" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_layout_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/dialog_text_bet_type"
+            style="@style/HeaderFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TipoApuesta" />
+
+        <TextView
+            android:id="@+id/dialog_text_bet_date"
+            style="@style/SubHeaderFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha" />
+
+        <TextView
+            android:id="@+id/dialog_text_bet_numbers"
+            style="@style/SubHeaderFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numeros" />
+       
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_layout_body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/dialog_text_bet"
+            style="@style/PrimaryFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numeros" />
+    </LinearLayout>
+
+</LinearLayout>
