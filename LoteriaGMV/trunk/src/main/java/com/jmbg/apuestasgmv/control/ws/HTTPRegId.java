@@ -20,7 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HTTPRegId {
-	private final static String URL_REGISTER_REGID = "http://54.229.202.59/loteria_gmv/scripts/register.php";
+	private final static String URL_REGISTER_REGID   = "http://54.229.202.59/loteria_gmv/scripts/register.php";
 	private final static String URL_UNREGISTER_REGID = "http://54.229.202.59/loteria_gmv/scripts/unregister.php";
 
 	public boolean doRegisterRegId(String imei, String regid) {
@@ -115,8 +115,8 @@ public class HTTPRegId {
 			con.setDoOutput(true);
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("device_imei", imei));
-			params.add(new BasicNameValuePair("registration_id", regid));
+			params.add(new BasicNameValuePair("imei", imei));
+			params.add(new BasicNameValuePair("regid", regid));
 
 			OutputStream os = con.getOutputStream();
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(

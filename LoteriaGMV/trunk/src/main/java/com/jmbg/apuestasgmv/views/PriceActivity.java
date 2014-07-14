@@ -3,6 +3,7 @@ package com.jmbg.apuestasgmv.views;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jmbg.apuestasgmv.Constants.TypeAppData;
 import com.jmbg.apuestasgmv.R;
 import com.jmbg.apuestasgmv.control.exception.ApuestasGMVException;
 import com.jmbg.apuestasgmv.model.dao.BetDao;

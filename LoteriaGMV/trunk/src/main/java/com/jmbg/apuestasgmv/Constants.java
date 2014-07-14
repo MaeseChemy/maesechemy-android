@@ -6,6 +6,10 @@ public class Constants {
 
 	public static final int MIN_POT_VALUE = 10;
 
+	public enum TypeAppData {
+		HOME, PARTICIPANT, BET, PRICE, POT
+	};
+	
 	public enum NotificationTypes {
 		UPD_BETS, UPD_PRICES, UPD_POT, UPD_PARTICIPANTS, UPD_OTHER
 	};

@@ -1,5 +1,6 @@
 package com.jmbg.apuestasgmv.views;
 
+import com.jmbg.apuestasgmv.Constants.TypeAppData;
 import com.jmbg.apuestasgmv.R;
 import com.jmbg.apuestasgmv.control.exception.ApuestasGMVException;
 import com.jmbg.apuestasgmv.control.ws.LectorDatosWS;
@@ -12,6 +13,7 @@ import com.jmbg.apuestasgmv.utils.LogManager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -21,15 +23,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public abstract class CustomActivity extends Activity {
 	protected LogManager logger = LogManager.getLogger(this.getClass());
 	private RelativeLayout customActionBar;
-
-	public enum TypeAppData {
-		HOME, PARTICIPANT, BET, PRICE, POT
-	};
 
 	private enum TypeActionBarButton {
 		CONFIG, REFRESH
@@ -80,10 +77,15 @@ public abstract class CustomActivity extends Activity {
 		configBtn.setVisibility(View.VISIBLE);
 		configBtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Toast.makeText(CustomActivity.this, "Configuración",
-						Toast.LENGTH_SHORT).show();
+				openPreferencesWindow();
 			}
 		});
+	}
+	
+	private void openPreferencesWindow(){
+		Intent intent = new Intent(this, PreferencesActivity.class);
+		startActivity(intent);
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
 
 	protected void enableRefreshButton() throws ApuestasGMVException {
