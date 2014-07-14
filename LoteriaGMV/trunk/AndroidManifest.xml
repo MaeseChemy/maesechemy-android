@@ -24,6 +24,7 @@
         android:targetSdkVersion="20" />
 
     <application
+        android:name="com.jmbg.apuestasgmv.ApuestasAppApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -64,6 +65,12 @@
         </activity>
         <activity
             android:name="com.jmbg.apuestasgmv.views.PriceActivity"
+            android:label="@string/category_participants"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name="com.jmbg.apuestasgmv.views.PreferencesActivity"
             android:label="@string/category_participants"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" >

@@ -1,12 +1,13 @@
 package com.jmbg.apuestasgmv.views;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.jmbg.apuestasgmv.Constants;
+import com.jmbg.apuestasgmv.Constants.TypeAppData;
 import com.jmbg.apuestasgmv.IntentResults;
+import com.jmbg.apuestasgmv.Preferences;
 import com.jmbg.apuestasgmv.R;
 import com.jmbg.apuestasgmv.control.ws.HTTPRegId;
 import com.jmbg.apuestasgmv.control.ws.LectorDatosWS;
@@ -15,10 +16,6 @@ import com.jmbg.apuestasgmv.model.dao.LotGMVDBAdapter;
 import com.jmbg.apuestasgmv.model.dao.ParticipantDao;
 import com.jmbg.apuestasgmv.model.dao.PotDao;
 import com.jmbg.apuestasgmv.model.dao.PriceDao;
-import com.jmbg.apuestasgmv.model.dao.entities.Bet;
-import com.jmbg.apuestasgmv.model.dao.entities.Participant;
-import com.jmbg.apuestasgmv.model.dao.entities.Pot;
-import com.jmbg.apuestasgmv.model.dao.entities.Price;
 import com.jmbg.apuestasgmv.utils.DeviceUtils;
 import com.jmbg.apuestasgmv.utils.LogManager;
 
@@ -34,7 +31,7 @@ import android.widget.Toast;
 public class LoadingActivity extends Activity {
 
 	private LogManager logger = LogManager.getLogger(this.getClass());
-
+	private Preferences prefrerences;
 	private int loadingProcess;
 	private final static int DISCOVER_GCM = 0;
 	private final static int GET_POTS = 1;
@@ -62,6 +59,8 @@ public class LoadingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		logger.info("Create app");
 		setContentView(R.layout.loading_activity);
+
+		prefrerences = Preferences.getInstance();
 
 		initActivityHolder();
 
@@ -143,9 +142,11 @@ public class LoadingActivity extends Activity {
 
 	private void discoverDevice() {
 		if (intentos <= MAX_INTENTOS) {
-			setLoadingText("Activando notificaciones");
+			String text = prefrerences.getEnableNotifications() ? "Activando notificaciones"
+					: "Desactivando notificaciones";
+			setLoadingText(text);
 			RegisterGCM registerGCM = new RegisterGCM();
-			registerGCM.execute(true);
+			registerGCM.execute(prefrerences.getEnableNotifications());
 		} else {
 			Toast.makeText(this,
 					"No se pudo realizar la accion, intentelo de nuevo...",
@@ -155,26 +156,38 @@ public class LoadingActivity extends Activity {
 	}
 
 	private void getBets() {
-		setLoadingText("Obteniendo apuestas");
-		BetWSTask task = new BetWSTask(this);
+		String text = prefrerences.getAllowInitLoadWSData() ? "Obteniedo apuestas"
+				: "Verificando apuestas";
+		setLoadingText(text);
+		DataWSTask task = new DataWSTask(this, TypeAppData.BET,
+				prefrerences.getAllowInitLoadWSData());
 		task.execute();
 	}
 
 	private void getPots() {
-		setLoadingText("Obteniendo bote");
-		PotWSTask task = new PotWSTask(this);
+		String text = prefrerences.getAllowInitLoadWSData() ? "Obteniedo Bote"
+				: "Verificando bote";
+		setLoadingText(text);
+		DataWSTask task = new DataWSTask(this, TypeAppData.POT,
+				prefrerences.getAllowInitLoadWSData());
 		task.execute();
 	}
 
 	private void getParticipants() {
-		setLoadingText("Obteniendo partipantes");
-		ParticipantWSTask task = new ParticipantWSTask(this);
+		String text = prefrerences.getAllowInitLoadWSData() ? "Obteniedo participantes"
+				: "Verificando participantes";
+		setLoadingText(text);
+		DataWSTask task = new DataWSTask(this, TypeAppData.PARTICIPANT,
+				prefrerences.getAllowInitLoadWSData());
 		task.execute();
 	}
 
 	private void getPrices() {
-		setLoadingText("Obteniendo premios");
-		PricesWSTask task = new PricesWSTask(this);
+		String text = prefrerences.getAllowInitLoadWSData() ? "Obteniedo premios"
+				: "Verificando premios";
+		setLoadingText(text);
+		DataWSTask task = new DataWSTask(this, TypeAppData.PRICE,
+				prefrerences.getAllowInitLoadWSData());
 		task.execute();
 	}
 
@@ -207,6 +220,7 @@ public class LoadingActivity extends Activity {
 		protected String doInBackground(Boolean... params) {
 			boolean doRegister = params[0];
 			String msg = "";
+			regid = prefrerences.getRegistrationID();
 			try {
 				if (gcm == null) {
 					gcm = GoogleCloudMessaging
@@ -214,21 +228,27 @@ public class LoadingActivity extends Activity {
 				}
 				if (doRegister) {
 					regid = gcm.register(Constants.SENDER_ID);
-					boolean register = sendRegistrationIdToBackend(true, regid);
-					if (register) {
-						logger.debug("["
-								+ RegisterGCM.class.getName()
-								+ ".doInBackground] Device registered, registration ID="
-								+ regid);
+					if (!regid.equals(prefrerences.getRegistrationID())) {
+						boolean register = sendRegistrationIdToBackend(true,
+								regid);
+						if (register) {
+							logger.debug("["
+									+ RegisterGCM.class.getName()
+									+ ".doInBackground] Device registered, registration ID="
+									+ regid);
+							msg = "Activacion de notificaciones correcto";
+							discoverOk = true;
+						} else {
+							logger.debug("["
+									+ RegisterGCM.class.getName()
+									+ ".doInBackground] Device not registered, setting registration ID=null");
+							msg = "Activacion de notificaciones incorrecto";
+							regid = "";
+							discoverOk = false;
+						}
+					}else{
 						msg = "Activacion de notificaciones correcto";
 						discoverOk = true;
-					} else {
-						logger.debug("["
-								+ RegisterGCM.class.getName()
-								+ ".doInBackground] Device not registered, setting registration ID=null");
-						msg = "Activacion de notificaciones incorrecto";
-						regid = "";
-						discoverOk = false;
 					}
 
 				} else {
@@ -269,26 +289,38 @@ public class LoadingActivity extends Activity {
 				intentos++;
 				discoverDevice();
 			} else {
+				prefrerences.setRegistrationID(regid);
 				intentos = 0;
 				nextStep();
 			}
 		}
 	}
 
-	public class PotWSTask extends AsyncTask<Void, Integer, List<Pot>> {
+	private class DataWSTask extends AsyncTask<Void, Integer, Boolean> {
 
 		private LogManager logger = LogManager.getLogger(this.getClass());
 
-		private PotDao mDao;
+		private ParticipantDao mParticipantDao;
+		private BetDao mBetDao;
+		private PriceDao mPriceDao;
+		private PotDao mPotDao;
 		private LotGMVDBAdapter mLotGMVDBAdapter;
 		private LectorDatosWS mLector;
 
-		private List<Pot> mResult;
+		private TypeAppData mTypeData;
 
-		public PotWSTask(Context context) {
+		private boolean mForceUpdate;
+
+		public DataWSTask(Context context, TypeAppData typeData,
+				boolean forceUpdate) {
+			mTypeData = typeData;
+			mForceUpdate = forceUpdate;
 			try {
 				mLotGMVDBAdapter = new LotGMVDBAdapter(context);
-				mDao = new PotDao(mLotGMVDBAdapter);
+				mParticipantDao = new ParticipantDao(mLotGMVDBAdapter);
+				mBetDao = new BetDao(mLotGMVDBAdapter);
+				mPriceDao = new PriceDao(mLotGMVDBAdapter);
+				mPotDao = new PotDao(mLotGMVDBAdapter);
 				mLector = new LectorDatosWS(context);
 			} catch (NumberFormatException e) {
 				logger.error("Error with the package name: " + e.getMessage());
@@ -301,169 +333,46 @@ public class LoadingActivity extends Activity {
 		}
 
 		@Override
-		protected List<Pot> doInBackground(Void... params) {
-			logger.debug("Getting from server bet history...");
-
-			mResult = mDao.findAll();
-			if (mResult == null || mResult.size() == 0) {
-				mResult = mLector.readPotHistory();
+		protected Boolean doInBackground(Void... params) {
+			logger.debug("Getting data from server...");
+			List<?> dbResult;
+			switch (mTypeData) {
+			case BET:
+				dbResult = mBetDao.findAll();
+				if (mForceUpdate || dbResult.size() == 0) {
+					mBetDao.removeAll();
+					mBetDao.save(mLector.readBet());
+				}
+				break;
+			case POT:
+				dbResult = mPotDao.findAll();
+				if (mForceUpdate || dbResult.size() == 0) {
+					mPotDao.removeAll();
+					mPotDao.save(mLector.readPotHistory());
+				}
+				break;
+			case PARTICIPANT:
+				dbResult = mParticipantDao.findAll();
+				if (mForceUpdate || dbResult.size() == 0) {
+					mParticipantDao.removeAll();
+					mParticipantDao.save(mLector.readParticipant());
+				}
+				break;
+			case PRICE:
+				dbResult = mPriceDao.findAll();
+				if (mForceUpdate || dbResult.size() == 0) {
+					mPriceDao.removeAll();
+					mPriceDao.save(mLector.readPrice());
+				}
+				break;
+			default:
+				return false;
 			}
-
-			Collections.sort(mResult);
-			return mResult;
+			return true;
 		}
 
 		@Override
-		protected void onPostExecute(List<Pot> mResult) {
-			if (mResult != null) {
-				mDao.removeAll();
-				mDao.save(mResult);
-			}
-			nextStep();
-		}
-	}
-
-	public class BetWSTask extends AsyncTask<Void, Integer, List<Bet>> {
-
-		private LogManager logger = LogManager.getLogger(this.getClass());
-
-		private BetDao mDao;
-		private LotGMVDBAdapter mLotGMVDBAdapter;
-		private LectorDatosWS mLector;
-
-		private List<Bet> mResult;
-
-		public BetWSTask(Context context) {
-			try {
-				mLotGMVDBAdapter = new LotGMVDBAdapter(context);
-				mDao = new BetDao(mLotGMVDBAdapter);
-				mLector = new LectorDatosWS(context);
-			} catch (NumberFormatException e) {
-				logger.error("Error with the package name: " + e.getMessage());
-				logger.debug("Error with the package name: " + e);
-			} catch (NameNotFoundException e) {
-				logger.error("Error with the application version name: "
-						+ e.getMessage());
-				logger.debug("Error with the application version name: " + e);
-			}
-		}
-
-		@Override
-		protected List<Bet> doInBackground(Void... params) {
-			logger.debug("Getting from server bet history...");
-
-			mResult = mDao.findAll();
-			if (mResult == null || mResult.size() == 0) {
-				mResult = mLector.readBet();
-			}
-
-			Collections.sort(mResult);
-			return mResult;
-		}
-
-		@Override
-		protected void onPostExecute(List<Bet> mResult) {
-			if (mResult != null) {
-				mDao.removeAll();
-				mDao.save(mResult);
-			}
-			nextStep();
-		}
-	}
-
-	public class ParticipantWSTask extends
-			AsyncTask<Void, Integer, List<Participant>> {
-
-		private LogManager logger = LogManager.getLogger(this.getClass());
-
-		private ParticipantDao mDao;
-		private LotGMVDBAdapter mLotGMVDBAdapter;
-		private LectorDatosWS mLector;
-
-		private List<Participant> mResult;
-
-		public ParticipantWSTask(Context context) {
-			try {
-				mLotGMVDBAdapter = new LotGMVDBAdapter(context);
-				mDao = new ParticipantDao(mLotGMVDBAdapter);
-				mLector = new LectorDatosWS(context);
-			} catch (NumberFormatException e) {
-				logger.error("Error with the package name: " + e.getMessage());
-				logger.debug("Error with the package name: " + e);
-			} catch (NameNotFoundException e) {
-				logger.error("Error with the application version name: "
-						+ e.getMessage());
-				logger.debug("Error with the application version name: " + e);
-			}
-		}
-
-		@Override
-		protected List<Participant> doInBackground(Void... params) {
-			logger.debug("Getting from server bet history...");
-
-			mResult = mDao.findAll();
-			if (mResult == null || mResult.size() == 0) {
-				mResult = mLector.readParticipant();
-			}
-
-			Collections.sort(mResult);
-			return mResult;
-		}
-
-		@Override
-		protected void onPostExecute(List<Participant> mResult) {
-			if (mResult != null) {
-				mDao.removeAll();
-				mDao.save(mResult);
-			}
-			nextStep();
-		}
-	}
-
-	public class PricesWSTask extends AsyncTask<Void, Integer, List<Price>> {
-
-		private LogManager logger = LogManager.getLogger(this.getClass());
-
-		private PriceDao mDao;
-		private LotGMVDBAdapter mLotGMVDBAdapter;
-		private LectorDatosWS mLector;
-
-		private List<Price> mResult;
-
-		public PricesWSTask(Context context) {
-			try {
-				mLotGMVDBAdapter = new LotGMVDBAdapter(context);
-				mDao = new PriceDao(mLotGMVDBAdapter);
-				mLector = new LectorDatosWS(context);
-			} catch (NumberFormatException e) {
-				logger.error("Error with the package name: " + e.getMessage());
-				logger.debug("Error with the package name: " + e);
-			} catch (NameNotFoundException e) {
-				logger.error("Error with the application version name: "
-						+ e.getMessage());
-				logger.debug("Error with the application version name: " + e);
-			}
-		}
-
-		@Override
-		protected List<Price> doInBackground(Void... params) {
-			logger.debug("Getting from server bet history...");
-
-			mResult = mDao.findAll();
-			if (mResult == null || mResult.size() == 0) {
-				mResult = mLector.readPrice();
-			}
-
-			Collections.sort(mResult);
-			return mResult;
-		}
-
-		@Override
-		protected void onPostExecute(List<Price> mResult) {
-			if (mResult != null) {
-				mDao.removeAll();
-				mDao.save(mResult);
-			}
+		protected void onPostExecute(Boolean mResult) {
 			nextStep();
 		}
 	}

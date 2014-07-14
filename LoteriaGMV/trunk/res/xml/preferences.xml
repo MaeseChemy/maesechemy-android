@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="pref_screen_main" >
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="pref_init_load_ws_all_data"
+        android:summary="Descargar toda la información en el arranque"
+        android:title="Descarga de Datos" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_notifications"
+        android:summary="Activar notificaciones"
+        android:title="Notificaciones" />
+
+</PreferenceScreen>
