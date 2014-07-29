@@ -1,5 +1,6 @@
 package com.jmbg.apuestasgmv.utils;
 
+import com.jmbg.apuestasgmv.IntentResults;
 import com.jmbg.apuestasgmv.R;
 import com.jmbg.apuestasgmv.views.PotActivity;
 
@@ -23,4 +24,8 @@ public class PotActivityElement extends ActivityElement {
 		return intent;
 	}
 
+	@Override
+	public int getActivityCode() {
+		return IntentResults.INIT_POT;
+	}
 }

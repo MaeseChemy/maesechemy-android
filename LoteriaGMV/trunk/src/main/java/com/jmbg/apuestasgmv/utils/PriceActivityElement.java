@@ -1,5 +1,6 @@
 package com.jmbg.apuestasgmv.utils;
 
+import com.jmbg.apuestasgmv.IntentResults;
 import com.jmbg.apuestasgmv.R;
 import com.jmbg.apuestasgmv.views.PriceActivity;
 
@@ -23,6 +24,11 @@ public class PriceActivityElement extends ActivityElement {
 	public Intent getIntent() {
 		Intent intent = new Intent(context, PriceActivity.class);
 		return intent;
+	}
+
+	@Override
+	public int getActivityCode() {
+		return IntentResults.INIT_PRICE;
 	}
 
 }
