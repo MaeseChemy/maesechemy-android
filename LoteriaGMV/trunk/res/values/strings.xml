@@ -7,6 +7,7 @@
     <!-- LOADING STRINGS -->
     <string name="loading_app_name_upper">APUESTAS GMV</string>
     <string name="loading_text">Cargando</string>
+    <string name="loading_version">v2.0.0</string>
 
     <!-- HOME STRING -->
     <string name="current_pot">Bote Actual</string>
