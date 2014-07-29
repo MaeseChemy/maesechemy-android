@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.jmbg.apuestasgmv.Constants;
+import com.jmbg.apuestasgmv.IntentResults;
 import com.jmbg.apuestasgmv.Constants.TypeAppData;
 import com.jmbg.apuestasgmv.R;
 import com.jmbg.apuestasgmv.control.exception.ApuestasGMVException;
@@ -73,7 +74,7 @@ public class HomeActivity extends CustomActivity {
 		} catch (ApuestasGMVException e) {
 			e.printStackTrace();
 		}
-		
+
 		initDaos();
 		initViewHolder();
 	}
@@ -93,12 +94,11 @@ public class HomeActivity extends CustomActivity {
 		}
 	}
 
-	
 	@Override
-	protected TypeAppData getTypeDataActivity(){
+	protected TypeAppData getTypeDataActivity() {
 		return TypeAppData.HOME;
 	}
-	
+
 	@Override
 	protected void initViewHolder() {
 		mHolder = new HomeViewHolder();
@@ -150,7 +150,9 @@ public class HomeActivity extends CustomActivity {
 						if (activity != null) {
 							Intent launchIntent = activity.getIntent();
 							if (launchIntent != null) {
-								startActivity(launchIntent);
+								//startActivity(launchIntent);
+								startActivityForResult(launchIntent,
+										activity.getActivityCode());
 								overridePendingTransition(R.anim.push_left_in,
 										R.anim.push_left_out);
 							}
@@ -159,6 +161,23 @@ public class HomeActivity extends CustomActivity {
 					}
 
 				});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		logger.debug("onActivityResult [requestCode=" + requestCode + "]"
+				+ "[resultCode=" + resultCode + "]");
+
+		switch (requestCode) {
+		case IntentResults.INIT_BET:
+			initBetValues();
+			return;
+		case IntentResults.INIT_POT:
+			initPotValues();
+			return;
+		}
 	}
 
 	private void initPotValues() {
@@ -219,7 +238,7 @@ public class HomeActivity extends CustomActivity {
 						imageDialog.setImageBitmap(BitmapFactory
 								.decodeByteArray(item.getBetImage(), 0,
 										item.getBetImage().length));
-						
+
 						imageDialog.show();
 					}
 				});

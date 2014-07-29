@@ -41,4 +41,6 @@ public abstract class ActivityElement {
 	}
 	
 	public abstract Intent getIntent();
+
+	public abstract int getActivityCode();
 }
