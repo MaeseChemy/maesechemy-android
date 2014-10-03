@@ -29,7 +29,7 @@ import android.content.Context;
 
 public class LectorDatosWS {
 
-	public final static String URL_BASE = "http://54.229.202.59/loteria_gmv";
+	public final static String URL_BASE = "http://178.62.214.182/loteria_gmv";
 
 	private LogManager LOG = LogManager.getLogger(this.getClass());
 
@@ -373,10 +373,12 @@ public class LectorDatosWS {
 			return "08";
 		} else if (nameMonth.equals("septiembre")) {
 			return "09";
-		} else if (nameMonth.equals("noviembre")) {
+		} else if (nameMonth.equals("octubre")) {
 			return "10";
-		} else if (nameMonth.equals("diciembre")) {
+		} else if (nameMonth.equals("noviembre")) {
 			return "11";
+		} else if (nameMonth.equals("diciembre")) {
+			return "12";
 		} else {
 			return "12";
 		}

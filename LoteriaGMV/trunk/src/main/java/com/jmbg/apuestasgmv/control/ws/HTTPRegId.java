@@ -20,8 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HTTPRegId {
-	private final static String URL_REGISTER_REGID   = "http://54.229.202.59/loteria_gmv/scripts/register.php";
-	private final static String URL_UNREGISTER_REGID = "http://54.229.202.59/loteria_gmv/scripts/unregister.php";
+	private final static String URL_REGISTER_REGID   = "http://178.62.214.182/loteria_gmv/scripts/register.php";
+	private final static String URL_UNREGISTER_REGID = "http://178.62.214.182/loteria_gmv/scripts/unregister.php";
 
 	public boolean doRegisterRegId(String imei, String regid) {
 
