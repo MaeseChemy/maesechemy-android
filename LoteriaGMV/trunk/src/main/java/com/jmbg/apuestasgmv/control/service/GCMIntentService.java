@@ -1,6 +1,6 @@
 package com.jmbg.apuestasgmv.control.service;
 
-import com.google.android.gcm.GCMBaseIntentService;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.jmbg.apuestasgmv.Constants;
 import com.jmbg.apuestasgmv.Constants.NotificationTypes;
 import com.jmbg.apuestasgmv.R;
@@ -11,14 +11,16 @@ import com.jmbg.apuestasgmv.views.ParticipantActivity;
 import com.jmbg.apuestasgmv.views.PotActivity;
 import com.jmbg.apuestasgmv.views.PriceActivity;
 
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-public class GCMIntentService extends GCMBaseIntentService {
+public class GCMIntentService extends IntentService {
 
 	private NotificationManager mNotificationManager;
 
@@ -28,56 +30,42 @@ public class GCMIntentService extends GCMBaseIntentService {
 		super(Constants.SENDER_ID);
 	}
 
-	/**
-	 * Method called on device registered
-	 **/
 	@Override
-	protected void onRegistered(Context context, String registrationId) {
-		logger.info("Device registered: regId = " + registrationId);
-	}
+	protected void onHandleIntent(Intent intent) {
+		Bundle extras = intent.getExtras();
+		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+		// The getMessageType() intent parameter must be the intent you received
+		// in your BroadcastReceiver.
+		String messageType = gcm.getMessageType(intent);
 
-	/**
-	 * Method called on device un registred
-	 * */
-	@Override
-	protected void onUnregistered(Context context, String registrationId) {
-		logger.info("Device unregistered");
-	}
+		if (!extras.isEmpty()) { // has effect of unparcelling Bundle
+			/*
+			 * Filter messages based on message type. Since it is likely that
+			 * GCM will be extended in the future with new message types, just
+			 * ignore any message types you're not interested in, or that you
+			 * don't recognize.
+			 */
+			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
+					.equals(messageType)) {
+				logger.info("Send error: " + extras.toString());
+			} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED
+					.equals(messageType)) {
+				logger.info("Deleted messages");
 
-	/**
-	 * Method called on Receiving a new message
-	 * */
-	@Override
-	protected void onMessage(Context context, Intent intent) {
-		logger.info("Received message");
-		String message = intent.getExtras().getString("notification");
-		String typeMessage = intent.getExtras().getString("notification_type");
+				// If it's a regular GCM message, do some work.
+			} else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
+					.equals(messageType)) {
+				logger.info("Received message");
+				String message = intent.getExtras().getString("notification");
+				String typeMessage = intent.getExtras().getString(
+						"notification_type");
 
-		// Notificamos al usuario de datos nuevos en la aplicacion
-		generateNotification(context, typeMessage, message);
-	}
-
-	/**
-	 * Method called on receiving a deleted message
-	 * */
-	@Override
-	protected void onDeletedMessages(Context context, int total) {
-		logger.info("Received deleted messages notification");
-	}
-
-	/**
-	 * Method called on Error
-	 * */
-	@Override
-	public void onError(Context context, String errorId) {
-		logger.info("Received error: " + errorId);
-	}
-
-	@Override
-	protected boolean onRecoverableError(Context context, String errorId) {
-		// log message
-		logger.info("Received recoverable error: " + errorId);
-		return super.onRecoverableError(context, errorId);
+				// Notificamos al usuario de datos nuevos en la aplicacion
+				generateNotification(this, typeMessage, message);
+			}
+		}
+		// Release the wake lock provided by the WakefulBroadcastReceiver.
+		GcmBroadcastReceiver.completeWakefulIntent(intent);
 	}
 
 	private void generateNotification(Context context, String typeMessage,

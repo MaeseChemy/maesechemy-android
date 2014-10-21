@@ -54,19 +54,23 @@ public class PotAdapter extends ArrayAdapter<Pot> {
 		ViewHolder holder;
 		DecimalFormat df = new DecimalFormat("#.##");
 
-		LayoutInflater vi = (LayoutInflater) this.getContext()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		v = vi.inflate(layout, null);
+		if (v == null) {
+			LayoutInflater vi = (LayoutInflater) this.getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			v = vi.inflate(layout, null);
 
-		holder = new ViewHolder();
-		holder.txtPotDate = (TextView) v.findViewById(R.id.pot_date);
-		holder.txtPotValue = (TextView) v.findViewById(R.id.pot_value);
-		holder.txtPotBet = (TextView) v.findViewById(R.id.pot_bet);
-		holder.txtPotWon = (TextView) v.findViewById(R.id.pot_won);
-		holder.txtPotFinalValue = (TextView) v
-				.findViewById(R.id.pot_final_value);
+			holder = new ViewHolder();
+			holder.txtPotDate = (TextView) v.findViewById(R.id.pot_date);
+			holder.txtPotValue = (TextView) v.findViewById(R.id.pot_value);
+			holder.txtPotBet = (TextView) v.findViewById(R.id.pot_bet);
+			holder.txtPotWon = (TextView) v.findViewById(R.id.pot_won);
+			holder.txtPotFinalValue = (TextView) v
+					.findViewById(R.id.pot_final_value);
 
-		v.setTag(holder);
+			v.setTag(holder);
+		} else {
+			holder = (ViewHolder) v.getTag();
+		}
 
 		Pot item = this.items.get(position);
 

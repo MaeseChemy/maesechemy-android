@@ -52,25 +52,32 @@ public class ParticipantAdapter extends ArrayAdapter<Participant> {
 		View v = convertView;
 		ViewHolder holder;
 
-		LayoutInflater vi = (LayoutInflater) this.getContext()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		v = vi.inflate(layout, null);
+		if (v == null) {
+			LayoutInflater vi = (LayoutInflater) this.getContext()
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			v = vi.inflate(layout, null);
 
-		holder = new ViewHolder();
-		holder.imageParticipant = (ImageView) v
-				.findViewById(R.id.participant_image);
-		holder.txtParticipantName = (TextView) v
-				.findViewById(R.id.participant_name);
-		holder.txtParticipantFund = (TextView) v
-				.findViewById(R.id.participant_fund);
-		holder.imageFundParticipant = (ImageView) v
-				.findViewById(R.id.participant_image_fund);
-
+			holder = new ViewHolder();
+			holder.imageParticipant = (ImageView) v
+					.findViewById(R.id.participant_image);
+			holder.txtParticipantName = (TextView) v
+					.findViewById(R.id.participant_name);
+			holder.txtParticipantFund = (TextView) v
+					.findViewById(R.id.participant_fund);
+			holder.imageFundParticipant = (ImageView) v
+					.findViewById(R.id.participant_image_fund);
+			v.setTag(holder);
+		} else {
+			holder = (ViewHolder) v.getTag();
+		}
 		Participant item = this.items.get(position);
 
-		holder.imageParticipant.setImageBitmap(BitmapFactory.decodeByteArray(item.getParticipantImageURL(), 0, item.getParticipantImageURL().length));
+		holder.imageParticipant.setImageBitmap(BitmapFactory.decodeByteArray(
+				item.getParticipantImageURL(), 0,
+				item.getParticipantImageURL().length));
 		holder.txtParticipantName.setText(item.getParticipantName());
-		holder.txtParticipantFund.setText(Float.toString(item.getParticipantFund()) + " €");
+		holder.txtParticipantFund.setText(Float.toString(item
+				.getParticipantFund()) + " €");
 
 		if (item.getParticipantFund() < 0) {
 			holder.txtParticipantFund.setTextColor(context.getResources()
