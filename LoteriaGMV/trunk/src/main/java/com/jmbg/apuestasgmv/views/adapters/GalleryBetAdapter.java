@@ -41,17 +41,22 @@ public class GalleryBetAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-
-		LayoutInflater vi = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		v = vi.inflate(layout, null);
-
+		GaleryHolder holder;
+		if (v == null){
+			LayoutInflater vi = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			v = vi.inflate(layout, null);
+	
+			holder = new GaleryHolder();
+			holder.betImage = (ImageView) v.findViewById(R.id.bet_image);
+			holder.betTitle = (TextView) v.findViewById(R.id.bet_title);
+			holder.betSubtitle = (TextView) v.findViewById(R.id.bet_subTitle);
+			
+			v.setTag(holder);
+		}else {
+			holder = (GaleryHolder) v.getTag();
+		}
 		Bet item = getItem(position);
-		GaleryHolder holder = new GaleryHolder();
-		holder.betImage = (ImageView) v.findViewById(R.id.bet_image);
-		holder.betTitle = (TextView) v.findViewById(R.id.bet_title);
-		holder.betSubtitle = (TextView) v.findViewById(R.id.bet_subTitle);
-
 		holder.betImage.setImageBitmap(BitmapFactory.decodeByteArray(
 				item.getBetImage(), 0, item.getBetImage().length));
 		holder.betTitle.setText(item.getBetType());

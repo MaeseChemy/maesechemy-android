@@ -23,7 +23,7 @@ public class PriceAdapter extends ArrayAdapter<Price> {
 	private Context context;
 	private int layout;
 	private List<Price> items;
-	
+
 	private PriceActivity mActivity;
 
 	public static class ViewHolder {
@@ -62,26 +62,32 @@ public class PriceAdapter extends ArrayAdapter<Price> {
 		View v = convertView;
 		ViewHolder holder;
 		DecimalFormat df = new DecimalFormat("###,###.##");
-		
+
 		LayoutInflater vi = (LayoutInflater) this.getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		v = vi.inflate(layout, null);
+		if (v == null) {
+			v = vi.inflate(layout, null);
 
-		holder = new ViewHolder();
-		holder.txtPriceType = (TextView) v.findViewById(R.id.price_type);
-		holder.txtPriceDate = (TextView) v.findViewById(R.id.price_date);
-		holder.layoutNumbers = (LinearLayout) v
-				.findViewById(R.id.price_layout_numbers);
-		holder.txtPriceNextPrice = (TextView) v
-				.findViewById(R.id.price_next_date);
-		holder.txtPriceNextPot = (TextView) v.findViewById(R.id.price_next_pot);
-		holder.searchButton = (ImageView) v.findViewById(R.id.price_search_results);
-		
-		v.setTag(holder);
+			holder = new ViewHolder();
+			holder.txtPriceType = (TextView) v.findViewById(R.id.price_type);
+			holder.txtPriceDate = (TextView) v.findViewById(R.id.price_date);
+			holder.layoutNumbers = (LinearLayout) v
+					.findViewById(R.id.price_layout_numbers);
+			holder.txtPriceNextPrice = (TextView) v
+					.findViewById(R.id.price_next_date);
+			holder.txtPriceNextPot = (TextView) v
+					.findViewById(R.id.price_next_pot);
+			holder.searchButton = (ImageView) v
+					.findViewById(R.id.price_search_results);
+
+			v.setTag(holder);
+		} else {
+			holder = (ViewHolder) v.getTag();
+		}
 
 		final Price item = this.items.get(position);
 		holder.txtPriceType.setText(item.getPriceType());
-		holder.txtPriceDate.setText("["+item.getPriceDate()+"]");
+		holder.txtPriceDate.setText("[" + item.getPriceDate() + "]");
 		holder.txtPriceNextPrice.setText("Siguiente sorteo: "
 				+ item.getPriceNextDate());
 		holder.txtPriceNextPot.setText("BOTE: "
@@ -128,15 +134,15 @@ public class PriceAdapter extends ArrayAdapter<Price> {
 		}
 
 		holder.layoutNumbers.addView(layoutNumeros);
-		
+
 		holder.searchButton.setClickable(true);
 		holder.searchButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			public void onClick(View v) {
 				mActivity.searchPriceResults(item);
 			}
 		});
-		
+
 		return v;
 	}
 

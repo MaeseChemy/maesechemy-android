@@ -6,6 +6,7 @@ import com.jmbg.apuestasgmv.R;
 import com.jmbg.apuestasgmv.utils.ActivityElement;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,11 @@ public class GridAdapter extends BaseAdapter {
 
 	private List<ActivityElement> gridElements;
 	private Activity activity;
+
+	public class GridHolder {
+		public ImageView iconGrid;
+		public TextView textGrid;
+	}
 
 	public GridAdapter(Activity activity, List<ActivityElement> gridElements) {
 		super();
@@ -37,25 +43,32 @@ public class GridAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = this.activity.getLayoutInflater();
-		View view = inflater.inflate(R.layout.grid_element, null, true);
+		View v = convertView;
 
-		ImageView iconGrid = (ImageView) view
-				.findViewById(R.id.image_grid_menu);
+		GridHolder holder;
+		if (v == null) {
+			LayoutInflater vi = (LayoutInflater) this.activity
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			v = vi.inflate(R.layout.grid_element, null);
 
-		iconGrid.setScaleType(ImageView.ScaleType.CENTER_CROP);
+			holder = new GridHolder();
+			holder.iconGrid = (ImageView) v.findViewById(R.id.image_grid_menu);
+			holder.textGrid = (TextView) v.findViewById(R.id.name_grid_menu);
 
-		TextView textGrid = (TextView) view.findViewById(R.id.name_grid_menu);
+			v.setTag(holder);
+		} else {
+			holder = (GridHolder) v.getTag();
+		}
 
 		ActivityElement ae = this.gridElements.get(position);
-
-		iconGrid.setImageResource(ae.getActivityIcon());
-		textGrid.setText(ae.getActivityName());
+		holder.iconGrid.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		holder.iconGrid.setImageResource(ae.getActivityIcon());
+		holder.textGrid.setText(ae.getActivityName());
 
 		if (!ae.isVisibility()) {
-			view.setVisibility(View.GONE);
+			v.setVisibility(View.GONE);
 		}
-		return view;
+		return v;
 	}
 
 }
